@@ -151,13 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Algorithm.cpp" />
+    <ClCompile Include="Creature.cpp" />
     <ClCompile Include="Problem.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithm.h" />
-    <ClInclude Include="Config.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="Problem.h" />
     <ClInclude Include="Loader.h" />

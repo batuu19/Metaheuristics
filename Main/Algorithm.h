@@ -1,11 +1,12 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 
 static constexpr size_t DEFAULT_POPSIZE = 100;
-static constexpr size_t DEFAULT_GENERATIONS = 100;
+static constexpr size_t DEFAULT_GENERATIONS = 10;
 static constexpr float DEFAULT_PX = 0.01f;
-static constexpr float DEFAULT_PX = 0.1f;
+static constexpr float DEFAULT_PM = 0.1f;
 
 
 class Config
@@ -13,7 +14,6 @@ class Config
 public:
 	Config();
 	Config(size_t popsize, size_t generations, float px, float pm);
-	Config(std::string filename);
 
 	bool isInitialized() { return initialized; };
 private:
@@ -29,8 +29,9 @@ private:
 class Algorithm
 {
 public:
-	Config config;
+
 private:
+	Config config;
 	Population pop;
 
 };
