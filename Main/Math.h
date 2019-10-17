@@ -3,7 +3,7 @@
 class Point
 {
 public:
-	int x, y;
+	float x, y;
 private:
 
 };
