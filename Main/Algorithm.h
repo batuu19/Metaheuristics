@@ -1,21 +1,36 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
 
-#include "Math.h"
+static constexpr size_t DEFAULT_POPSIZE = 100;
+static constexpr size_t DEFAULT_GENERATIONS = 100;
+static constexpr float DEFAULT_PX = 0.01f;
+static constexpr float DEFAULT_PX = 0.1f;
+
+
+class Config
+{
+public:
+	Config();
+	Config(size_t popsize, size_t generations, float px, float pm);
+	Config(std::string filename);
+
+	bool isInitialized() { return initialized; };
+private:
+	bool initialized = false;
+	size_t popSize;
+	size_t generations;
+	float px, pm;//crossover, mutation
+	friend class Algorithm;
+};
+
+#include "Population.h"
 
 class Algorithm
 {
 public:
-	Algorithm();//temp?
-	Algorithm(std::string name, std::string type, std::string comment, std::string edgeWeightType,
-		const std::vector<Point> &nodes);
+	Config config;
 private:
-	std::string name;
-	std::string type;
-	std::string comment;
-	//int dimension;
-	std::string edgeWeightType;
-	std::vector<Point> nodes;
+	Population pop;
+
 };

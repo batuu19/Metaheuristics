@@ -1,6 +1,6 @@
 #include "Loader.h"
 
-Algorithm Loader::load(const std::string& filename)
+Problem Loader::loadData(const std::string& filename)
 {
 	std::string name;
 	std::string type;
@@ -23,10 +23,11 @@ Algorithm Loader::load(const std::string& filename)
 	{		
 		std::stringstream ss = std::stringstream(l);
 		std::string word;
+		
 		if (!nowNodes) 
 		{
 			ss >> word;
-
+			//TODO optimize
 			if (word == "NAME:")
 			{
 				ss >> name;
@@ -66,5 +67,5 @@ Algorithm Loader::load(const std::string& filename)
 
 	}
 
-	return Algorithm(name,type,comment,edgeWeightType,nodes);
+	return Problem(name,type,comment,edgeWeightType,nodes);
 }

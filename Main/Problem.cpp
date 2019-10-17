@@ -1,12 +1,12 @@
-#include "Algorithm.h"
+#include "Problem.h"
 
 
-Algorithm::Algorithm()
-	:Algorithm("unknown","","no comment","",std::vector<Point>())
+Problem::Problem()
+	:Problem("unknown","","no comment","",std::vector<Point>())
 {
 }
 
-Algorithm::Algorithm(
+Problem::Problem(
 	std::string name, std::string type, std::string comment, std::string edgeWeightType, 
 	const std::vector<Point>& nodes) :
 	name(name),
