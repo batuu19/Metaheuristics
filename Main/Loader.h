@@ -16,5 +16,7 @@ static class Loader
 public:
 	static Problem loadData(const std::string& filename);
 	static std::vector<Config> loadConfigs(const std::string& filename);
+	static int getConfigInt(std::string line);
+	static float getConfigFloat(std::string line);
 
 };

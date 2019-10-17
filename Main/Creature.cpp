@@ -2,6 +2,7 @@
 
 Creature::Creature(int citiesCount)
 	:
+	citiesCount(citiesCount),
 	cities(citiesCount),
 	dist(0, citiesCount)
 {}
@@ -16,7 +17,7 @@ void Creature::mutate(std::mt19937& rng)
 {
 	int i = dist(rng);
 	int j;
-	do 
+	do
 	{
 		j = dist(rng);
 	} while (i == j);
@@ -25,5 +26,18 @@ void Creature::mutate(std::mt19937& rng)
 }
 
 void Creature::crossover(Creature& other, std::mt19937& rng)
+{
+	int x = dist(rng);
+	std::vector<int> newOrder(citiesCount);
+	for (int i = 0; i < x; i++)
+		newOrder[i] = cities[i];
+	for (int i = x; i < citiesCount; i++)
+		newOrder[i] = other.cities[i];
+
+	
+	
+}
+
+void Creature::repairCrossover()
 {
 }
