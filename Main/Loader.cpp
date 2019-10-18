@@ -98,6 +98,8 @@ std::vector<Config> Loader::loadConfigs(const std::string& filename)
 		getline(file, line);//PM
 		pm = getConfigFloat(line);
 	}
+	//todo
+	return std::vector<Config>();
 }
 
 int Loader::getConfigInt(std::string line)
