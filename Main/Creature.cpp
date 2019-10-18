@@ -13,77 +13,71 @@ void Creature::init(std::mt19937& rng)
 	std::shuffle(cities.begin(), cities.end(), rng);
 }
 
-void Creature::mutate(std::mt19937& rng)
+void Creature::mutateSwap(std::mt19937& rng)
 {
-	int i = dist(rng);
-	int j;
+	int first = dist(rng);
+	int second;
 	do
 	{
-		j = dist(rng);
-	} while (i == j);
+		second = dist(rng);
+	} while (first == second);
 
-	std::swap(cities[i], cities[j]);
+	std::swap(cities[first], cities[second]);
 }
 
-void Creature::crossover(Creature& other, std::mt19937& rng)
+void Creature::mutateInv(std::mt19937 & rng)
 {
-	int x = dist(rng);
-	std::vector<int> newOrder(citiesCount);
-	for (int i = 0; i < x; i++)
-		newOrder[i] = cities[i];
-	for (int i = x; i < citiesCount; i++)
-		newOrder[i] = other.cities[i];
+	int begin = dist(rng);
+	int end;
+	do
+	{
+		end = dist(rng);
+	} while (begin == end);
 
-	cities.clear();
+	if (begin > end)
+		std::swap(begin, end);
 
-	for (size_t i = 0; i < citiesCount; i++)
-		cities[i] = newOrder[i];
-
-	repairCrossover();
-
-
+	std::reverse(cities.begin() + begin, cities.begin() + end);
 }
 
-void Creature::repairCrossover()
+Creature Creature::crossoverOX(Creature & other, std::mt19937 & rng)
 {
-	std::vector<int> values(citiesCount, 0);
-	std::vector<int> places;
+	int begin = dist(rng);
+	int end;
+	do
+	{
+		end = dist(rng);
+	} while (begin == end);
+
+	if (begin > end)
+		std::swap(begin, end);
+
+	//std::vector<int> subVector(cities.begin() + i, cities.begin() + j);
+	std::vector<int> newOrder(citiesCount, -1);
+
+	for (size_t index = begin; index < end; index++)
+		newOrder[index] = cities[index];
+	
+	auto sorted = std::set<int>(cities.begin() + begin, cities.begin() + end);
+	auto otherSorted = std::set<int>(other.cities.begin(), other.cities.end());
+	
+	std::vector<int> toInsert;
+	std::set_difference(sorted.begin(), sorted.end(), otherSorted.begin(), otherSorted.end(), std::back_inserter(toInsert));
+
 
 	for (size_t i = 0; i < citiesCount; i++)
 	{
-		if (values[cities[i]] == 0)//first entry
-		{
-			values[cities[i]]++;
-		}
-		else
-		{
-			places.push_back(i);
-			values[cities[i]]++;
+		if (i < begin || i >= end) {
+			newOrder[i] = toInsert.back();
+			toInsert.pop_back();
 		}
 	}
 
-	//auto needed = std::find_if(values.begin(), values.end(), [](int x) {return x == 0; });
-	std::vector<int> missing;
+	auto out = Creature(citiesCount);
+	out.cities = std::vector<int>(newOrder);
+}
 
-	//get missing numbers
-	for (size_t i = 0; i < citiesCount; i++)
-	{
-		if (values[i] == 0)
-			missing.push_back(i);
-
-	}
-
-	//size_t placesCounter = 0;
-
-	for (size_t i = 0; i < citiesCount; i++)
-	{
-		while (values[i] > 1)
-		{
-			cities[places.back()] = missing.back();
-			places.pop_back();
-			missing.pop_back();
-		}
-	}
-
-
+Creature Creature::crossoverPMX(Creature & other, std::mt19937 & rng)
+{
+	return Creature(0);
 }
