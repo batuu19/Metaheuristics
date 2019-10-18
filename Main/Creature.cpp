@@ -68,8 +68,8 @@ std::vector<Creature> Creature::crossoverPMX(Creature & other, std::mt19937 & rn
 	//auto subSet1 = std::vector<int>(cities.begin() + begin, cities.begin() + end);
 	//auto subSet2 = std::vector<int>(other.cities.begin() + begin, other.cities.begin() + end);
 
-	auto newOrder1 = std::vector<int>(citiesCount);
-	auto newOrder2 = std::vector<int>(citiesCount);
+	auto newOrder1 = std::vector<int>(citiesCount,-1);
+	auto newOrder2 = std::vector<int>(citiesCount,-1);
 
 	for (size_t i = begin; i < end; i++)
 	{
@@ -78,21 +78,42 @@ std::vector<Creature> Creature::crossoverPMX(Creature & other, std::mt19937 & rn
 	}
 
 	std::set<int> set;
-
+	std::vector<int> randomSource;
 
 	//this
 	for (size_t i = 0; i < citiesCount; i++)
 		set.insert(set.end(), i);
 	for (size_t i = begin; i < end; i++)
 		set.erase(cities[i]);
-	//TODO ended here
 
+	randomSource = std::vector<int>(set.begin(),set.end());
+	std::shuffle(randomSource.begin(), randomSource.end(), rng);
+	size_t it = 0;
+	while (!randomSource.empty())
+	{
+		while (newOrder1[it] != -1)//skip filled
+			it++;
+		newOrder1[it] = randomSource.back();
+		randomSource.pop_back();
+	}
 
 	//other
 	set.clear();
 	for (size_t i = 0; i < citiesCount; i++)
 		set.insert(set.end(), i);
-
+	for (size_t i = begin; i < end; i++)
+		set.erase(other.cities[i]);
+	randomSource.clear();
+	randomSource = std::vector<int>(set.begin(), set.end());
+	std::shuffle(randomSource.begin(), randomSource.end(), rng);
+	it = 0; 
+	while (!randomSource.empty())
+	{
+		while (newOrder1[it] != -1)//skip filled
+			it++;
+		newOrder2[it] = randomSource.back();
+		randomSource.pop_back();
+	}
 
 	return std::vector<Creature>();
 }
