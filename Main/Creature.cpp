@@ -7,6 +7,12 @@ Creature::Creature(int citiesCount)
 	dist(0, citiesCount)
 {}
 
+Creature::Creature(const std::vector<int>& cities)
+	:
+	cities(cities),
+	citiesCount(cities.size()),
+	dist(0,citiesCount)
+{}
 void Creature::init(std::mt19937& rng)
 {
 	std::iota(cities.begin(), cities.end(), 0);
@@ -115,7 +121,7 @@ std::vector<Creature> Creature::crossoverPMX(Creature & other, std::mt19937 & rn
 		randomSource.pop_back();
 	}
 
-	return std::vector<Creature>();
+	return {newOrder1,newOrder2};
 }
 
 void Creature::getRandomBeginEnd(int & begin, int & end, std::mt19937 & rng)

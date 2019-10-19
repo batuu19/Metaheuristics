@@ -15,6 +15,7 @@ public:
 	Creature crossoverOX(Creature& other, std::mt19937& rng);
 	std::vector<Creature> crossoverPMX(Creature& other, std::mt19937& rng);
 private:
+	Creature(const std::vector<int>& cities);
 	std::vector<int> cities;
 	int citiesCount;
 	std::uniform_int_distribution<size_t> dist;
