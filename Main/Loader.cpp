@@ -9,22 +9,21 @@ Problem Loader::loadData(const std::string& filename)
 	std::string edgeWeightType;
 	std::vector<Point> nodes;
 
-
 	std::ifstream file;
 	file.open(TSP_DIRECTORY + filename);
 
 	std::string line;
 	std::vector<std::string> lines;
-	while (getline(file, line) && line != "EOF")
+	while (getline(file, line) && line != LINE_EOF)
 		lines.push_back(line);
 
 	bool nowNodes = false;
-	for (const auto& l : lines) 
-	{		
+	for (const auto& l : lines)
+	{
 		std::stringstream ss = std::stringstream(l);
 		std::string word;
-		
-		if (!nowNodes) 
+
+		if (!nowNodes)
 		{
 			ss >> word;
 			//TODO optimize
@@ -48,7 +47,6 @@ Problem Loader::loadData(const std::string& filename)
 			}
 			else if (word == "NODE_COORD_SECTION")
 			{
-
 				nowNodes = true;
 			}
 		}
@@ -63,11 +61,9 @@ Problem Loader::loadData(const std::string& filename)
 
 			nodes.push_back({ x,y });
 		}
-		
-
 	}
 
-	return Problem(name,type,comment,edgeWeightType,nodes);
+	return Problem(name, type, comment, edgeWeightType, nodes);
 }
 
 std::vector<Config> Loader::loadConfigs(const std::string& filename)
@@ -98,7 +94,7 @@ std::vector<Config> Loader::loadConfigs(const std::string& filename)
 		getline(file, line);//PM
 		pm = getConfigFloat(line);
 	}
-	//todo
+	//TODO==================================
 	return std::vector<Config>();
 }
 
@@ -118,4 +114,34 @@ float Loader::getConfigFloat(std::string line)
 	ss >> word;
 	ss >> word;
 	return stof(word);
+}
+
+std::vector<Point> Loader::debugLoadNodes(const std::string& filename)
+{
+	std::ifstream file;
+	file.open(TSP_DIRECTORY + filename);
+	std::stringstream ss;
+	std::string line;
+	std::string word;
+	float x, y;
+	do
+	{
+		getline(file, line);
+	} while (line != LINE_NODES_BEGIN);
+	std::vector<Point> result;
+	getline(file, line);
+	do
+	{
+		ss = std::stringstream(line);
+		ss >> word;
+		ss >> word;
+		x = std::stof(word);
+		ss >> word;
+		y = std::stof(word);
+		result.push_back({ x,y });
+		getline(file, line);
+
+	} while (line != LINE_EOF);
+
+	return result;
 }

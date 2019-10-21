@@ -2,6 +2,7 @@
 #include "Main.h"
 #include "Problem.h"
 #include "Loader.h"
+#include "DistanceMatrix.h"
 
 int main()
 {
@@ -14,14 +15,8 @@ int main()
 
 	std::vector<int> t = { 1,2,3,4,5,6,7,8 };
 
-	int x = t.back();
-	t.pop_back();
-
-	for (size_t i = 0; i < t.size(); i++)
-	{
-		std::cout << t[i];
-	}
-
+	auto nodes = Loader::debugLoadNodes("berlin11_modified.tsp");
+	DistanceMatrix m = DistanceMatrix(nodes);
 
 
 	system("pause");
