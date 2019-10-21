@@ -9,6 +9,7 @@ class DistanceMatrix
 public:
 	DistanceMatrix(const std::vector<Point>& nodes);
 	float getDistance(int from, int to) const;
+	size_t getSize() const;
 private:
 	std::vector<std::vector<float>> matrix;
 

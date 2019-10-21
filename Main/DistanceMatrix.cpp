@@ -20,3 +20,8 @@ float DistanceMatrix::getDistance(int from, int to) const
 	if (from > to)std::swap(from, to);
 	return matrix[from][to];
 }
+
+size_t DistanceMatrix::getSize() const
+{
+    return matrix.size();
+}

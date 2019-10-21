@@ -31,10 +31,10 @@ private:
 class Algorithm
 {
 public:
-	//Algorithm()
+    Algorithm(Config config,const DistanceMatrix& distanceMatrix);
 	void run(std::mt19937& rng);
 private:
 	Config config;
 	Population pop;
-
+    const DistanceMatrix& distanceMatrix;
 };

@@ -14,9 +14,15 @@ Config::Config(size_t popSize, size_t generations, float px, float pm, size_t tS
 {
 }
 
+Algorithm::Algorithm(Config config,const DistanceMatrix& distanceMatrix)
+        :
+        config(config),
+        distanceMatrix(distanceMatrix)
+{}
+
 void Algorithm::run(std::mt19937& rng)
 {
-	pop.init(rng);
+//	pop.init(rng);
 
 
 	for (size_t i = 0; i < config.generations; i++)//warunek stop
@@ -31,3 +37,5 @@ void Algorithm::run(std::mt19937& rng)
 
 	}
 }
+
+

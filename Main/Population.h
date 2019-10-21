@@ -8,7 +8,7 @@
 class Population
 {
 public:
-	void init(std::mt19937& rng);
+	void init(std::mt19937& rng,const DistanceMatrix& distanceMatrix);
 	void selection(std::mt19937& rng);
 
 private:

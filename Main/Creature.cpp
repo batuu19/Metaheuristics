@@ -1,143 +1,153 @@
 #include "Creature.h"
 
-Creature::Creature(const Problem& problem,const std::vector<int>& cities)//private
-	:
-	cities(cities),
-	citiesCount(cities.size()),
-	dist(0,citiesCount),
-	problem(problem)
+Creature::Creature(const DistanceMatrix &distanceMatrix, const std::vector<int> &cities)//private
+        :
+        cities(cities),
+        citiesCount(cities.size()),
+        dist(0, citiesCount),
+        distanceMatrix(distanceMatrix)
 {}
 
-Creature::Creature(const Problem& problem)
-	:
-	problem(problem),
-	citiesCount(problem.getDimension()),
-	cities(citiesCount)
+Creature::Creature(const DistanceMatrix &distanceMatrix)
+        :
+        distanceMatrix(distanceMatrix),
+        citiesCount(distanceMatrix.getSize()),
+        cities(citiesCount)
 {}
 
-void Creature::init(std::mt19937& rng)
+void Creature::init(std::mt19937 &rng)
 {
-	std::iota(cities.begin(), cities.end(), 0);//0,1,2,3,...
-	std::shuffle(cities.begin(), cities.end(), rng);
+    std::iota(cities.begin(), cities.end(), 0);//0,1,2,3,...
+    std::shuffle(cities.begin(), cities.end(), rng);
 }
 
-void Creature::mutateSwap(std::mt19937& rng)
+void Creature::mutateSwap(std::mt19937 &rng)
 {
-	int first, second;
-	getRandomBeginEnd(first, second, rng);
+    int first, second;
+    getRandomBeginEnd(first, second, rng);
 
-	std::swap(cities[first], cities[second]);
+    std::swap(cities[first], cities[second]);
 }
 
-void Creature::mutateInv(std::mt19937 & rng)
+void Creature::mutateInv(std::mt19937 &rng)
 {
-	int begin, end;
-	getRandomBeginEnd(begin, end, rng);
+    int begin, end;
+    getRandomBeginEnd(begin, end, rng);
 
-	std::reverse(cities.begin() + begin, cities.begin() + end);
+    std::reverse(cities.begin() + begin, cities.begin() + end);
 }
 
-Creature Creature::crossoverOX(Creature & other, std::mt19937 & rng)
+Creature Creature::crossoverOX(Creature &other, std::mt19937 &rng)
 {
-	int begin, end;
-	getRandomBeginEnd(begin, end, rng);
+    int begin, end;
+    getRandomBeginEnd(begin, end, rng);
 
-	//std::vector<int> subVector(cities.begin() + i, cities.begin() + j);
-	std::vector<int> newOrder(citiesCount, -1);
+    //std::vector<int> subVector(cities.begin() + i, cities.begin() + j);
+    std::vector<int> newOrder(citiesCount, -1);
 
-	for (size_t index = begin; index < end; index++)
-		newOrder[index] = cities[index];
+    for (size_t index = begin; index < end; index++)
+        newOrder[index] = cities[index];
 
-	auto sorted = std::set<int>(cities.begin() + begin, cities.begin() + end);
-	auto otherSorted = std::set<int>(other.cities.begin(), other.cities.end());
+    auto sorted = std::set<int>(cities.begin() + begin, cities.begin() + end);
+    auto otherSorted = std::set<int>(other.cities.begin(), other.cities.end());
 
-	std::vector<int> toInsert;
-	std::set_difference(sorted.begin(), sorted.end(), otherSorted.begin(), otherSorted.end(), std::back_inserter(toInsert));
+    std::vector<int> toInsert;
+    std::set_difference(sorted.begin(), sorted.end(), otherSorted.begin(), otherSorted.end(),
+                        std::back_inserter(toInsert));
 
 
-	for (size_t i = 0; i < citiesCount; i++)
-	{
-		if (newOrder[i] == -1) {
-			newOrder[i] = toInsert.back();
-			toInsert.pop_back();
-		}
-	}
+    for (size_t i = 0; i < citiesCount; i++)
+    {
+        if (newOrder[i] == -1)
+        {
+            newOrder[i] = toInsert.back();
+            toInsert.pop_back();
+        }
+    }
 
-	auto result = Creature(problem,newOrder);
-	return result;
+    auto result = Creature(distanceMatrix, newOrder);
+    return result;
 }
 
-std::vector<Creature> Creature::crossoverPMX(Creature & other, std::mt19937 & rng)
+std::vector<Creature> Creature::crossoverPMX(Creature &other, std::mt19937 &rng)
 {
-	int begin, end;
-	getRandomBeginEnd(begin, end, rng);
+    int begin, end;
+    getRandomBeginEnd(begin, end, rng);
 
-	//auto subSet1 = std::vector<int>(cities.begin() + begin, cities.begin() + end);
-	//auto subSet2 = std::vector<int>(other.cities.begin() + begin, other.cities.begin() + end);
+    //auto subSet1 = std::vector<int>(cities.begin() + begin, cities.begin() + end);
+    //auto subSet2 = std::vector<int>(other.cities.begin() + begin, other.cities.begin() + end);
 
-	auto newOrder1 = std::vector<int>(citiesCount,-1);
-	auto newOrder2 = std::vector<int>(citiesCount,-1);
+    auto newOrder1 = std::vector<int>(citiesCount, -1);
+    auto newOrder2 = std::vector<int>(citiesCount, -1);
 
-	for (size_t i = begin; i < end; i++)
-	{
-		newOrder1[i] = cities[i];
-		newOrder2[i] = other.cities[i];
-	}
+    for (size_t i = begin; i < end; i++)
+    {
+        newOrder1[i] = cities[i];
+        newOrder2[i] = other.cities[i];
+    }
 
-	std::set<int> set;
-	std::vector<int> randomSource;
+    std::set<int> set;
+    std::vector<int> randomSource;
 
-	//this
-	for (size_t i = 0; i < citiesCount; i++)
-		set.insert(set.end(), i);
-	for (size_t i = begin; i < end; i++)
-		set.erase(cities[i]);
+    //this
+    for (size_t i = 0; i < citiesCount; i++)
+        set.insert(set.end(), i);
+    for (size_t i = begin; i < end; i++)
+        set.erase(cities[i]);
 
-	randomSource = std::vector<int>(set.begin(),set.end());
-	std::shuffle(randomSource.begin(), randomSource.end(), rng);
-	size_t it = 0;
-	while (!randomSource.empty())
-	{
-		while (newOrder1[it] != -1)//skip filled
-			it++;
-		newOrder1[it] = randomSource.back();
-		randomSource.pop_back();
-	}
+    randomSource = std::vector<int>(set.begin(), set.end());
+    std::shuffle(randomSource.begin(), randomSource.end(), rng);
+    size_t it = 0;
+    while (!randomSource.empty())
+    {
+        while (newOrder1[it] != -1)//skip filled
+            it++;
+        newOrder1[it] = randomSource.back();
+        randomSource.pop_back();
+    }
 
-	//other
-	set.clear();
-	for (size_t i = 0; i < citiesCount; i++)
-		set.insert(set.end(), i);
-	for (size_t i = begin; i < end; i++)
-		set.erase(other.cities[i]);
-	randomSource.clear();
-	randomSource = std::vector<int>(set.begin(), set.end());
-	std::shuffle(randomSource.begin(), randomSource.end(), rng);
-	it = 0; 
-	while (!randomSource.empty())
-	{
-		while (newOrder1[it] != -1)//skip filled
-			it++;
-		newOrder2[it] = randomSource.back();
-		randomSource.pop_back();
-	}
+    //other
+    set.clear();
+    for (size_t i = 0; i < citiesCount; i++)
+        set.insert(set.end(), i);
+    for (size_t i = begin; i < end; i++)
+        set.erase(other.cities[i]);
+    randomSource.clear();
+    randomSource = std::vector<int>(set.begin(), set.end());
+    std::shuffle(randomSource.begin(), randomSource.end(), rng);
+    it = 0;
+    while (!randomSource.empty())
+    {
+        while (newOrder1[it] != -1)//skip filled
+            it++;
+        newOrder2[it] = randomSource.back();
+        randomSource.pop_back();
+    }
 
-	return { {problem,newOrder1},{problem,newOrder2} };
+    return {{distanceMatrix, newOrder1},
+            {distanceMatrix, newOrder2}};
 }
 
-float Creature::calculateFitness()
+float Creature::calculateFitness() const
 {
-	return problem.calculateFitness(cities);
+    float fitness = 0.f;
+    size_t i = 1;
+    while (i < cities.size())
+    {
+        fitness += distanceMatrix.getDistance(cities[i], cities[i - 1]);
+        i++;
+    }
+    return fitness;
 }
 
-void Creature::getRandomBeginEnd(int & begin, int & end, std::mt19937 & rng)
+void Creature::getRandomBeginEnd(int &begin, int &end, std::mt19937 &rng)
 {
-	begin = dist(rng);
-	do
-	{
-		end = dist(rng);
-	} while (begin == end);
+    begin = dist(rng);
+    do
+    {
+        end = dist(rng);
+    } while (begin == end);
 
-	if (begin > end)
-		std::swap(begin, end);
+    if (begin > end)
+        std::swap(begin, end);
 }
