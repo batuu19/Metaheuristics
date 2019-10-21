@@ -52,14 +52,7 @@ Problem Loader::loadData(const std::string& filename)
 		}
 		else//now nodes
 		{
-			float x, y;
-			ss >> word;//count
-			ss >> word;
-			x = std::stof(word);
-			ss >> word;
-			y = std::stof(word);
-
-			nodes.push_back({ x,y });
+			nodes.push_back(getPointFromLine(line));
 		}
 	}
 
@@ -71,59 +64,37 @@ std::vector<Config> Loader::loadConfigs(const std::string& filename)
 	std::ifstream file;
 	file.open(filename);
 	std::string line;
-	std::vector<std::string> lines;
 	getline(file, line);
-	std::stringstream ss = std::stringstream(line);
-	std::string word;
-	ss >> word;//placeholder
-	ss >> word;
-	size_t count = stoi(word);
+	size_t count = getConfigVar<int>(line);
 	size_t popSize;
 	size_t generations;
 	float px, pm;//crossover, mutation
+	size_t tSize;//turniej size
+	std::vector<Config> configs;
 	for (size_t i = 0; i < count; i++)
 	{
 		getline(file, line);//empty line between
 		getline(file, line);//config num
 		getline(file, line);//popsize
-		popSize = getConfigInt(line);
+		popSize = getConfigVar<int>(line);
 		getline(file, line);//generations
-		generations = getConfigInt(line);
+		generations = getConfigVar<int>(line);
 		getline(file, line);//PX
-		px = getConfigFloat(line);
+		px = getConfigVar<float>(line);
 		getline(file, line);//PM
-		pm = getConfigFloat(line);
+		pm = getConfigVar<float>(line);
+		getline(file, line);//tSize
+		tSize = getConfigVar<int>(line);
+		configs.push_back({ popSize,generations,px,pm,tSize });
 	}
-	//TODO==================================
-	return std::vector<Config>();
-}
-
-int Loader::getConfigInt(std::string line)
-{
-	std::stringstream ss = std::stringstream(line);
-	std::string word;
-	ss >> word;
-	ss >> word;
-	return stoi(word);
-}
-
-float Loader::getConfigFloat(std::string line)
-{
-	std::stringstream ss = std::stringstream(line);
-	std::string word;
-	ss >> word;
-	ss >> word;
-	return stof(word);
+	return configs;
 }
 
 std::vector<Point> Loader::debugLoadNodes(const std::string& filename)
 {
 	std::ifstream file;
 	file.open(TSP_DIRECTORY + filename);
-	std::stringstream ss;
 	std::string line;
-	std::string word;
-	float x, y;
 	do
 	{
 		getline(file, line);
@@ -132,15 +103,8 @@ std::vector<Point> Loader::debugLoadNodes(const std::string& filename)
 	getline(file, line);
 	do
 	{
-		ss = std::stringstream(line);
-		ss >> word;
-		ss >> word;
-		x = std::stof(word);
-		ss >> word;
-		y = std::stof(word);
-		result.push_back({ x,y });
+		result.push_back(getPointFromLine(line));
 		getline(file, line);
-
 	} while (line != LINE_EOF);
 
 	return result;

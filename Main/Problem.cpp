@@ -37,5 +37,6 @@ float Problem::calculateFitness(const std::vector<int>& cities)
 		fitness += distances.getDistance(cities[i], cities[i - 1]);
 		i++;
 	}
+	return fitness;
 }
 

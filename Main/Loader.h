@@ -8,6 +8,7 @@
 
 #include "Problem.h"
 #include "Algorithm.h"
+#include "Utils.h"
 
 static constexpr char TSP_DIRECTORY[] = "../TSP_files/";
 static constexpr char LINE_NODES_BEGIN[] = "NODE_COORD_SECTION";
@@ -18,8 +19,6 @@ static class Loader
 public:
 	static Problem loadData(const std::string& filename);
 	static std::vector<Config> loadConfigs(const std::string& filename);
-	static int getConfigInt(std::string line);
-	static float getConfigFloat(std::string line);
 
 	static std::vector<Point> debugLoadNodes(const std::string& filename);
 };
