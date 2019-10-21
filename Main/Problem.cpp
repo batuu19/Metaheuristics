@@ -28,7 +28,7 @@ Problem::Problem(const std::vector<Point>& nodes)
 {
 }
 
-float Problem::calculateFitness(const std::vector<int>& cities)
+float Problem::calculateFitness(const std::vector<int>& cities) const
 {
 	float fitness = 0.f;
 	size_t i = 1;
@@ -38,5 +38,15 @@ float Problem::calculateFitness(const std::vector<int>& cities)
 		i++;
 	}
 	return fitness;
+}
+
+int Problem::getDimension() const
+{
+	return dimension;
+}
+
+const DistanceMatrix& Problem::getDistanceMatrix() const
+{
+	return distances;
 }
 

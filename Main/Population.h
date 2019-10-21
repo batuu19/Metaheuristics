@@ -8,7 +8,8 @@
 class Population
 {
 public:
-	void selection(std::mt19937 rng);
+	void init(std::mt19937& rng);
+	void selection(std::mt19937& rng);
 
 private:
 	size_t size;

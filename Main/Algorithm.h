@@ -32,7 +32,7 @@ class Algorithm
 {
 public:
 	//Algorithm()
-	void run();
+	void run(std::mt19937& rng);
 private:
 	Config config;
 	Population pop;

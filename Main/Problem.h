@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "Math.h"
-#include "Creature.h"
+//#include "Creature.h"
 #include "DistanceMatrix.h"
 
 class Problem
@@ -14,7 +14,11 @@ public:
 	Problem(std::string name, std::string type, std::string comment, std::string edgeWeightType,
 		const std::vector<Point>& nodes);
 	Problem(const std::vector<Point>& nodes);
-	float calculateFitness(const std::vector<int>& cities);
+	float calculateFitness(const std::vector<int>& cities) const;
+
+	int getDimension() const;
+	const DistanceMatrix& getDistanceMatrix() const;
+
 private:
 	std::string name;
 	std::string type;

@@ -1,21 +1,23 @@
 #include "Creature.h"
 
-Creature::Creature(int citiesCount)
-	:
-	citiesCount(citiesCount),
-	cities(citiesCount),
-	dist(0, citiesCount)
-{}
-
-Creature::Creature(const std::vector<int>& cities)
+Creature::Creature(const Problem& problem,const std::vector<int>& cities)//private
 	:
 	cities(cities),
 	citiesCount(cities.size()),
-	dist(0,citiesCount)
+	dist(0,citiesCount),
+	problem(problem)
 {}
+
+Creature::Creature(const Problem& problem)
+	:
+	problem(problem),
+	citiesCount(problem.getDimension()),
+	cities(citiesCount)
+{}
+
 void Creature::init(std::mt19937& rng)
 {
-	std::iota(cities.begin(), cities.end(), 0);
+	std::iota(cities.begin(), cities.end(), 0);//0,1,2,3,...
 	std::shuffle(cities.begin(), cities.end(), rng);
 }
 
@@ -61,8 +63,7 @@ Creature Creature::crossoverOX(Creature & other, std::mt19937 & rng)
 		}
 	}
 
-	auto result = Creature(citiesCount);
-	result.cities = std::vector<int>(newOrder);
+	auto result = Creature(problem,newOrder);
 	return result;
 }
 
@@ -121,7 +122,12 @@ std::vector<Creature> Creature::crossoverPMX(Creature & other, std::mt19937 & rn
 		randomSource.pop_back();
 	}
 
-	return {newOrder1,newOrder2};
+	return { {problem,newOrder1},{problem,newOrder2} };
+}
+
+float Creature::calculateFitness()
+{
+	return problem.calculateFitness(cities);
 }
 
 void Creature::getRandomBeginEnd(int & begin, int & end, std::mt19937 & rng)

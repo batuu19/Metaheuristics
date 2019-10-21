@@ -14,16 +14,15 @@ Config::Config(size_t popSize, size_t generations, float px, float pm, size_t tS
 {
 }
 
-void Algorithm::run()
+void Algorithm::run(std::mt19937& rng)
 {
-	//init 
-	//??????
+	pop.init(rng);
 
 
 	for (size_t i = 0; i < config.generations; i++)//warunek stop
 	{
 		//selekcja
-		pop.selection();
+		pop.selection(rng);
 
 
 		//crossover
