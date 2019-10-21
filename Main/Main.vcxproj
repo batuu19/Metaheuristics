@@ -154,6 +154,7 @@
     <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DistanceMatrix.cpp" />
+    <ClCompile Include="Population.cpp" />
     <ClCompile Include="Problem.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Main.cpp" />

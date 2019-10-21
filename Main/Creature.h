@@ -9,6 +9,7 @@ class Creature
 {
 public:
 	Creature(int citiesCount);
+	//Creature(const Problem& problem);
 	void init(std::mt19937& rng);
 	void mutateSwap(std::mt19937& rng);
 	void mutateInv(std::mt19937& rng);
@@ -21,4 +22,6 @@ private:
 	std::uniform_int_distribution<size_t> dist;
 
 	void getRandomBeginEnd(int& begin, int& end, std::mt19937& rng);
+
+	//Problem& problem;//???
 };

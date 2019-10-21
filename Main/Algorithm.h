@@ -31,7 +31,8 @@ private:
 class Algorithm
 {
 public:
-
+	//Algorithm()
+	void run();
 private:
 	Config config;
 	Population pop;
