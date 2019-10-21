@@ -5,6 +5,7 @@
 
 #include "Math.h"
 #include "Creature.h"
+#include "DistanceMatrix.h"
 
 class Problem
 {
@@ -13,15 +14,13 @@ public:
 	Problem(std::string name, std::string type, std::string comment, std::string edgeWeightType,
 		const std::vector<Point>& nodes);
 	Problem(const std::vector<Point>& nodes);
-	float calculateFitness(const Creature& c);
+	float calculateFitness(const std::vector<int>& cities);
 private:
 	std::string name;
 	std::string type;
 	std::string comment;
-	//int dimension;
+	int dimension;
 	std::string edgeWeightType;
 	std::vector<Point> nodes;
-	std::vector<std::vector<float>> distances;
-
-	void calculateDistances();
+	DistanceMatrix distances;
 };

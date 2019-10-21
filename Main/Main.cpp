@@ -15,7 +15,7 @@ int main()
 
 	std::vector<int> t = { 1,2,3,4,5,6,7,8 };
 
-	auto nodes = Loader::debugLoadNodes("berlin11_modified.tsp");
+	auto nodes = Loader::debugLoadNodes(filename);
 	DistanceMatrix m = DistanceMatrix(nodes);
 
 
