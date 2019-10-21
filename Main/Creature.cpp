@@ -6,7 +6,9 @@ Creature::Creature(const DistanceMatrix &distanceMatrix, const std::vector<int> 
         citiesCount(cities.size()),
         dist(0, citiesCount),
         distanceMatrix(distanceMatrix)
-{}
+{
+    calculateFitness();//needed,optimize?
+}
 
 Creature::Creature(const DistanceMatrix &distanceMatrix)
         :
@@ -19,6 +21,7 @@ void Creature::init(std::mt19937 &rng)
 {
     std::iota(cities.begin(), cities.end(), 0);//0,1,2,3,...
     std::shuffle(cities.begin(), cities.end(), rng);
+    calculateFitness();
 }
 
 void Creature::mutateSwap(std::mt19937 &rng)
@@ -27,6 +30,7 @@ void Creature::mutateSwap(std::mt19937 &rng)
     getRandomBeginEnd(first, second, rng);
 
     std::swap(cities[first], cities[second]);
+    calculateFitness();
 }
 
 void Creature::mutateInv(std::mt19937 &rng)
@@ -35,6 +39,7 @@ void Creature::mutateInv(std::mt19937 &rng)
     getRandomBeginEnd(begin, end, rng);
 
     std::reverse(cities.begin() + begin, cities.begin() + end);
+    calculateFitness();
 }
 
 Creature Creature::crossoverOX(Creature &other, std::mt19937 &rng)
@@ -128,7 +133,7 @@ std::vector<Creature> Creature::crossoverPMX(Creature &other, std::mt19937 &rng)
             {distanceMatrix, newOrder2}};
 }
 
-float Creature::calculateFitness() const
+void Creature::calculateFitness()
 {
     float fitness = 0.f;
     size_t i = 1;
@@ -137,6 +142,11 @@ float Creature::calculateFitness() const
         fitness += distanceMatrix.getDistance(cities[i], cities[i - 1]);
         i++;
     }
+    this->fitness = fitness;
+}
+
+float Creature::getFitness() const
+{
     return fitness;
 }
 

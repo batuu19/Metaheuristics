@@ -1,4 +1,6 @@
 #include "Population.h"
+#include "Utils.h"
+#include <algorithm>
 
 void Population::init(std::mt19937& rng,const DistanceMatrix& distanceMatrix)
 {
@@ -8,14 +10,15 @@ void Population::init(std::mt19937& rng,const DistanceMatrix& distanceMatrix)
     }
 }
 
-void Population::selection(std::mt19937& rng)
+Creature Population::selection(std::mt19937& rng,size_t tSize)
 {
-	//calculate fitness for each creature
-	for (auto& c : creatures) 
-	{
-		c.calculateFitness();
-	}
-	//make tournament for population
+	std::shuffle(creatures.begin(),creatures.end(),rng);
 
-	//
+	std::sort(creatures.begin(),creatures.begin() + tSize,[](const Creature& c){return c.getFitness();});
+	return creatures[0];
+}
+
+bool Population::isPopulationFilled()
+{
+    return creatures.size() == size;
 }

@@ -11,7 +11,8 @@ void Controller::run() {
 
     auto problem = Loader::loadData(TSP_DIRECTORY + filename);
     auto configs = Loader::loadConfigs(configFilename);
-
-//    Algorithm algorithm(configs[0]);
+    std::mt19937 rng;
+    Algorithm algorithm(configs[0],problem.getDistanceMatrix());
+    algorithm.run(rng);
 
 }

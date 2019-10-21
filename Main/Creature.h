@@ -17,8 +17,9 @@ public:
 	void mutateInv(std::mt19937& rng);
 	Creature crossoverOX(Creature& other, std::mt19937& rng);
 	std::vector<Creature> crossoverPMX(Creature& other, std::mt19937& rng);
-	float calculateFitness() const;
+	float getFitness() const;
 private:
+    void calculateFitness();
 	Creature(const DistanceMatrix& distanceMatrix, const std::vector<int>& cities);
 	int citiesCount;
 	std::vector<int> cities;
@@ -28,4 +29,5 @@ private:
 
 	const DistanceMatrix& distanceMatrix;
 
+	float fitness=-1.f;
 };
