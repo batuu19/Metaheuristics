@@ -14,9 +14,11 @@ public:
 	Problem(std::string name, std::string type, std::string comment, std::string edgeWeightType,
 		const std::vector<Point>& nodes);
 	Problem(const std::vector<Point>& nodes);
+	//Problem(const Problem&) = delete;
+	//Problem& operator=(const Problem&) = delete;
 
 	int getDimension() const;
-	const DistanceMatrix& getDistanceMatrix() const;
+	DistanceMatrix* getDistanceMatrix();
 
 private:
 	std::string name;

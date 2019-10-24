@@ -41,7 +41,7 @@ Algorithm::~Algorithm()
 
 void Algorithm::run(std::mt19937 &rng)
 {
-    pop.init(rng,*distanceMatrix);
+    pop.init(rng,distanceMatrix);
 
     for (size_t i = 0; i < config.generations; i++)
     {

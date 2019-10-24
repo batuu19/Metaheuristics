@@ -33,8 +33,8 @@ int Problem::getDimension() const
 	return dimension;
 }
 
-const DistanceMatrix& Problem::getDistanceMatrix() const
+DistanceMatrix* Problem::getDistanceMatrix()
 {
-	return distances;
+	return &distances;
 }
 
