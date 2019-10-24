@@ -42,7 +42,7 @@ public:
 	Algorithm(const Algorithm&);
 	Algorithm& operator=(const Algorithm&);
 	~Algorithm();
-	void run(std::mt19937& rng);
+	std::pair<int, std::string> run(std::mt19937& rng);
 private:
 	Config config;
 	Population pop;

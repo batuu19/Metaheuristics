@@ -14,7 +14,7 @@ Config::Config(int id,size_t popSize, size_t generations, float px, float pm, si
 	tSize(tSize)
 {
 	if (tSize > popSize)
-		tSize = popSize * 0.1f;
+		this->tSize = (size_t)((float)popSize * 0.1f);
 }
 
 std::string Config::getFileName()
@@ -27,12 +27,13 @@ std::string Config::getFileName()
 void Config::saveToFile()
 {
 	std::ofstream cfgFile;
-	cfgFile.open(getFileName() + "cfg");
+	cfgFile.open(getFileName() + ".cfg");
 	cfgFile << "POPSIZE: " << popSize << std::endl;
 	cfgFile << "GENERATIONS: " << generations << std::endl;
 	cfgFile << "PX: " << px << std::endl;
 	cfgFile << "PM: " << pm << std::endl;
 	cfgFile << "TSIZE: " << tSize << std::endl;
+	cfgFile.close();
 }
 
 Algorithm::Algorithm(Config config, DistanceMatrix* distanceMatrix)
@@ -61,13 +62,17 @@ Algorithm& Algorithm::operator=(const Algorithm& other)
 Algorithm::~Algorithm()
 {}//do nothing, do not delete distance matrix
 
-void Algorithm::run(std::mt19937& rng)
+std::pair<int, std::string> Algorithm::run(std::mt19937& rng)
 {
 	std::ofstream csvFile;
 
 	csvFile.open(config.getFileName() + ".csv");
 	pop.init(rng, distanceMatrix);
 	csvFile << CSV_FIRST_LINE;
+
+	std::pair<int, std::string> out;
+	out.second = config.getFileName();
+
 	for (size_t i = 0; i < config.generations; i++)
 	{
 		Population newPop = Population(config.popSize);
@@ -129,17 +134,13 @@ void Algorithm::run(std::mt19937& rng)
 			<< vec[config.popSize / 2].getFitness() << ","
 			<< vec[0].getFitness()
 			<< std::endl;
-		std::cout << i << std::endl;
-
-		/*
-			dopóki nowa populacja nie jest pe³na
-			losuj dwóch rodziców
-			sprawdŸ czy crossover
-			sprawdŸ czy mutacja
-			dodaj osobników do nowej populacji
-		*/
+		//std::cout << i << std::endl;
 	}
 	csvFile.close();
+
+	out.first = pop.getSortedCreatures()[0].getFitness();
+
+	return out;
 }
 
 

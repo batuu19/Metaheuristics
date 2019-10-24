@@ -2,11 +2,14 @@
 //#include "Main.h"
 #include <random>
 #include <iostream>
+#include <cstdio>
+
 #include "Loader.h"
 #include "Algorithm.h"
 #include "Problem.h"
 #include "Loader.h"
 #include "Utils.h"
+
 
 int main()
 {
@@ -29,9 +32,15 @@ int main()
 	std::vector<float> pms = { 0.03f,0.1f,0.3f };
 	std::vector<size_t> tSizes = { 10,50,200 };
 
+	//std::vector<size_t> popSizes = { 100,200,500 };
+	//std::vector<size_t> generationCounts = { 100,200 };
+	//std::vector<float> pxs = { 0.9f };
+	//std::vector<float> pms = { 0.1f };
+	//std::vector<size_t> tSizes = { 10,50 };
+
 	size_t nextID = configs.size() + 1;
 
-	bool extra = false;
+	bool extra = true;
 
 	if (extra)
 		for (auto pS : popSizes)
@@ -39,22 +48,38 @@ int main()
 				for (auto px : pxs)
 					for (auto pm : pms)
 						for (auto tSize : tSizes)
-							configs.push_back(Config(nextID, pS, gC, px, pm, tSize));
+							configs.push_back(Config(nextID++, pS, gC, px, pm, tSize));
 
 
 	std::mt19937 rng(std::random_device{}());
 
+	auto cmp = [](std::pair<int, std::string> pair1, std::pair<int, std::string>pair2) {
+		return pair1.first < pair2.first;
+	};
+	std::set < std::pair<int, std::string>, decltype(cmp)> pairs(cmp);
+
+	int bestConfigsCount = 5;
 	for (auto& config : configs)
 	{
 		Algorithm algorithm(config, problem.getDistanceMatrix());
-		algorithm.run(rng);
+		pairs.insert(algorithm.run(rng));
 		config.saveToFile();
+
+		if (pairs.size() > bestConfigsCount)
+		{
+			auto worstIt = std::prev(pairs.end());
+			std::string toRemove = (*worstIt).second;
+			pairs.erase(worstIt);
+			std::remove(std::string(toRemove + ".csv").c_str());
+			std::remove(std::string(toRemove + ".cfg").c_str());
+		}
 
 	}
 
 
+	std::cout << "best: " << (*pairs.begin()).first << "in file " << (*pairs.begin()).second << std::endl;
 
-
+	system("pause");
 
 	//system("pause");
 }
