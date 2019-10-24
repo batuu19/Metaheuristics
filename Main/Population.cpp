@@ -40,11 +40,12 @@ size_t Population::getCreaturesCount() const
 	return creatures.size();
 }
 
-Creature& Population::getBestCreature()
+const std::vector<Creature>& Population::getSortedCreatures()
 {
-	std::sort(creatures.begin(),creatures.end(), 
+	std::sort(creatures.begin(), creatures.end(),
 		[](const Creature& c1, const Creature& c2) {
-		return c1.getFitness() < c2.getFitness();
+			return c1.getFitness() < c2.getFitness();
 		});
-	return creatures[0];
+
+	return creatures;
 }

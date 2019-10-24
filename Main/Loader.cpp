@@ -66,6 +66,7 @@ std::vector<Config> Loader::loadConfigs(const std::string& filename)
 	std::string line;
 	getline(file, line);
 	size_t count = getConfigVar<int>(line);
+	int id;
 	size_t popSize;
 	size_t generations;
 	float px, pm;//crossover, mutation
@@ -75,6 +76,7 @@ std::vector<Config> Loader::loadConfigs(const std::string& filename)
 	{
 		getline(file, line);//empty line between
 		getline(file, line);//config num
+		id = getConfigVar<int>(line);
 		getline(file, line);//popsize
 		popSize = getConfigVar<int>(line);
 		getline(file, line);//generations
@@ -85,7 +87,7 @@ std::vector<Config> Loader::loadConfigs(const std::string& filename)
 		pm = getConfigVar<float>(line);
 		getline(file, line);//tSize
 		tSize = getConfigVar<int>(line);
-		configs.push_back({ popSize,generations,px,pm,tSize });
+		configs.push_back({ id,popSize,generations,px,pm,tSize });
 	}
 	return configs;
 }

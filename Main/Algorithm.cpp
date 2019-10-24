@@ -1,17 +1,38 @@
 #include "Algorithm.h"
 
 Config::Config()
-	: Config(DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
+	: Config(-1,DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
 {}
 
-Config::Config(size_t popSize, size_t generations, float px, float pm, size_t tSize)
+Config::Config(int id,size_t popSize, size_t generations, float px, float pm, size_t tSize)
 	:
+	id(id),
 	popSize(popSize),
 	generations(generations),
 	px(px),
 	pm(pm),
 	tSize(tSize)
 {
+	if (tSize > popSize)
+		tSize = popSize * 0.1f;
+}
+
+std::string Config::getFileName()
+{
+	std::stringstream ss;
+	ss<<"CSV\\configID"<<id;
+	return ss.str();
+}
+
+void Config::saveToFile()
+{
+	std::ofstream cfgFile;
+	cfgFile.open(getFileName() + "cfg");
+	cfgFile << "POPSIZE: " << popSize << std::endl;
+	cfgFile << "GENERATIONS: " << generations << std::endl;
+	cfgFile << "PX: " << px << std::endl;
+	cfgFile << "PM: " << pm << std::endl;
+	cfgFile << "TSIZE: " << tSize << std::endl;
 }
 
 Algorithm::Algorithm(Config config, DistanceMatrix* distanceMatrix)
@@ -42,8 +63,11 @@ Algorithm::~Algorithm()
 
 void Algorithm::run(std::mt19937& rng)
 {
-	pop.init(rng, distanceMatrix);
+	std::ofstream csvFile;
 
+	csvFile.open(config.getFileName() + ".csv");
+	pop.init(rng, distanceMatrix);
+	csvFile << CSV_FIRST_LINE;
 	for (size_t i = 0; i < config.generations; i++)
 	{
 		Population newPop = Population(config.popSize);
@@ -98,6 +122,15 @@ void Algorithm::run(std::mt19937& rng)
 
 		//swap populations
 		std::swap(pop, newPop);
+
+		auto vec = pop.getSortedCreatures();
+		csvFile << i << ","
+			<< vec[config.popSize - 1].getFitness() << ","
+			<< vec[config.popSize / 2].getFitness() << ","
+			<< vec[0].getFitness()
+			<< std::endl;
+		std::cout << i << std::endl;
+
 		/*
 			dopóki nowa populacja nie jest pe³na
 			losuj dwóch rodziców
@@ -106,6 +139,7 @@ void Algorithm::run(std::mt19937& rng)
 			dodaj osobników do nowej populacji
 		*/
 	}
+	csvFile.close();
 }
 
 

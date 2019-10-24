@@ -13,20 +13,24 @@ static constexpr size_t DEFAULT_TSIZE = 10;
 static constexpr float OX_TO_PMX_PROB = 0.5f;
 static constexpr float SWAP_TO_INV_PROB = 0.9f;
 
+static constexpr char CSV_FIRST_LINE[] = "generation, worst, medium, best\n";
+
 class Config
 {
 public:
 	Config();
-	Config(size_t popSize, size_t generations, float px, float pm, size_t tSize);
+	Config(int id,size_t popSize, size_t generations, float px, float pm, size_t tSize);
 
-	//bool isInitialized() { return initialized; };
+	void saveToFile();
 private:
-	//bool initialized = false;
+	int id;
 	size_t popSize;
 	size_t generations;
 	float px, pm;//crossover, mutation
 	size_t tSize;
 	friend class Algorithm;
+
+	std::string getFileName();
 };
 
 #include "Population.h"

@@ -16,7 +16,7 @@ public:
 	void addCreature(Creature& creature);
 	size_t getCreaturesCount() const;
 	
-	Creature& getBestCreature();
+	const std::vector<Creature>& getSortedCreatures();
 private:
 	size_t size;
     std::vector<Creature> creatures;
