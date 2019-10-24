@@ -16,7 +16,6 @@ public:
 	Config();
 	Config(size_t popSize, size_t generations, float px, float pm, size_t tSize);
 
-
 	bool isInitialized() { return initialized; };
 private:
 	bool initialized = false;
@@ -32,14 +31,13 @@ private:
 class Algorithm
 {
 public:
-    Algorithm(Config config,const DistanceMatrix& distanceMatrix);
-
+    Algorithm(Config config,DistanceMatrix* distanceMatrix);
 	Algorithm(const Algorithm&);
-	Algorithm& operator=(Algorithm);
-	friend void swap(Algorithm& first, Algorithm& second);
+	Algorithm& operator=(const Algorithm&);
+	~Algorithm();
 	void run(std::mt19937& rng);
 private:
 	Config config;
 	Population pop;
-    const DistanceMatrix& distanceMatrix;
+    DistanceMatrix* distanceMatrix;
 };

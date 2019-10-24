@@ -2,7 +2,7 @@
 
 DistanceMatrix::DistanceMatrix(const std::vector<Point>& nodes)
 {
-	int size = nodes.size();
+	auto size = nodes.size();
 	std::vector<float> line;
 	for (size_t i = 0; i < size; i++)
 	{

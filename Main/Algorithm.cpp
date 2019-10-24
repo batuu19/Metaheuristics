@@ -14,7 +14,7 @@ Config::Config(size_t popSize, size_t generations, float px, float pm, size_t tS
 {
 }
 
-Algorithm::Algorithm(Config config, const DistanceMatrix &distanceMatrix)
+Algorithm::Algorithm(Config config, DistanceMatrix* distanceMatrix)
         :
         config(config),
         distanceMatrix(distanceMatrix)
@@ -28,19 +28,16 @@ Algorithm::Algorithm(const Algorithm& other)
 {
 }
 
-Algorithm& Algorithm::operator=(Algorithm other)
+Algorithm& Algorithm::operator=(const Algorithm& other)
 {
-	swap(*this, other);
+	this->config = other.config;
+	this->pop = other.pop;
+	this->distanceMatrix = other.distanceMatrix;
 	return *this;
 }
 
-void swap(Algorithm& first, Algorithm& second)
-{
-	using std::swap;
-	swap(first.config, second.config);
-	swap(first.pop, second.pop);
-	swap(first.distanceMatrix, second.distanceMatrix);
-}
+Algorithm::~Algorithm()
+{}//do nothing, do not delete distance matrix
 
 void Algorithm::run(std::mt19937 &rng)
 {
@@ -58,4 +55,5 @@ void Algorithm::run(std::mt19937 &rng)
 
     }
 }
+
 

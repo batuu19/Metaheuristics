@@ -8,14 +8,14 @@
 class Population
 {
 public:
-    void init(std::mt19937 &rng, const DistanceMatrix &distanceMatrix);
+    void init(std::mt19937 &rng, DistanceMatrix* distanceMatrix);
 
     Creature selection(std::mt19937 &rng,size_t tSize);
 
     bool isPopulationFilled();
 
 private:
-    size_t size;
+    size_t size = 0;
     std::vector<Creature> creatures;
 
 };
