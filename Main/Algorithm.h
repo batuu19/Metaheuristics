@@ -16,6 +16,7 @@ public:
 	Config();
 	Config(size_t popSize, size_t generations, float px, float pm, size_t tSize);
 
+
 	bool isInitialized() { return initialized; };
 private:
 	bool initialized = false;
@@ -32,6 +33,10 @@ class Algorithm
 {
 public:
     Algorithm(Config config,const DistanceMatrix& distanceMatrix);
+
+	Algorithm(const Algorithm&);
+	Algorithm& operator=(Algorithm);
+	friend void swap(Algorithm& first, Algorithm& second);
 	void run(std::mt19937& rng);
 private:
 	Config config;

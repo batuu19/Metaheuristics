@@ -20,6 +20,28 @@ Algorithm::Algorithm(Config config, const DistanceMatrix &distanceMatrix)
         distanceMatrix(distanceMatrix)
 {}
 
+Algorithm::Algorithm(const Algorithm& other)
+	:
+	config(other.config),
+	pop(other.pop),
+	distanceMatrix(other.distanceMatrix)
+{
+}
+
+Algorithm& Algorithm::operator=(Algorithm other)
+{
+	swap(*this, other);
+	return *this;
+}
+
+void swap(Algorithm& first, Algorithm& second)
+{
+	using std::swap;
+	swap(first.config, second.config);
+	swap(first.pop, second.pop);
+	swap(first.distanceMatrix, second.distanceMatrix);
+}
+
 void Algorithm::run(std::mt19937 &rng)
 {
     pop.init(rng,distanceMatrix);
@@ -27,7 +49,7 @@ void Algorithm::run(std::mt19937 &rng)
     for (size_t i = 0; i < config.generations; i++)
     {
         //selekcja
-        pop.selection(rng);
+        //pop.selection(rng);
 
 
         //crossover
@@ -36,5 +58,4 @@ void Algorithm::run(std::mt19937 &rng)
 
     }
 }
-
 

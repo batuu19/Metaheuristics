@@ -12,6 +12,10 @@ class Creature
 {
 public:
 	Creature(const DistanceMatrix& distanceMatrix);
+	Creature(const Creature&);
+	Creature& operator=(const Creature&);//const Creature& ???
+	//~Creature(); //needed?
+	friend void swap(Creature& first, Creature& second);
 	void init(std::mt19937& rng);
 	void mutateSwap(std::mt19937& rng);
 	void mutateInv(std::mt19937& rng);
@@ -21,11 +25,11 @@ public:
 private:
     void calculateFitness();
 	Creature(const DistanceMatrix& distanceMatrix, const std::vector<int>& cities);
-	int citiesCount;
+	size_t citiesCount;
 	std::vector<int> cities;
 	std::uniform_int_distribution<size_t> dist;
 
-	void getRandomBeginEnd(int& begin, int& end, std::mt19937& rng);
+	void getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng);
 
 	const DistanceMatrix& distanceMatrix;
 

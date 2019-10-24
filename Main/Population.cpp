@@ -14,7 +14,7 @@ Creature Population::selection(std::mt19937& rng,size_t tSize)
 {
 	std::shuffle(creatures.begin(),creatures.end(),rng);
 
-	std::sort(creatures.begin(),creatures.begin() + tSize,[](const Creature& c){return c.getFitness();});
+	//std::sort(creatures.begin(),creatures.begin() + tSize,[](const Creature& c){return c.getFitness();});
 	return creatures[0];
 }
 

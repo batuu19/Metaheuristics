@@ -8,6 +8,7 @@ class DistanceMatrix
 {
 public:
 	DistanceMatrix(const std::vector<Point>& nodes);
+	DistanceMatrix(const DistanceMatrix&) = delete;
 	float getDistance(int from, int to) const;
 	size_t getSize() const;
 private:

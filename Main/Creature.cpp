@@ -17,6 +17,35 @@ Creature::Creature(const DistanceMatrix &distanceMatrix)
         cities(citiesCount)
 {}
 
+Creature::Creature(const Creature& other) 
+	:
+	citiesCount(other.citiesCount),
+	cities(other.cities),
+	dist(0, other.citiesCount),
+	distanceMatrix(other.distanceMatrix)
+{
+}
+
+Creature& Creature::operator=(const Creature& other)
+{
+	citiesCount = other.citiesCount;
+	cities = other.cities;
+	dist = other.dist;
+	distanceMatrix = &other.distanceMatrix;
+	return *this;
+}
+
+void swap(Creature& first, Creature& second)
+{
+	using std::swap;
+	swap(first.citiesCount, second.citiesCount);
+	swap(first.cities, second.cities);
+	swap(first.dist, second.dist);
+	swap(first.distanceMatrix, second.distanceMatrix);
+	swap(first.fitness, second.fitness);
+}
+
+
 void Creature::init(std::mt19937 &rng)
 {
     std::iota(cities.begin(), cities.end(), 0);//0,1,2,3,...
@@ -26,7 +55,7 @@ void Creature::init(std::mt19937 &rng)
 
 void Creature::mutateSwap(std::mt19937 &rng)
 {
-    int first, second;
+	size_t first, second;
     getRandomBeginEnd(first, second, rng);
 
     std::swap(cities[first], cities[second]);
@@ -35,7 +64,7 @@ void Creature::mutateSwap(std::mt19937 &rng)
 
 void Creature::mutateInv(std::mt19937 &rng)
 {
-    int begin, end;
+	size_t begin, end;
     getRandomBeginEnd(begin, end, rng);
 
     std::reverse(cities.begin() + begin, cities.begin() + end);
@@ -44,7 +73,7 @@ void Creature::mutateInv(std::mt19937 &rng)
 
 Creature Creature::crossoverOX(Creature &other, std::mt19937 &rng)
 {
-    int begin, end;
+	size_t begin, end;
     getRandomBeginEnd(begin, end, rng);
 
     //std::vector<int> subVector(cities.begin() + i, cities.begin() + j);
@@ -76,7 +105,7 @@ Creature Creature::crossoverOX(Creature &other, std::mt19937 &rng)
 
 std::vector<Creature> Creature::crossoverPMX(Creature &other, std::mt19937 &rng)
 {
-    int begin, end;
+    size_t begin, end;
     getRandomBeginEnd(begin, end, rng);
 
     //auto subSet1 = std::vector<int>(cities.begin() + begin, cities.begin() + end);
@@ -150,7 +179,7 @@ float Creature::getFitness() const
     return fitness;
 }
 
-void Creature::getRandomBeginEnd(int &begin, int &end, std::mt19937 &rng)
+void Creature::getRandomBeginEnd(size_t &begin, size_t&end, std::mt19937 &rng)
 {
     begin = dist(rng);
     do
@@ -161,3 +190,4 @@ void Creature::getRandomBeginEnd(int &begin, int &end, std::mt19937 &rng)
     if (begin > end)
         std::swap(begin, end);
 }
+
