@@ -12,10 +12,10 @@ public:
 
     Creature selection(std::mt19937 &rng,size_t tSize);
 
-    bool isPopulationFilled();
+	void addCreature(Creature& creature);
+	size_t getCreaturesCount() const;
 
 private:
-    size_t size = 0;
     std::vector<Creature> creatures;
 
 };

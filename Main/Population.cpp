@@ -4,8 +4,7 @@
 
 void Population::init(std::mt19937& rng,DistanceMatrix* distanceMatrix)
 {
-    size = distanceMatrix->getSize();
-    for (size_t i = 0; i < size; ++i) {
+    for (size_t i = 0; i < distanceMatrix->getSize(); ++i) {
         creatures.emplace_back(distanceMatrix);
     }
 }
@@ -21,7 +20,13 @@ Creature Population::selection(std::mt19937& rng,size_t tSize)
 	return creatures[0];
 }
 
-bool Population::isPopulationFilled()
+
+void Population::addCreature(Creature& creature)
 {
-    return creatures.size() == size;
+	creatures.push_back(creature);
+}
+
+size_t Population::getCreaturesCount() const
+{
+	return creatures.size();
 }
