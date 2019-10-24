@@ -24,7 +24,7 @@ Creature Population::selection(std::mt19937& rng,size_t tSize)
 
 	std::sort(creatures.begin(),creatures.begin() + tSize,
 		[](const Creature& c1,const Creature& c2){
-			return c1.getFitness() > c2.getFitness();
+			return c1.getFitness() < c2.getFitness();
 		});
 	return creatures[0];
 }
@@ -38,4 +38,13 @@ void Population::addCreature(Creature& creature)
 size_t Population::getCreaturesCount() const
 {
 	return creatures.size();
+}
+
+Creature& Population::getBestCreature()
+{
+	std::sort(creatures.begin(),creatures.end(), 
+		[](const Creature& c1, const Creature& c2) {
+		return c1.getFitness() < c2.getFitness();
+		});
+	return creatures[0];
 }

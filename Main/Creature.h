@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <numeric>
 #include <set>
-
+#include <sstream>
 #include "Problem.h"
 
 class Creature
@@ -21,6 +21,7 @@ public:
 	Creature crossoverOX(Creature& other, std::mt19937& rng);
 	std::vector<Creature> crossoverPMX(Creature& other, std::mt19937& rng);
 	float getFitness() const;
+	std::string getInfo() const;
 private:
     void calculateFitness();
 	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);

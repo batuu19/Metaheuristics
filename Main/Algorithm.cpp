@@ -56,8 +56,8 @@ void Algorithm::run(std::mt19937& rng)
 			{
 				auto c12 = c1.crossoverOX(c2, rng);
 				auto c21 = c2.crossoverOX(c1, rng);
-				c1 = std::move(c12);
-				c2 = std::move(c21);
+				c1 = c12;
+				c2 = c21;
 			}
 			if (percentageDist(rng) < config.pm)
 			{
@@ -65,11 +65,12 @@ void Algorithm::run(std::mt19937& rng)
 			}
 			if (percentageDist(rng) < config.pm)
 			{
-				c1.mutateSwap(rng);
+				c2.mutateSwap(rng);
 			}
 
 			newPop.addCreature(c1);
 			newPop.addCreature(c2);
+			creaturesCount += 2;
 		}
 
 		if (creaturesCount == config.popSize - 1)
@@ -80,7 +81,7 @@ void Algorithm::run(std::mt19937& rng)
 		}
 
 		//swap populations
-		pop = std::move(newPop);
+		std::swap(pop, newPop);
 		/*
 			dopóki nowa populacja nie jest pe³na
 			losuj dwóch rodziców
@@ -88,7 +89,8 @@ void Algorithm::run(std::mt19937& rng)
 			sprawdŸ czy mutacja
 			dodaj osobników do nowej populacji
 		*/
-
+		auto best = pop.getBestCreature();
+		std::cout << best.getInfo();
 	}
 }
 

@@ -4,7 +4,7 @@ Creature::Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& citie
 	:
 	citiesCount(cities.size()),
 	cities(cities),
-	dist(0, citiesCount),
+	dist(0, citiesCount-1),
 	distanceMatrix(distanceMatrix)
 {
 	calculateFitness();//needed,optimize?
@@ -21,7 +21,7 @@ Creature::Creature(const Creature& other)
 	:
 	citiesCount(other.citiesCount),
 	cities(other.cities),
-	dist(0, citiesCount),
+	dist(0, citiesCount-1),
 	distanceMatrix(other.distanceMatrix),
 	fitness(other.fitness)
 {}
@@ -30,7 +30,7 @@ Creature& Creature::operator=(const Creature& other)
 {
 	this->citiesCount = other.citiesCount;
 	this->cities = other.cities;//?
-	this->dist = std::uniform_int_distribution<size_t>(0, citiesCount);//???
+	this->dist = std::uniform_int_distribution<size_t>(0, citiesCount-1);//???
 	this->distanceMatrix = other.distanceMatrix;
 	this->fitness = other.fitness;
 	return *this;
@@ -172,6 +172,17 @@ void Creature::calculateFitness()
 float Creature::getFitness() const
 {
 	return fitness;
+}
+
+std::string Creature::getInfo() const
+{
+	std::stringstream ss;
+	ss << "Creature Info: Cities: ";
+	for (auto x : cities)
+		ss << x << ", ";
+	ss << " Fitness: " << fitness;
+	ss << std::endl;
+	return ss.str();
 }
 
 void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng)

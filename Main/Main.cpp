@@ -26,5 +26,6 @@ int main()
 	algorithm.run(rng);
 
 
-	//system("pause");
+
+	system("pause");
 }
