@@ -14,11 +14,30 @@ Config::Config(size_t popSize, size_t generations, float px, float pm, size_t tS
 {
 }
 
-Algorithm::Algorithm(Config config, const DistanceMatrix &distanceMatrix)
+Algorithm::Algorithm(Config config, DistanceMatrix* distanceMatrix)
         :
         config(config),
         distanceMatrix(distanceMatrix)
 {}
+
+Algorithm::Algorithm(const Algorithm& other)
+	:
+	config(other.config),
+	pop(other.pop),
+	distanceMatrix(other.distanceMatrix)
+{
+}
+
+Algorithm& Algorithm::operator=(const Algorithm& other)
+{
+	this->config = other.config;
+	this->pop = other.pop;
+	this->distanceMatrix = other.distanceMatrix;
+	return *this;
+}
+
+Algorithm::~Algorithm()
+{}//do nothing, do not delete distance matrix
 
 void Algorithm::run(std::mt19937 &rng)
 {
@@ -27,7 +46,7 @@ void Algorithm::run(std::mt19937 &rng)
     for (size_t i = 0; i < config.generations; i++)
     {
         //selekcja
-        pop.selection(rng);
+        //pop.selection(rng);
 
 
         //crossover
