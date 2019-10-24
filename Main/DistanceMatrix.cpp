@@ -17,7 +17,7 @@ DistanceMatrix::DistanceMatrix(const std::vector<Point>& nodes)
 
 float DistanceMatrix::getDistance(int from, int to) const
 {
-	if (from > to)std::swap(from, to);
+	if (from < to)std::swap(from, to);//from bigger to smaller
 	return matrix[from][to];
 }
 

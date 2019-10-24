@@ -17,9 +17,9 @@ public:
 	Config();
 	Config(size_t popSize, size_t generations, float px, float pm, size_t tSize);
 
-	bool isInitialized() { return initialized; };
+	//bool isInitialized() { return initialized; };
 private:
-	bool initialized = false;
+	//bool initialized = false;
 	size_t popSize;
 	size_t generations;
 	float px, pm;//crossover, mutation

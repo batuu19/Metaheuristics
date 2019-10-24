@@ -17,7 +17,8 @@ Config::Config(size_t popSize, size_t generations, float px, float pm, size_t tS
 Algorithm::Algorithm(Config config, DistanceMatrix* distanceMatrix)
 	:
 	config(config),
-	distanceMatrix(distanceMatrix)
+	distanceMatrix(distanceMatrix),
+	pop(config.popSize)
 {}
 
 Algorithm::Algorithm(const Algorithm& other)
@@ -45,7 +46,7 @@ void Algorithm::run(std::mt19937& rng)
 
 	for (size_t i = 0; i < config.generations; i++)
 	{
-		Population newPop = Population();
+		Population newPop = Population(config.popSize);
 		size_t creaturesCount = 0;
 		while (creaturesCount < config.popSize - 1)//because putting always 2 at back
 		{

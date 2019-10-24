@@ -52,7 +52,7 @@ Problem Loader::loadData(const std::string& filename)
 		}
 		else//now nodes
 		{
-			nodes.push_back(getPointFromLine(line));
+			nodes.push_back(getPointFromLine(l));
 		}
 	}
 

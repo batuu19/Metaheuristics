@@ -21,7 +21,7 @@ Creature::Creature(const Creature& other)
 	:
 	citiesCount(other.citiesCount),
 	cities(other.cities),
-	dist(0,citiesCount),
+	dist(0, citiesCount),
 	distanceMatrix(other.distanceMatrix),
 	fitness(other.fitness)
 {}
@@ -30,7 +30,7 @@ Creature& Creature::operator=(const Creature& other)
 {
 	this->citiesCount = other.citiesCount;
 	this->cities = other.cities;//?
-	this->dist = std::uniform_int_distribution<size_t>(0,citiesCount);//???
+	this->dist = std::uniform_int_distribution<size_t>(0, citiesCount);//???
 	this->distanceMatrix = other.distanceMatrix;
 	this->fitness = other.fitness;
 	return *this;
@@ -72,25 +72,27 @@ Creature Creature::crossoverOX(Creature& other, std::mt19937& rng)
 	//std::vector<int> subVector(cities.begin() + i, cities.begin() + j);
 	std::vector<int> newOrder(citiesCount, -1);
 
+	std::set<int> ordered;
+
 	for (size_t index = begin; index < end; index++)
-		newOrder[index] = cities[index];
-
-	auto sorted = std::set<int>(cities.begin() + begin, cities.begin() + end);
-	auto otherSorted = std::set<int>(other.cities.begin(), other.cities.end());
-
-	std::vector<int> toInsert;
-	std::set_difference(sorted.begin(), sorted.end(), otherSorted.begin(), otherSorted.end(),
-		std::back_inserter(toInsert));
-
-
-	for (size_t i = 0; i < citiesCount; i++)
 	{
-		if (newOrder[i] == -1)
-		{
-			newOrder[i] = toInsert.back();
-			toInsert.pop_back();
-		}
+		newOrder[index] = cities[index];
+		ordered.insert(cities[index]);
 	}
+
+	size_t i = 0;
+	auto it = other.cities.begin();
+	while (i<citiesCount)
+	{
+		if (newOrder[i] == -1)//empty
+		{
+			while (ordered.find(*it) != ordered.end())it++;
+			newOrder[i] = *it;
+			it++;
+		}
+		i++;
+	}
+
 
 	auto result = Creature(distanceMatrix, newOrder);
 	return result;

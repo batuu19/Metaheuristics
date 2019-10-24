@@ -2,11 +2,20 @@
 #include "Utils.h"
 #include <algorithm>
 
+Population::Population(size_t size)
+	:
+	size(size)
+{
+}
+
 void Population::init(std::mt19937& rng,DistanceMatrix* distanceMatrix)
 {
-    for (size_t i = 0; i < distanceMatrix->getSize(); ++i) {
+    for (size_t i = 0; i < size; ++i) {
         creatures.emplace_back(distanceMatrix);
     }
+	for (auto& c : creatures)
+		c.init(rng);
+
 }
 
 Creature Population::selection(std::mt19937& rng,size_t tSize)

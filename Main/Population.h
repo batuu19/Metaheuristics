@@ -8,6 +8,7 @@
 class Population
 {
 public:
+	Population(size_t size);
     void init(std::mt19937 &rng, DistanceMatrix* distanceMatrix);
 
     Creature selection(std::mt19937 &rng,size_t tSize);
@@ -16,6 +17,7 @@ public:
 	size_t getCreaturesCount() const;
 
 private:
+	size_t size;
     std::vector<Creature> creatures;
 
 };

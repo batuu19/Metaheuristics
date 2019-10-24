@@ -8,7 +8,7 @@
 
 std::vector<std::string> splitString(std::string s);
 
-Point getPointFromLine(std::string line);
+Point getPointFromLine(std::string line);//error here(takes EOF)
 
 template<typename T>
 T getConfigVar(std::string line);
