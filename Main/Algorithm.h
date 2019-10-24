@@ -10,6 +10,8 @@ static constexpr float DEFAULT_PX = 0.01f;
 static constexpr float DEFAULT_PM = 0.1f;
 static constexpr size_t DEFAULT_TSIZE = 10;
 
+static constexpr float OX_TO_PMX_PROB = 0.5f;
+static constexpr float SWAP_TO_INV_PROB = 0.9f;
 
 class Config
 {

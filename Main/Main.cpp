@@ -10,11 +10,8 @@
 
 int main()
 {
-	//std::cout << "Hello World!\n";
-	//std::string command = "ls " + std::string(TSP_DIRECTORY);
 	//std::string filename = "berlin11_modified.tsp";
-
-	std::string filename = "berlin11_modified.tsp";
+	std::string filename = "berlin52.tsp";
 	std::string configFilename = "config.cfg";
 
 	auto problem = Loader::loadData(TSP_DIRECTORY + filename);

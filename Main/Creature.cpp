@@ -147,7 +147,7 @@ std::vector<Creature> Creature::crossoverPMX(Creature& other, std::mt19937& rng)
 	it = 0;
 	while (!randomSource.empty())
 	{
-		while (newOrder1[it] != -1)//skip filled
+		while (newOrder2[it] != -1)//skip filled
 			it++;
 		newOrder2[it] = randomSource.back();
 		randomSource.pop_back();
@@ -175,13 +175,16 @@ float Creature::getFitness() const
 	return fitness;
 }
 
-std::string Creature::getInfo() const
+std::string Creature::getInfo(bool extended) const
 {
 	std::stringstream ss;
-	ss << "Creature Info: Cities: ";
-	for (auto x : cities)
-		ss << x << ", ";
-	ss << cities[0];
+	if (extended)
+	{
+		ss << "Creature Info: Cities: ";
+		for (auto x : cities)
+			ss << x << ", ";
+		ss << cities[0];
+	}
 	ss << " Fitness: " << fitness;
 	ss << std::endl;
 	return ss.str();

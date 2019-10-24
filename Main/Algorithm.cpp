@@ -54,18 +54,34 @@ void Algorithm::run(std::mt19937& rng)
 			auto c2 = pop.selection(rng, config.tSize);
 			if (percentageDist(rng) < config.px)
 			{
-				auto c12 = c1.crossoverOX(c2, rng);
-				auto c21 = c2.crossoverOX(c1, rng);
-				c1 = c12;
-				c2 = c21;
+				if (percentageDist(rng) < OX_TO_PMX_PROB)
+				{
+					auto c12 = c1.crossoverOX(c2, rng);
+					auto c21 = c2.crossoverOX(c1, rng);
+					c1 = c12;
+					c2 = c21;
+				}
+				else
+				{
+					auto vec = c1.crossoverPMX(c2, rng);
+					c1 = vec[0];
+					c2 = vec[1];
+				}
+
 			}
 			if (percentageDist(rng) < config.pm)
 			{
-				c1.mutateSwap(rng);
+				if (percentageDist(rng) < SWAP_TO_INV_PROB)
+					c1.mutateSwap(rng);
+				else
+					c1.mutateInv(rng);
 			}
 			if (percentageDist(rng) < config.pm)
 			{
-				c2.mutateSwap(rng);
+				if (percentageDist(rng) < SWAP_TO_INV_PROB)
+					c2.mutateSwap(rng);
+				else
+					c1.mutateInv(rng);
 			}
 
 			newPop.addCreature(c1);
@@ -89,8 +105,6 @@ void Algorithm::run(std::mt19937& rng)
 			sprawdŸ czy mutacja
 			dodaj osobników do nowej populacji
 		*/
-		auto best = pop.getBestCreature();
-		std::cout <<"Generation: "<<i<< best.getInfo();
 	}
 }
 
