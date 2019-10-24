@@ -1,11 +1,6 @@
 #include "Problem.h"
 
 
-Problem::Problem()
-	:Problem("unknown","","","",std::vector<Point>())
-{
-}
-
 Problem::Problem(
 	std::string name, std::string type, std::string comment, std::string edgeWeightType,
 	const std::vector<Point>& nodes) :
@@ -14,27 +9,49 @@ Problem::Problem(
 	comment(comment),
 	dimension(nodes.size()),
 	edgeWeightType(edgeWeightType),
-	nodes(nodes),
-	distances(nodes)
+	nodes(nodes)
 {
-
+	distanceMatrix = new DistanceMatrix(nodes);
 }
 
 Problem::Problem(const std::vector<Point>& nodes)
 	:
 	nodes(nodes),
-	dimension(nodes.size()),
-	distances(nodes)
+	dimension(nodes.size())
 {
+	distanceMatrix = new DistanceMatrix(nodes);
 }
 
-int Problem::getDimension() const
+Problem::Problem(const Problem& other)
+	:
+	dimension(other.dimension),
+	distanceMatrix(other.distanceMatrix)
+{}
+
+Problem& Problem::operator=(const Problem& other)
+{
+	this->name = other.name;
+	this->type = other.type;
+	this->comment = other.comment;
+	this->dimension = other.dimension;
+	this->edgeWeightType = other.edgeWeightType;
+	this->nodes = other.nodes;
+	this->distanceMatrix = other.distanceMatrix;
+	return *this;
+}
+
+Problem::~Problem()
+{
+	delete distanceMatrix;
+}
+
+size_t Problem::getDimension() const
 {
 	return dimension;
 }
 
 DistanceMatrix* Problem::getDistanceMatrix()
 {
-	return &distances;
+	return distanceMatrix;
 }
 

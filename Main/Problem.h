@@ -10,22 +10,22 @@
 class Problem
 {
 public:
-	Problem();//temp?
 	Problem(std::string name, std::string type, std::string comment, std::string edgeWeightType,
 		const std::vector<Point>& nodes);
 	Problem(const std::vector<Point>& nodes);
-	//Problem(const Problem&) = delete;
-	//Problem& operator=(const Problem&) = delete;
+	Problem(const Problem&);
+	Problem& operator=(const Problem&);
+	~Problem();
 
-	int getDimension() const;
+	size_t getDimension() const;
 	DistanceMatrix* getDistanceMatrix();
 
 private:
 	std::string name;
 	std::string type;
 	std::string comment;
-	int dimension;
+	size_t dimension;
 	std::string edgeWeightType;
 	std::vector<Point> nodes;
-	DistanceMatrix distances;
+	DistanceMatrix* distanceMatrix;
 };
