@@ -166,6 +166,7 @@ void Creature::calculateFitness()
 		fitness += distanceMatrix->getDistance(cities[i], cities[i - 1]);
 		i++;
 	}
+	fitness += distanceMatrix->getDistance(*cities.begin(), *(cities.end() - 1));
 	this->fitness = fitness;
 }
 
@@ -180,6 +181,7 @@ std::string Creature::getInfo() const
 	ss << "Creature Info: Cities: ";
 	for (auto x : cities)
 		ss << x << ", ";
+	ss << cities[0];
 	ss << " Fitness: " << fitness;
 	ss << std::endl;
 	return ss.str();

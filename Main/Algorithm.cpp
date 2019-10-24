@@ -90,7 +90,7 @@ void Algorithm::run(std::mt19937& rng)
 			dodaj osobników do nowej populacji
 		*/
 		auto best = pop.getBestCreature();
-		std::cout << best.getInfo();
+		std::cout <<"Generation: "<<i<< best.getInfo();
 	}
 }
 
