@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "Problem.h"
-#include "Algorithm.h"
+#include "GAAlgorithm.h"
 #include "Utils.h"
 
 static constexpr char TSP_DIRECTORY[] = "../TSP_files/";

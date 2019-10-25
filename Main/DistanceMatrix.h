@@ -13,6 +13,6 @@ public:
 	float getDistance(int from, int to) const;
 	size_t getSize() const;
 private:
-	std::vector<std::vector<float>> matrix;
+	std::vector<std::vector<float>> matrix;//TODO: storage with pointers
 
 };

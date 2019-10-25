@@ -5,7 +5,7 @@
 #include <cstdio>
 
 #include "Loader.h"
-#include "Algorithm.h"
+#include "GAAlgorithm.h"
 #include "Problem.h"
 #include "Loader.h"
 #include "Utils.h"
@@ -21,7 +21,7 @@ int main()
 	auto problem = Loader::loadData(TSP_DIRECTORY + filename);
 	auto configs = Loader::loadConfigs(configFilename);
 
-	
+
 
 	std::mt19937 rng(std::random_device{}());
 

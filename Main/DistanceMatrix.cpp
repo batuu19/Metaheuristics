@@ -23,5 +23,5 @@ float DistanceMatrix::getDistance(int from, int to) const
 
 size_t DistanceMatrix::getSize() const
 {
-    return matrix.size();
+	return matrix.size();
 }

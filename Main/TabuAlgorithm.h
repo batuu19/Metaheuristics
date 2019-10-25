@@ -13,7 +13,7 @@ public:
 private:
 	Creature best;
 	TabuList tabuList;
-	size_t neighSize;
+	size_t neighSize = 0;
 	size_t citiesCount;
 
 	bool endCondition();

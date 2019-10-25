@@ -163,7 +163,7 @@
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Algorithm.h" />
+    <ClInclude Include="GAAlgorithm.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="DistanceMatrix.h" />

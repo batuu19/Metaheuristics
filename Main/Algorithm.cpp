@@ -1,10 +1,10 @@
-#include "Algorithm.h"
+#include "GAAlgorithm.h"
 
 Config::Config()
-	: Config(-1,DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
+	: Config(-1, DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
 {}
 
-Config::Config(int id,size_t popSize, size_t generations, float px, float pm, size_t tSize)
+Config::Config(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize)
 	:
 	id(id),
 	popSize(popSize),
@@ -20,7 +20,7 @@ Config::Config(int id,size_t popSize, size_t generations, float px, float pm, si
 std::string Config::getFileName()
 {
 	std::stringstream ss;
-	ss<<"CSV\\configID"<<id;
+	ss << "CSV\\configID" << id;
 	return ss.str();
 }
 
@@ -36,14 +36,14 @@ void Config::saveToFile()
 	cfgFile.close();
 }
 
-Algorithm::Algorithm(Config config, DistanceMatrix* distanceMatrix)
+GAAlgorithm::GAAlgorithm(Config config, DistanceMatrix* distanceMatrix)
 	:
 	config(config),
 	distanceMatrix(distanceMatrix),
 	pop(config.popSize)
 {}
 
-Algorithm::Algorithm(const Algorithm& other)
+GAAlgorithm::GAAlgorithm(const GAAlgorithm& other)
 	:
 	config(other.config),
 	pop(other.pop),
@@ -51,7 +51,7 @@ Algorithm::Algorithm(const Algorithm& other)
 {
 }
 
-Algorithm& Algorithm::operator=(const Algorithm& other)
+GAAlgorithm& GAAlgorithm::operator=(const GAAlgorithm& other)
 {
 	this->config = other.config;
 	this->pop = other.pop;
@@ -59,10 +59,10 @@ Algorithm& Algorithm::operator=(const Algorithm& other)
 	return *this;
 }
 
-Algorithm::~Algorithm()
+GAAlgorithm::~GAAlgorithm()
 {}//do nothing, do not delete distance matrix
 
-std::pair<int, std::string> Algorithm::run(std::mt19937& rng)
+std::pair<int, std::string> GAAlgorithm::run(std::mt19937& rng)
 {
 	std::ofstream csvFile;
 

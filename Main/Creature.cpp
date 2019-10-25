@@ -157,6 +157,11 @@ std::vector<Creature> Creature::crossoverPMX(Creature& other, std::mt19937& rng)
 			{distanceMatrix, newOrder2} };
 }
 
+const std::vector<int>& Creature::getCities() const
+{
+	return cities;
+}
+
 unsigned long int Creature::getHash() const
 {
 	return hash;
@@ -212,6 +217,7 @@ std::vector<Creature> Creature::getPointNeighbors(size_t point) const
 			neighbors.push_back(c);
 		}
 	}
+	return neighbors;
 }
 
 void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng)

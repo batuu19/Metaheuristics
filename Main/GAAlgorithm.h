@@ -19,7 +19,7 @@ class Config
 {
 public:
 	Config();
-	Config(int id,size_t popSize, size_t generations, float px, float pm, size_t tSize);
+	Config(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize);
 
 	void saveToFile();
 private:
@@ -28,25 +28,25 @@ private:
 	size_t generations;
 	float px, pm;//crossover, mutation
 	size_t tSize;
-	friend class Algorithm;
+	friend class GAAlgorithm;
 
 	std::string getFileName();
 };
 
 #include "Population.h"
 
-class Algorithm
+class GAAlgorithm
 {
 public:
-    Algorithm(Config config,DistanceMatrix* distanceMatrix);
-	Algorithm(const Algorithm&);
-	Algorithm& operator=(const Algorithm&);
-	~Algorithm();
+	GAAlgorithm(Config config, DistanceMatrix* distanceMatrix);
+	GAAlgorithm(const GAAlgorithm&);
+	GAAlgorithm& operator=(const GAAlgorithm&);
+	~GAAlgorithm();
 	std::pair<int, std::string> run(std::mt19937& rng);
 private:
 	Config config;
 	Population pop;
-    DistanceMatrix* distanceMatrix;
+	DistanceMatrix* distanceMatrix;
 
 	std::uniform_real_distribution<float> percentageDist;//default setting(0.f,1.f)
 };

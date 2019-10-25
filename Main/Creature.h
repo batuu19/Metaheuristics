@@ -26,24 +26,24 @@ public:
 	//Tabu
 	//here?
 	std::vector<Creature> getRandomNeighbors(size_t count) const;
-	std::vector<Creature> getPointNeighbors(size_t point,size_t count) const;
+	std::vector<Creature> getPointNeighbors(size_t point, size_t count) const;
 	std::vector<Creature> getPointNeighbors(size_t point) const;
 	std::vector<Creature> getAllNeighbors() const;
 
-	const std::vector<size_t>& getCities() const;
+	const std::vector<int>& getCities() const;
 	unsigned long int getHash() const;
 	//std::vector<Creature> getAllNeighbors();//too many
 private:
-    void calculateFitness();
+	void calculateFitness();
 	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);
 	size_t citiesCount;
 	std::vector<int> cities;
 	std::uniform_int_distribution<size_t> dist;
-	unsigned long int hash;
+	unsigned long int hash = 0L;
 
 	void getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng);
 
 	DistanceMatrix* distanceMatrix;
 
-	float fitness=0.f;
+	float fitness = 0.f;
 };
