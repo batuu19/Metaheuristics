@@ -31,7 +31,7 @@ public:
 	std::vector<Creature> getAllNeighbors() const;
 
 	const std::vector<size_t>& getCities() const;
-
+	unsigned long int getHash() const;
 	//std::vector<Creature> getAllNeighbors();//too many
 private:
     void calculateFitness();
@@ -39,6 +39,7 @@ private:
 	size_t citiesCount;
 	std::vector<int> cities;
 	std::uniform_int_distribution<size_t> dist;
+	unsigned long int hash;
 
 	void getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng);
 

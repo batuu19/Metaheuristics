@@ -12,7 +12,7 @@ TabuEntry::TabuEntry(const std::vector<size_t>& cities)
 
 void TabuList::push(const Creature &  creature)
 {
-	entries.emplace_back(creature);//ignoing max size for now
+	entries.emplace_back(creature);//ignoring max size for now
 }
 
 bool TabuList::contains(const Creature &  creature)

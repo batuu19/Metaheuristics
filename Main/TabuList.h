@@ -16,7 +16,7 @@ private:
 class TabuList
 {
 public:
-	void push(const Creature&  creature);
+	void push(const Creature& creature);
 	bool contains(const Creature&  creature);
 private:
 	std::vector<TabuEntry> entries;//set using fitness?

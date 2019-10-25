@@ -157,6 +157,11 @@ std::vector<Creature> Creature::crossoverPMX(Creature& other, std::mt19937& rng)
 			{distanceMatrix, newOrder2} };
 }
 
+unsigned long int Creature::getHash() const
+{
+	return hash;
+}
+
 void Creature::calculateFitness()
 {
 	float fitness = 0.f;
@@ -168,6 +173,10 @@ void Creature::calculateFitness()
 	}
 	fitness += distanceMatrix->getDistance(*cities.begin(), *(cities.end() - 1));
 	this->fitness = fitness;
+
+	//calculate hash;
+
+	//std::hash<std::vector<size_t>>;
 }
 
 float Creature::getFitness() const
@@ -188,6 +197,21 @@ std::string Creature::getInfo(bool extended) const
 	ss << " Fitness: " << fitness;
 	ss << std::endl;
 	return ss.str();
+}
+
+std::vector<Creature> Creature::getPointNeighbors(size_t point) const
+{
+	std::vector<Creature> neighbors;
+
+	for (size_t i = 0; i < citiesCount; i++)
+	{
+		if (i != point)//OPTIMIZE
+		{
+			auto c = Creature(*this);
+			std::swap(c.cities[i], c.cities[point]);
+			neighbors.push_back(c);
+		}
+	}
 }
 
 void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng)
