@@ -18,7 +18,7 @@ public:
 	~Problem();
 
 	size_t getDimension() const;
-	DistanceMatrix* getDistanceMatrix();
+	DistanceMatrix* getDistanceMatrix() const;
 
 private:
 	std::string name;

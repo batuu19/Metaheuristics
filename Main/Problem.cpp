@@ -50,7 +50,7 @@ size_t Problem::getDimension() const
 	return dimension;
 }
 
-DistanceMatrix* Problem::getDistanceMatrix()
+DistanceMatrix* Problem::getDistanceMatrix() const
 {
 	return distanceMatrix;
 }

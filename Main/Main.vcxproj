@@ -23,7 +23,7 @@
     <ProjectGuid>{C02F759A-50F6-4B7B-8D58-6717C606B6DE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Main</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -158,6 +158,8 @@
     <ClCompile Include="Problem.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="TabuAlgorithm.cpp" />
+    <ClCompile Include="TabuList.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,10 +169,10 @@
     <ClInclude Include="DistanceMatrix.h" />
     <ClInclude Include="Problem.h" />
     <ClInclude Include="Loader.h" />
-    <ClInclude Include="Main.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Population.h" />
-    <ClInclude Include="TSPAlgorithm.h" />
+    <ClInclude Include="TabuAlgorithm.h" />
+    <ClInclude Include="TabuList.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -22,6 +22,17 @@ public:
 	std::vector<Creature> crossoverPMX(Creature& other, std::mt19937& rng);
 	float getFitness() const;
 	std::string getInfo(bool extended = true) const;
+
+	//Tabu
+	//here?
+	std::vector<Creature> getRandomNeighbors(size_t count) const;
+	std::vector<Creature> getPointNeighbors(size_t point,size_t count) const;
+	std::vector<Creature> getPointNeighbors(size_t point) const;
+	std::vector<Creature> getAllNeighbors() const;
+
+	const std::vector<size_t>& getCities() const;
+
+	//std::vector<Creature> getAllNeighbors();//too many
 private:
     void calculateFitness();
 	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);
