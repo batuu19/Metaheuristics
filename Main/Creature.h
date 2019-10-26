@@ -21,6 +21,7 @@ public:
 	~Creature();
 	void init(std::mt19937& rng);
 	void mutateSwap(std::mt19937& rng);
+	void mutateSwap(size_t first, size_t second);
 	void mutateInv(std::mt19937& rng);
 	Creature crossoverOX(Creature& other, std::mt19937& rng);
 	std::vector<Creature> crossoverPMX(Creature& other, std::mt19937& rng);

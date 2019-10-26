@@ -55,6 +55,13 @@ void Creature::mutateSwap(std::mt19937& rng)
 	calculateFitness();
 }
 
+void Creature::mutateSwap(size_t first, size_t second)
+{
+    std::swap(cities[first],cities[second]);
+    calculateFitness();
+}
+
+
 void Creature::mutateInv(std::mt19937& rng)
 {
 	size_t begin, end;
@@ -169,6 +176,10 @@ unsigned long long Creature::getHash() const
 
 void Creature::calculateFitness()
 {
+    if(cities[0] == 0 && cities[1] == 0)
+    {
+        std::cout<<"boi";
+    }
 	float fitness = 0.f;
 	size_t i = 1;
 	while (i < cities.size())

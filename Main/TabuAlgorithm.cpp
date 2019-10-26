@@ -12,15 +12,17 @@ void TabuAlgorithm::run(std::mt19937 &rng)
     best.init(rng);
 
     auto bestFitness = best.getFitness();
-
+    auto pairComp = [](const NeighborAndSwap& nas1,const NeighborAndSwap& nas2)
+    {
+        return nas1.first.getFitness() < nas2.first.getFitness();
+    };
     std::uniform_int_distribution<size_t> pointDist(0, citiesCount);
     std::vector<NeighborAndSwap> neighborsAndSwaps;
-    std::set<NeighborAndSwap> sorted;
+    std::set<NeighborAndSwap, decltype(pairComp)> sorted(pairComp);
 
-    std::stack<swap_t> swaps;
+    std::stack<swap_t> swapsHistory;
 
-
-    while (!endCondition())//check if no improvement
+    while (swapsHistory.size() < 10)//check if no improvement
     {
         neighborsAndSwaps.clear();
         sorted.clear();
@@ -29,15 +31,8 @@ void TabuAlgorithm::run(std::mt19937 &rng)
 //        std::transform(neighborsAndSwaps.begin(),neighborsAndSwaps.end(),
 //                       std::back_inserter(neighbors),
 //                       [](const auto& pair){return pair.first;});
-        auto comp = [](const Creature &c1, const Creature &c2)
-        {
-            return c1.getFitness() < c2.getFitness();
-        };
-        auto pairComp = [&comp](const NeighborAndSwap& nas1,const NeighborAndSwap& nas2)
-        {
-            return comp(nas1.first,nas2.first);
-        };
-        sorted = std::set<NeighborAndSwap>(neighborsAndSwaps.begin(), neighborsAndSwaps.end());
+
+        sorted.insert(neighborsAndSwaps.begin(), neighborsAndSwaps.end());
 
         //maybe not remove, but put at back of the list
         std::remove_if(neighborsAndSwaps.begin(), neighborsAndSwaps.end(), [this](const NeighborAndSwap &n)
@@ -45,18 +40,27 @@ void TabuAlgorithm::run(std::mt19937 &rng)
 
 
 //      auto index = std::binary_search(neighbors.begin(), neighbors.end(), best, comp);
-        auto bestNeighbor = neighborsAndSwaps[0];
-        if (bestNeighbor.first.getFitness() >= best.getFitness())
+        if (!swapsHistory.empty() &&
+                (neighborsAndSwaps.empty() || neighborsAndSwaps[0].first.getFitness() >= best.getFitness())
+                )
         {
-            //what to do here?
+            //swap back
+            //remove from history
+            auto lastSwap = swapsHistory.top();
+            swapsHistory.pop();
+            best.mutateSwap(lastSwap.second,lastSwap.first);
         }
-        swaps.push(bestNeighbor.second);
-        best = bestNeighbor.first;
-        bestFitness = std::min(bestFitness,best.getFitness());
+        else
+        {
+            auto bestNeighbor = neighborsAndSwaps[0];
+            swapsHistory.push(bestNeighbor.second);
+            best = bestNeighbor.first;
+            bestFitness = std::min(bestFitness,best.getFitness());
+        }
 
         std::cout << "best: " << best.getFitness() << std::endl;
     }
-    std::cout << "BEST: " << best.getFitness() << std::endl;
+    std::cout << "BEST: " << bestFitness<< std::endl;
 }
 
 bool TabuAlgorithm::endCondition()
