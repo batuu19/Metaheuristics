@@ -14,26 +14,49 @@ void TabuAlgorithm::run(std::mt19937 &rng)
     auto bestFitness = best.getFitness();
 
     std::uniform_int_distribution<size_t> pointDist(0, citiesCount);
-    std::vector<Creature> neighbors;
-    while (!endCondition())
-    {
+    std::vector<NeighborAndSwap> neighborsAndSwaps;
+    std::set<NeighborAndSwap> sorted;
 
-        neighbors = best.getPointNeighbors(pointDist(rng));
-//	    sorted = std::set<Creature>(neighbors.begin(),neighbors.end());
+    std::stack<swap_t> swaps;
+
+
+    while (!endCondition())//check if no improvement
+    {
+        neighborsAndSwaps.clear();
+        sorted.clear();
+
+        neighborsAndSwaps = best.getPointNeighborsAndSwaps(pointDist(rng));
+//        std::transform(neighborsAndSwaps.begin(),neighborsAndSwaps.end(),
+//                       std::back_inserter(neighbors),
+//                       [](const auto& pair){return pair.first;});
         auto comp = [](const Creature &c1, const Creature &c2)
         {
             return c1.getFitness() < c2.getFitness();
         };
-        std::sort(neighbors.begin(), neighbors.end(), comp);
+        auto pairComp = [&comp](const NeighborAndSwap& nas1,const NeighborAndSwap& nas2)
+        {
+            return comp(nas1.first,nas2.first);
+        };
+        sorted = std::set<NeighborAndSwap>(neighborsAndSwaps.begin(), neighborsAndSwaps.end());
 
-//        auto index = std::binary_search(neighbors.begin(), neighbors.end(), best, comp);
-        auto bestNeighbor = neighbors[0];
-        if(bestNeighbor.getFitness() >= best.getFitness())
-            break;
-        best = bestNeighbor;
-        std::cout<<"best: "<<best.getFitness()<<std::endl;
+        //maybe not remove, but put at back of the list
+        std::remove_if(neighborsAndSwaps.begin(), neighborsAndSwaps.end(), [this](const NeighborAndSwap &n)
+        { return tabuList.contains(n.first); });
+
+
+//      auto index = std::binary_search(neighbors.begin(), neighbors.end(), best, comp);
+        auto bestNeighbor = neighborsAndSwaps[0];
+        if (bestNeighbor.first.getFitness() >= best.getFitness())
+        {
+            //what to do here?
+        }
+        swaps.push(bestNeighbor.second);
+        best = bestNeighbor.first;
+        bestFitness = std::min(bestFitness,best.getFitness());
+
+        std::cout << "best: " << best.getFitness() << std::endl;
     }
-    std::cout<<"BEST: "<<best.getFitness()<<std::endl;
+    std::cout << "BEST: " << best.getFitness() << std::endl;
 }
 
 bool TabuAlgorithm::endCondition()

@@ -3,6 +3,7 @@
 #include "Creature.h"
 #include "TabuList.h"
 #include "Problem.h"
+#include <stack>
 
 class TabuAlgorithm
 {

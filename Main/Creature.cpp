@@ -211,9 +211,9 @@ std::string Creature::getInfo(bool extended) const
 	return ss.str();
 }
 
-std::vector<Creature> Creature::getPointNeighbors(size_t point) const
+std::vector<NeighborAndSwap> Creature::getPointNeighborsAndSwaps(size_t point) const
 {
-	std::vector<Creature> neighbors;
+    std::vector<NeighborAndSwap> neighborsAndSwaps;
 
 	for (size_t i = 0; i < citiesCount; i++)
 	{
@@ -222,10 +222,10 @@ std::vector<Creature> Creature::getPointNeighbors(size_t point) const
 			auto c = Creature(*this);
 			std::swap(c.cities[i], c.cities[point]);
 			c.calculateFitness();
-			neighbors.push_back(c);
+            neighborsAndSwaps.push_back({c,{point,i}});
 		}
 	}
-	return neighbors;
+	return neighborsAndSwaps;
 }
 
 void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng)
@@ -238,4 +238,14 @@ void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng)
 
 	if (begin > end)
 		std::swap(begin, end);
+}
+
+bool Creature::operator<(const Creature &other) const
+{
+    return this->fitness < other.fitness;
+}
+
+bool Creature::operator==(const Creature &other) const
+{
+    return this->fitness == other.fitness;
 }
