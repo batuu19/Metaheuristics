@@ -6,7 +6,7 @@ void TabuList::push(const Creature& creature)
 	
 }
 
-bool TabuList::contains(const Creature& creature)
+bool TabuList::contains(const Creature& creature) const
 {
 	return hashes.find(creature.getHash()) != hashes.end();
 }

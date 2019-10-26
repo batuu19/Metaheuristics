@@ -221,6 +221,7 @@ std::vector<Creature> Creature::getPointNeighbors(size_t point) const
 		{
 			auto c = Creature(*this);
 			std::swap(c.cities[i], c.cities[point]);
+			c.calculateFitness();
 			neighbors.push_back(c);
 		}
 	}

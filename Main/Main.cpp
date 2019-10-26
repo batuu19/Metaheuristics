@@ -1,5 +1,4 @@
 
-//#include "Main.h"
 #include <random>
 #include <iostream>
 #include <cstdio>
@@ -14,12 +13,12 @@
 
 int main()
 {
-	std::string filename = "berlin11_modified.tsp";
-	//std::string filename = "berlin52.tsp";
-	std::string configFilename = "config.cfg";
+    std::string filename = "berlin11_modified.tsp";
+    //std::string filename = "berlin52.tsp";
+    std::string configFilename = "config.cfg";
 
 	auto problem = Loader::loadData(TSP_DIRECTORY + filename);
-	auto configs = Loader::loadConfigs(configFilename);
+//	auto configs = Loader::loadConfigs(configFilename);
 
 
 
@@ -28,7 +27,6 @@ int main()
 	TabuAlgorithm tabu = TabuAlgorithm(problem);
 	tabu.run(rng);
 
-	system("pause");
-
-	//system("pause");
+//	system("pause");
+    std::cout << "test";
 }
