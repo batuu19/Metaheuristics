@@ -162,7 +162,7 @@ const std::vector<int>& Creature::getCities() const
 	return cities;
 }
 
-unsigned long int Creature::getHash() const
+unsigned long long Creature::getHash() const
 {
 	return hash;
 }
@@ -179,7 +179,14 @@ void Creature::calculateFitness()
 	fitness += distanceMatrix->getDistance(*cities.begin(), *(cities.end() - 1));
 	this->fitness = fitness;
 
+	hash = 0;
 	//calculate hash;
+	for (size_t i = 0; i < cities.size(); i++)
+	{
+		hash += static_cast<unsigned long long>(primes[i]) * 
+				static_cast<unsigned long long>(cities[i]);
+	}
+	
 
 	//std::hash<std::vector<size_t>>;
 }

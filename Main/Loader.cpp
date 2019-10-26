@@ -92,6 +92,28 @@ std::vector<Config> Loader::loadConfigs(const std::string& filename)
 	return configs;
 }
 
+unsigned long* Loader::loadPrimes(int count)
+{
+	if (count > MAX_PRIMES_COUNT)
+		return nullptr;
+	std::string filename = "primes-to-100k.txt";
+	std::ifstream file;
+	file.open(filename);
+
+	unsigned long* arr = new unsigned long[count];
+	size_t i = 0;
+	unsigned long word;
+	while (i<count)
+	{
+		file >> word;
+		arr[i] = word;
+		i++;
+	}
+
+
+	return arr;
+}
+
 std::vector<Point> Loader::debugLoadNodes(const std::string& filename)
 {
 	std::ifstream file;

@@ -8,40 +8,16 @@
 
 int main()
 {
-	//constexpr size_t size = std::numeric_limits<size_t>().max();
-	constexpr size_t size = 2 << 15;
+	size_t size = 20;
+	int* arr = new int[size];
+	std::vector<int> vec(size, 1);
 
-	int arr[size];
-	int* ptr = new int[size];
-	std::vector<int> vec(size,1);
-
-	size_t i = 0;
-
-	for (size_t j = 0; j < (2<<11); j++)
+	for (size_t i = 0; i < size; i++)
 	{
-		while (i < size)
-		{
-			arr[i] = i;
-			ptr[i] = i;
-			//vec[i] = i;
-			i++;
-		}
+		arr[i] = i;
 	}
-	for (unsigned long long int j = 0; j < ULLONG_MAX; j++)
-	{
-		i = 0;
-		int x;
 
-		while (i < size)
-		{
-			x = arr[i];
-			x = vec[i];
-			x = ptr[i];
-			i++;
-		}
-	}
-	delete arr;
-	delete[]ptr;
 
-	std::cout << "Hello World!\n" << size;
+	std::cout << "Hello World!\n";
+	delete[]arr;
 }
