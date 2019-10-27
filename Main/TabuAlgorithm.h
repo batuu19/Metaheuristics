@@ -5,6 +5,8 @@
 #include "Problem.h"
 #include <stack>
 
+constexpr size_t MAX_SWAPS_HISTORY = 20;
+
 class TabuAlgorithm
 {
 public:

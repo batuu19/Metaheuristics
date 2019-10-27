@@ -151,9 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DistanceMatrix.cpp" />
+    <ClCompile Include="GAAlgorithm.cpp" />
     <ClCompile Include="Population.cpp" />
     <ClCompile Include="Problem.cpp" />
     <ClCompile Include="Loader.cpp" />

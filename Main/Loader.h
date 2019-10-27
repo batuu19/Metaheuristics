@@ -20,7 +20,6 @@ class Loader
 public:
 	static Problem loadData(const std::string& filename);
 	static std::vector<Config> loadConfigs(const std::string& filename);
-	static unsigned long* loadPrimes(int count);
 
 	static std::vector<Point> debugLoadNodes(const std::string& filename);
 };

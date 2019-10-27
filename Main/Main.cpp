@@ -27,6 +27,6 @@ int main()
 	TabuAlgorithm tabu = TabuAlgorithm(problem);
 	tabu.run(rng);
 
-//	system("pause");
+	system("pause");
     std::cout << "test";
 }

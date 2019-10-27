@@ -16,13 +16,13 @@ void TabuAlgorithm::run(std::mt19937 &rng)
     {
         return nas1.first.getFitness() < nas2.first.getFitness();
     };
-    std::uniform_int_distribution<size_t> pointDist(0, citiesCount);
+    std::uniform_int_distribution<size_t> pointDist(0, citiesCount-1);
     std::vector<NeighborAndSwap> neighborsAndSwaps;
     std::set<NeighborAndSwap, decltype(pairComp)> sorted(pairComp);
 
     std::stack<swap_t> swapsHistory;
 
-    while (swapsHistory.size() < 10)//check if no improvement
+    while (swapsHistory.size() < MAX_SWAPS_HISTORY)//check if no improvement
     {
         neighborsAndSwaps.clear();
         sorted.clear();
@@ -58,7 +58,7 @@ void TabuAlgorithm::run(std::mt19937 &rng)
             bestFitness = std::min(bestFitness,best.getFitness());
         }
 
-        std::cout << "best: " << best.getFitness() << std::endl;
+        std::cout << "best: " << best.getFitness() <<"\tBEST_EVER"<<bestFitness<<std::endl;
     }
     std::cout << "BEST: " << bestFitness<< std::endl;
 }
