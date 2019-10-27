@@ -30,10 +30,10 @@ public:
 
 	//Tabu
 	//here?
-//	std::vector<Creature> getRandomNeighbors(size_t count) const;
+	std::vector<NeighborAndSwap> getRandomNeighborsAndSwaps(std::mt19937& rng,size_t count) const;
 //	std::vector<Creature> getPointNeighborsAndSwaps(size_t point, size_t count) const;
 	std::vector<NeighborAndSwap> getPointNeighborsAndSwaps(size_t point) const;
-//	std::vector<Creature> getAllNeighbors() const;
+	std::vector<NeighborAndSwap> getAllNeighborsAndSwaps() const;
 
 	const std::vector<int>& getCities() const;
 	unsigned long long getHash() const;
@@ -48,7 +48,7 @@ private:
 	std::vector<int> cities;
 	std::uniform_int_distribution<size_t> dist;
 
-	void getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng);
+	void getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng) const;
 
 	DistanceMatrix* distanceMatrix;
 

@@ -14,7 +14,8 @@ Creature::Creature(DistanceMatrix* distanceMatrix)
 	:
 	citiesCount(distanceMatrix->getSize()),
 	cities(citiesCount),
-	distanceMatrix(distanceMatrix)
+	distanceMatrix(distanceMatrix),
+	dist(0,citiesCount-1)
 {}//no cities yet, do not calculate fitness
 
 Creature::Creature(const Creature& other)
@@ -23,7 +24,8 @@ Creature::Creature(const Creature& other)
 	cities(other.cities),
 	dist(0, citiesCount-1),
 	distanceMatrix(other.distanceMatrix),
-	fitness(other.fitness)
+	fitness(other.fitness),
+	hash(other.hash)
 {}
 
 Creature& Creature::operator=(const Creature& other)
@@ -33,6 +35,7 @@ Creature& Creature::operator=(const Creature& other)
 	this->dist = std::uniform_int_distribution<size_t>(0, citiesCount-1);//???
 	this->distanceMatrix = other.distanceMatrix;
 	this->fitness = other.fitness;
+	this->hash = other.hash;
 	return *this;
 }
 
@@ -222,10 +225,27 @@ std::string Creature::getInfo(bool extended) const
 	return ss.str();
 }
 
+std::vector<NeighborAndSwap> Creature::getRandomNeighborsAndSwaps(std::mt19937& rng, size_t count) const
+{
+	std::vector<NeighborAndSwap> neighborsAndSwaps;
+	neighborsAndSwaps.reserve(count);
+	std::uniform_int_distribution<int> swapDist(0, citiesCount - 1);
+	size_t first, second;
+	for (size_t i = 0; i < count; i++)
+	{
+		auto c = Creature(*this);
+		getRandomBeginEnd(first, second, rng);
+		c.mutateSwap(first, second);
+		neighborsAndSwaps.push_back({ c,{first,second} });
+	}
+
+	return neighborsAndSwaps;
+}
+
 std::vector<NeighborAndSwap> Creature::getPointNeighborsAndSwaps(size_t point) const
 {
     std::vector<NeighborAndSwap> neighborsAndSwaps;
-
+	neighborsAndSwaps.reserve(citiesCount);
 	for (size_t i = 0; i < citiesCount; i++)
 	{
 		if (i != point)//OPTIMIZE
@@ -239,7 +259,25 @@ std::vector<NeighborAndSwap> Creature::getPointNeighborsAndSwaps(size_t point) c
 	return neighborsAndSwaps;
 }
 
-void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng)
+std::vector<NeighborAndSwap> Creature::getAllNeighborsAndSwaps() const
+{
+	std::vector<NeighborAndSwap> neighborsAndSwaps;
+	neighborsAndSwaps.reserve(citiesCount * citiesCount);
+	std::vector<NeighborAndSwap> temp;
+	for (size_t i = 0; i < citiesCount; i++)
+	{
+		for (size_t j = i+1; j < citiesCount; j++)
+		{
+			auto c = Creature(*this);
+			c.mutateSwap(i, j);
+			neighborsAndSwaps.push_back({ c,{i,j} });
+		}
+	}
+
+	return neighborsAndSwaps;
+}
+
+void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng) const
 {
 	begin = dist(rng);
 	do

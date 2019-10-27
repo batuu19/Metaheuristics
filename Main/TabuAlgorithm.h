@@ -4,8 +4,10 @@
 #include "TabuList.h"
 #include "Problem.h"
 #include <stack>
+#include <fstream>
 
 constexpr size_t MAX_SWAPS_HISTORY = 20;
+constexpr size_t NEIGHBORS_COUNT = 20;
 
 class TabuAlgorithm
 {
@@ -18,6 +20,4 @@ private:
 	TabuList tabuList;
 	size_t neighSize = 0;
 	size_t citiesCount;
-
-	bool endCondition();
 };
