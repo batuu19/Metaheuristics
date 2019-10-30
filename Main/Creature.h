@@ -8,9 +8,9 @@
 #include <sstream>
 #include "Problem.h"
 
-class Creature;
-typedef std::pair<int,int> swap_t;
-typedef std::pair<Creature,swap_t> NeighborAndSwap;
+//class Creature;
+//typedef std::pair<int,int> swap_t;
+//typedef std::pair<Creature,swap_t> NeighborAndSwap;
 
 class Creature
 {
@@ -30,17 +30,21 @@ public:
 
 	//Tabu
 	//here?
-	std::vector<NeighborAndSwap> getRandomNeighborsAndSwaps(std::mt19937& rng,size_t count) const;
-//	std::vector<Creature> getPointNeighborsAndSwaps(size_t point, size_t count) const;
-	std::vector<NeighborAndSwap> getPointNeighborsAndSwaps(size_t point) const;
-	std::vector<NeighborAndSwap> getAllNeighborsAndSwaps() const;
+	std::vector<Creature> getRandomNeighbors(std::mt19937& rng,size_t count) const;
+	std::vector<Creature> getPointNeighbors(size_t point, size_t count) const;
+	std::vector<Creature> getPointNeighbors(size_t point) const;
+	std::vector<Creature> getAllNeighbors() const;
 
 	const std::vector<int>& getCities() const;
 	unsigned long long getHash() const;
 	//std::vector<Creature> getAllNeighbors();//too many
 public:
-	bool operator==(const Creature& other) const;
+	//bool operator==(const Creature& other) const;
+	//using fitness
 	bool operator<(const Creature& other) const;
+	bool operator<=(const Creature& other) const;
+	bool operator>(const Creature& other) const;
+	bool operator>=(const Creature& other) const;
 private:
 	void calculateFitness();
 	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);

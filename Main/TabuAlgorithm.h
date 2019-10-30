@@ -6,8 +6,9 @@
 #include <stack>
 #include <fstream>
 
-constexpr size_t MAX_SWAPS_HISTORY = 20;
-constexpr size_t NEIGHBORS_COUNT = 20;
+constexpr size_t DEFAULT_NEIGHBORS_COUNT = 3000;
+constexpr size_t DEFAULT_MAX_GENERATIONS = 1000;
+
 
 class TabuAlgorithm
 {
