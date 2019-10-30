@@ -10,6 +10,7 @@
 #include "Utils.h"
 
 #include "TabuAlgorithm.h"
+#include "WAlgorithm.h"
 
 int main()
 {
@@ -25,9 +26,7 @@ int main()
 
 	std::mt19937 rng(std::random_device{}());
 
-	TabuAlgorithm tabu = TabuAlgorithm(problem);
-	tabu.run(rng);
-
+	WAlgorithm alg = WAlgorithm(problem);
+	alg.run(rng);
 	system("pause");
-    std::cout << "test";
 }

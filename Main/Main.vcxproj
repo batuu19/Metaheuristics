@@ -161,6 +161,7 @@
     <ClCompile Include="TabuAlgorithm.cpp" />
     <ClCompile Include="TabuList.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="WAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAAlgorithm.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="TabuAlgorithm.h" />
     <ClInclude Include="TabuList.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="WAlgorithm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
