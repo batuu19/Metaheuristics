@@ -6,8 +6,8 @@
 #include <stack>
 #include <fstream>
 
-constexpr size_t DEFAULT_NEIGHBORS_COUNT = 30;
-constexpr size_t DEFAULT_MAX_GENERATIONS = 100;
+constexpr size_t DEFAULT_NEIGHBORS_COUNT = 20;
+constexpr size_t DEFAULT_MAX_GENERATIONS = 400;
 class TabuAlgorithm
 {
 public:
