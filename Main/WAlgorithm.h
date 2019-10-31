@@ -3,10 +3,12 @@
 #include "Creature.h"
 #include "Problem.h"
 #include <cmath>
+#include <fstream>
 
 
-constexpr size_t DEFAULT_NEIGHBORS_COUNT_W = 30;
-constexpr size_t DEFAULT_MAX_GENERATIONS_W = 100;
+constexpr size_t DEFAULT_NEIGHBORS_COUNT_W = 5;
+constexpr size_t DEFAULT_MAX_GENERATIONS_W = 1000;
+constexpr float DEFAULT_BEGIN_TEMPERATURE = 900.f;
 
 class WAlgorithm
 {
@@ -15,6 +17,7 @@ public:
 	void run(std::mt19937& rng);
 private:
 	Creature best;
-	size_t temperature = 0;
+	float temperature = DEFAULT_BEGIN_TEMPERATURE;
+	double coolingRate = 0.98f;
 	
 };
