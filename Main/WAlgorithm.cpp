@@ -1,17 +1,13 @@
 #include "WAlgorithm.h"
 
-WAlgorithm::WAlgorithm(Problem& problem)
-	:
-	best(problem.getDistanceMatrix())
-{
-}
-
 void WAlgorithm::run(std::mt19937& rng)
 {
 	//CSV FILE
 	std::ofstream csvFile;
 	csvFile.open("sa.csv");
 	csvFile << "generation,best,worst,bestEver,temperature\n";
+	pop.init(rng, distanceMatrix);
+	auto best = pop.getFirst();
 
 	best.init(rng);
 	float bestFitness = best.getFitness();
@@ -19,13 +15,13 @@ void WAlgorithm::run(std::mt19937& rng)
 
 	float percentage = percentageDist(rng);
 	std::vector<Creature> neighbors;
-	neighbors.reserve(DEFAULT_NEIGHBORS_COUNT_W);
-	auto beginTemp = temperature;
+	neighbors.reserve(config.neighborsCount);
+	auto temperature = config.beginTemperature;
 	size_t generation = 1;
-	while (generation < DEFAULT_MAX_GENERATIONS_W)
+	while (generation < config.maxIterations)
 	{
 		neighbors.clear();
-		neighbors = best.getRandomNeighbors(rng, DEFAULT_NEIGHBORS_COUNT_W);
+		neighbors = best.getRandomNeighbors(rng, config.neighborsCount);
 		//neighbors = best.getPointNeighbors(pointDist(rng));
 
 		std::sort(neighbors.begin(), neighbors.end());
@@ -59,7 +55,7 @@ void WAlgorithm::run(std::mt19937& rng)
 			bestFitness << "," <<
 			temperature <<
 			std::endl;
-		temperature *= coolingRate;
+		temperature *= config.coolingRate;
 		//temperature -= beginTemp / DEFAULT_MAX_GENERATIONS_W;
 		generation++;
 	}

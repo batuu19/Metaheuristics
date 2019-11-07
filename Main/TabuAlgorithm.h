@@ -5,18 +5,14 @@
 #include "Problem.h"
 #include <stack>
 #include <fstream>
-
-constexpr size_t DEFAULT_NEIGHBORS_COUNT = 20;
-constexpr size_t DEFAULT_MAX_GENERATIONS = 400;
-class TabuAlgorithm
+#include "MetaAlgorithm.h"
+//
+//constexpr size_t DEFAULT_NEIGHBORS_COUNT = 20;
+//constexpr size_t DEFAULT_MAX_GENERATIONS = 400;
+class TabuAlgorithm : public MetaAlgorithm
 {
 public:
-	TabuAlgorithm(const Problem& problem);
-
 	void run(std::mt19937& rng);
 private:
-	Creature best;
 	TabuList tabuList;
-	size_t neighSize = 0;
-	size_t citiesCount;
 };

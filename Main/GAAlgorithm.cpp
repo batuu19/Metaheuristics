@@ -1,77 +1,48 @@
 #include "GAAlgorithm.h"
 
-GAConfig::GAConfig()
-	: GAConfig(-1, DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
-{}
+//GAConfig::GAConfig()
+//	: GAConfig(-1, DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
+//{}
+//
+//GAConfig::GAConfig(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize)
+//	:
+//	id(id),
+//	popSize(popSize),
+//	generations(generations),
+//	px(px),
+//	pm(pm),
+//	tSize(tSize)
+//{
+//	if (tSize > popSize)
+//		this->tSize = (size_t)((float)popSize * 0.1f);
+//}
+//
+//std::string GAConfig::getFileName()
+//{
+//	std::stringstream ss;
+//	ss << "CSV\\configID" << id;
+//	return ss.str();
+//}
+//
+//void GAConfig::saveToFile()
+//{
+//	std::ofstream cfgFile;
+//	cfgFile.open(getFileName() + ".cfg");
+//	cfgFile << "POPSIZE: " << popSize << std::endl;
+//	cfgFile << "GENERATIONS: " << generations << std::endl;
+//	cfgFile << "PX: " << px << std::endl;
+//	cfgFile << "PM: " << pm << std::endl;
+//	cfgFile << "TSIZE: " << tSize << std::endl;
+//	cfgFile.close();
+//}
 
-GAConfig::GAConfig(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize)
-	:
-	id(id),
-	popSize(popSize),
-	generations(generations),
-	px(px),
-	pm(pm),
-	tSize(tSize)
-{
-	if (tSize > popSize)
-		this->tSize = (size_t)((float)popSize * 0.1f);
-}
-
-std::string GAConfig::getFileName()
-{
-	std::stringstream ss;
-	ss << "CSV\\configID" << id;
-	return ss.str();
-}
-
-void GAConfig::saveToFile()
-{
-	std::ofstream cfgFile;
-	cfgFile.open(getFileName() + ".cfg");
-	cfgFile << "POPSIZE: " << popSize << std::endl;
-	cfgFile << "GENERATIONS: " << generations << std::endl;
-	cfgFile << "PX: " << px << std::endl;
-	cfgFile << "PM: " << pm << std::endl;
-	cfgFile << "TSIZE: " << tSize << std::endl;
-	cfgFile.close();
-}
-
-GAAlgorithm::GAAlgorithm(GAConfig config, DistanceMatrix* distanceMatrix)
-	:
-	config(config),
-	distanceMatrix(distanceMatrix),
-	pop(config.popSize)
-{}
-
-GAAlgorithm::GAAlgorithm(const GAAlgorithm& other)
-	:
-	config(other.config),
-	pop(other.pop),
-	distanceMatrix(other.distanceMatrix)
-{
-}
-
-GAAlgorithm& GAAlgorithm::operator=(const GAAlgorithm& other)
-{
-	this->config = other.config;
-	this->pop = other.pop;
-	this->distanceMatrix = other.distanceMatrix;
-	return *this;
-}
-
-GAAlgorithm::~GAAlgorithm()
-{}//do nothing, do not delete distance matrix
-
-std::pair<int, std::string> GAAlgorithm::run(std::mt19937& rng)
+void GAAlgorithm::run(std::mt19937& rng)
 {
 	std::ofstream csvFile;
 
-	csvFile.open(config.getFileName() + ".csv");
+	csvFile.open("ga.csv");
 	pop.init(rng, distanceMatrix);
 	csvFile << CSV_FIRST_LINE;
-
-	std::pair<int, std::string> out;
-	out.second = config.getFileName();
 
 	for (size_t i = 0; i < config.generations; i++)
 	{
@@ -137,10 +108,6 @@ std::pair<int, std::string> GAAlgorithm::run(std::mt19937& rng)
 		//std::cout << i << std::endl;
 	}
 	csvFile.close();
-
-	out.first = pop.getSortedCreatures()[0].getFitness();
-
-	return out;
 }
 
 

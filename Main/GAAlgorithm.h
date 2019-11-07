@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "MetaAlgorithm.h";
 
 
 static constexpr size_t DEFAULT_POPSIZE = 100;
@@ -15,38 +16,9 @@ static constexpr float SWAP_TO_INV_PROB = 0.9f;
 
 static constexpr char CSV_FIRST_LINE[] = "generation, worst, medium, best\n";
 
-class GAConfig
+class GAAlgorithm : public MetaAlgorithm
 {
 public:
-	GAConfig();
-	GAConfig(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize);
-
-	void saveToFile();
+	void run(std::mt19937& rng) override;
 private:
-	int id;
-	size_t popSize;
-	size_t generations;
-	float px, pm;//crossover, mutation
-	size_t tSize;
-	friend class GAAlgorithm;
-
-	std::string getFileName();
-};
-
-#include "Population.h"
-
-class GAAlgorithm
-{
-public:
-	GAAlgorithm(GAConfig config, DistanceMatrix* distanceMatrix);
-	GAAlgorithm(const GAAlgorithm&);
-	GAAlgorithm& operator=(const GAAlgorithm&);
-	~GAAlgorithm();
-	std::pair<int, std::string> run(std::mt19937& rng);
-private:
-	GAConfig config;
-	Population pop;
-	DistanceMatrix* distanceMatrix;
-
-	std::uniform_real_distribution<float> percentageDist;//default setting(0.f,1.f)
 };

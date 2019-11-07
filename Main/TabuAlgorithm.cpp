@@ -1,12 +1,5 @@
 #include "TabuAlgorithm.h"
 
-TabuAlgorithm::TabuAlgorithm(const Problem &problem)
-	:
-	best(problem.getDistanceMatrix()),
-	citiesCount(problem.getDimension())
-{
-}
-
 void TabuAlgorithm::run(std::mt19937 &rng)
 {
 	//csv file
@@ -14,7 +7,8 @@ void TabuAlgorithm::run(std::mt19937 &rng)
 	csvFile.open("tabu.csv");
 	csvFile << "generation,best,worst,bestEver\n";
 	//csv file
-	best.init(rng);
+	pop.init(rng,distanceMatrix);
+	auto best = pop.getFirst();
 
 	auto bestFitness = best.getFitness();
 	csvFile << 0 << "," << best.getFitness() << "," << bestFitness << std::endl;
@@ -37,12 +31,12 @@ void TabuAlgorithm::run(std::mt19937 &rng)
 	std::vector<Creature> neighbors;
 	std::set<Creature> sorted;
 	size_t generation = 1;
-	while (generation < DEFAULT_MAX_GENERATIONS)
+	while (generation < config.maxIterations)
 	{
 		neighbors.clear();
 		sorted.clear();
 
-		neighbors = best.getRandomNeighbors(rng, DEFAULT_NEIGHBORS_COUNT);
+		neighbors = best.getRandomNeighbors(rng, config.neighborsCount);
 
 		std::copy_if(neighbors.begin(), neighbors.end(), std::inserter(sorted, sorted.begin()),
 			[this](const Creature& c)

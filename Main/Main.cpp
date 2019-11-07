@@ -26,8 +26,8 @@ int main()
 
 	std::mt19937 rng(std::random_device{}());
 
-	WAlgorithm alg = WAlgorithm(problem);
+	//WAlgorithm alg = WAlgorithm(problem);
 	//TabuAlgorithm alg = TabuAlgorithm(problem);
-	alg.run(rng);
+	//alg.run(rng);
 	system("pause");
 }

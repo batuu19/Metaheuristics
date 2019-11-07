@@ -49,3 +49,8 @@ const std::vector<Creature>& Population::getSortedCreatures()
 
 	return creatures;
 }
+
+Creature& Population::getFirst()
+{
+	return creatures[0];
+}

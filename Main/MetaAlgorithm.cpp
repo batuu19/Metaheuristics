@@ -33,8 +33,6 @@ Config Config::getSAConfig(float beginTemperature, double coolingRate, size_t ne
 	return cfg;
 }
 
-Config::Config(){} //default;
-
 
 
 
@@ -42,14 +40,16 @@ MetaAlgorithm::MetaAlgorithm(const Problem& problem, const Config& config)
 	:
 	config(config),
 	pop(config.popSize),
-	distanceMatrix(problem.getDistanceMatrix())
+	distanceMatrix(problem.getDistanceMatrix()),
+	citiesCount(problem.getDimension())
 {}
 
 MetaAlgorithm::MetaAlgorithm(const MetaAlgorithm& other)
 	:
 	config(other.config),
 	pop(config.popSize),
-	distanceMatrix(other.distanceMatrix)
+	distanceMatrix(other.distanceMatrix),
+	citiesCount(other.citiesCount)
 {}
 
 MetaAlgorithm& MetaAlgorithm::operator=(const MetaAlgorithm& other)
@@ -57,13 +57,9 @@ MetaAlgorithm& MetaAlgorithm::operator=(const MetaAlgorithm& other)
 	this->config = other.config;//good?
 	this->pop = other.pop;//good?
 	this->distanceMatrix = other.distanceMatrix;
+	this->citiesCount = other.citiesCount;
 	return *this;
 }
 
 MetaAlgorithm::~MetaAlgorithm()
 {}
-
-void MetaAlgorithm::run()
-{
-	//TODO
-}

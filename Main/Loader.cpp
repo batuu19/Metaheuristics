@@ -58,39 +58,39 @@ Problem Loader::loadData(const std::string& filename)
 
 	return Problem(name, type, comment, edgeWeightType, nodes);
 }
-
-std::vector<GAConfig> Loader::loadConfigs(const std::string& filename)
-{
-	std::ifstream file;
-	file.open(filename);
-	std::string line;
-	getline(file, line);
-	size_t count = getConfigVar<int>(line);
-	int id;
-	size_t popSize;
-	size_t generations;
-	float px, pm;//crossover, mutation
-	size_t tSize;//turniej size
-	std::vector<GAConfig> configs;
-	for (size_t i = 0; i < count; i++)
-	{
-		getline(file, line);//empty line between
-		getline(file, line);//config num
-		id = getConfigVar<int>(line);
-		getline(file, line);//popsize
-		popSize = getConfigVar<int>(line);
-		getline(file, line);//generations
-		generations = getConfigVar<int>(line);
-		getline(file, line);//PX
-		px = getConfigVar<float>(line);
-		getline(file, line);//PM
-		pm = getConfigVar<float>(line);
-		getline(file, line);//tSize
-		tSize = getConfigVar<int>(line);
-		configs.push_back({ id,popSize,generations,px,pm,tSize });
-	}
-	return configs;
-}
+//
+//std::vector<GAConfig> Loader::loadConfigs(const std::string& filename)
+//{
+//	std::ifstream file;
+//	file.open(filename);
+//	std::string line;
+//	getline(file, line);
+//	size_t count = getConfigVar<int>(line);
+//	int id;
+//	size_t popSize;
+//	size_t generations;
+//	float px, pm;//crossover, mutation
+//	size_t tSize;//turniej size
+//	std::vector<GAConfig> configs;
+//	for (size_t i = 0; i < count; i++)
+//	{
+//		getline(file, line);//empty line between
+//		getline(file, line);//config num
+//		id = getConfigVar<int>(line);
+//		getline(file, line);//popsize
+//		popSize = getConfigVar<int>(line);
+//		getline(file, line);//generations
+//		generations = getConfigVar<int>(line);
+//		getline(file, line);//PX
+//		px = getConfigVar<float>(line);
+//		getline(file, line);//PM
+//		pm = getConfigVar<float>(line);
+//		getline(file, line);//tSize
+//		tSize = getConfigVar<int>(line);
+//		configs.push_back({ id,popSize,generations,px,pm,tSize });
+//	}
+//	return configs;
+//}
 
 std::vector<Point> Loader::debugLoadNodes(const std::string& filename)
 {
