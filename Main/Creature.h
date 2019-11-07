@@ -18,7 +18,9 @@ class Creature
 public:
 	Creature(DistanceMatrix* distanceMatrix);
 	Creature(const Creature&);
+	Creature(Creature&&) noexcept;
 	Creature& operator=(const Creature&);
+	Creature& operator=(Creature&&) noexcept;
 	~Creature();
 	void init(std::mt19937& rng);
 	void mutateSwap(std::mt19937& rng);

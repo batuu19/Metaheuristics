@@ -28,6 +28,18 @@ Creature::Creature(const Creature& other)
 	hash(other.hash)
 {}
 
+Creature::Creature(Creature&& other) noexcept
+	:
+	citiesCount(other.citiesCount),
+	cities(std::move(other.cities)),
+	dist(std::move(other.dist)),
+	distanceMatrix(other.distanceMatrix),
+	fitness(other.fitness),
+	hash(other.hash)
+{
+	//distanceMatrix = nullptr;//needed?
+}
+
 Creature& Creature::operator=(const Creature& other)
 {
 	this->citiesCount = other.citiesCount;
@@ -36,6 +48,20 @@ Creature& Creature::operator=(const Creature& other)
 	this->distanceMatrix = other.distanceMatrix;
 	this->fitness = other.fitness;
 	this->hash = other.hash;
+	return *this;
+}
+
+Creature& Creature::operator=(Creature&& other) noexcept
+{
+	this->citiesCount = other.citiesCount;
+	this->fitness = other.fitness;
+	this->hash = other.hash;
+
+	this->cities = std::move( other.cities);
+	this->dist = std::move(other.dist);
+
+	this->distanceMatrix = other.distanceMatrix;
+	//other.distanceMatrix = nullptr;//needed?
 	return *this;
 }
 
