@@ -1,6 +1,6 @@
-#include "WAlgorithm.h"
+#include "SAAlgorithm.h"
 
-void WAlgorithm::run(std::mt19937& rng)
+void SAAlgorithm::run(std::mt19937& rng)
 {
 	//CSV FILE
 	std::ofstream csvFile;

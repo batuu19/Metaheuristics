@@ -9,9 +9,10 @@
 //constexpr size_t DEFAULT_MAX_GENERATIONS_W = 1000;
 //constexpr float DEFAULT_BEGIN_TEMPERATURE = 1500;
 
-class WAlgorithm : public MetaAlgorithm
+class SAAlgorithm : public MetaAlgorithm
 {
 public:
+	SAAlgorithm(const Problem& problem, const Config& config) : MetaAlgorithm(problem, config) {};
 	void run(std::mt19937& rng);
 private:
 	

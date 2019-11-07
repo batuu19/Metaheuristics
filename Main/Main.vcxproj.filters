@@ -45,10 +45,10 @@
     <ClCompile Include="GAAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WAlgorithm.cpp">
+    <ClCompile Include="MetaAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MetaAlgorithm.cpp">
+    <ClCompile Include="SAAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,10 +86,10 @@
     <ClInclude Include="GAAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WAlgorithm.h">
+    <ClInclude Include="MetaAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MetaAlgorithm.h">
+    <ClInclude Include="SAAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

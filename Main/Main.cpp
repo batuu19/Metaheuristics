@@ -4,13 +4,13 @@
 #include <cstdio>
 
 #include "Loader.h"
-#include "GAAlgorithm.h"
 #include "Problem.h"
 #include "Loader.h"
 #include "Utils.h"
 
+#include "GAAlgorithm.h"
 #include "TabuAlgorithm.h"
-#include "WAlgorithm.h"
+#include "SAAlgorithm.h"
 
 int main()
 {
@@ -25,9 +25,12 @@ int main()
 
 
 	std::mt19937 rng(std::random_device{}());
+	MetaAlgorithm* algorithm = new GAAlgorithm(problem, Config::getGAConfig(100, 100, 0.9f, 0.05f, 10));
+	algorithm->run(rng);
 
-	//WAlgorithm alg = WAlgorithm(problem);
+	//SAAlgorithm alg = SAAlgorithm(problem);
 	//TabuAlgorithm alg = TabuAlgorithm(problem);
 	//alg.run(rng);
 	system("pause");
+	delete algorithm;
 }

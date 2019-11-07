@@ -1,41 +1,5 @@
 #include "GAAlgorithm.h"
 
-//GAConfig::GAConfig()
-//	: GAConfig(-1, DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
-//{}
-//
-//GAConfig::GAConfig(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize)
-//	:
-//	id(id),
-//	popSize(popSize),
-//	generations(generations),
-//	px(px),
-//	pm(pm),
-//	tSize(tSize)
-//{
-//	if (tSize > popSize)
-//		this->tSize = (size_t)((float)popSize * 0.1f);
-//}
-//
-//std::string GAConfig::getFileName()
-//{
-//	std::stringstream ss;
-//	ss << "CSV\\configID" << id;
-//	return ss.str();
-//}
-//
-//void GAConfig::saveToFile()
-//{
-//	std::ofstream cfgFile;
-//	cfgFile.open(getFileName() + ".cfg");
-//	cfgFile << "POPSIZE: " << popSize << std::endl;
-//	cfgFile << "GENERATIONS: " << generations << std::endl;
-//	cfgFile << "PX: " << px << std::endl;
-//	cfgFile << "PM: " << pm << std::endl;
-//	cfgFile << "TSIZE: " << tSize << std::endl;
-//	cfgFile.close();
-//}
-
 void GAAlgorithm::run(std::mt19937& rng)
 {
 	std::ofstream csvFile;

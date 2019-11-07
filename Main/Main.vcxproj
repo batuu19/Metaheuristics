@@ -162,7 +162,7 @@
     <ClCompile Include="TabuAlgorithm.cpp" />
     <ClCompile Include="TabuList.cpp" />
     <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="WAlgorithm.cpp" />
+    <ClCompile Include="SAAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MetaAlgorithm.h" />
@@ -177,7 +177,7 @@
     <ClInclude Include="TabuAlgorithm.h" />
     <ClInclude Include="TabuList.h" />
     <ClInclude Include="Utils.h" />
-    <ClInclude Include="WAlgorithm.h" />
+    <ClInclude Include="SAAlgorithm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
