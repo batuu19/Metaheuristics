@@ -59,7 +59,7 @@ Problem Loader::loadData(const std::string& filename)
 	return Problem(name, type, comment, edgeWeightType, nodes);
 }
 
-std::vector<Config> Loader::loadConfigs(const std::string& filename)
+std::vector<GAConfig> Loader::loadConfigs(const std::string& filename)
 {
 	std::ifstream file;
 	file.open(filename);
@@ -71,7 +71,7 @@ std::vector<Config> Loader::loadConfigs(const std::string& filename)
 	size_t generations;
 	float px, pm;//crossover, mutation
 	size_t tSize;//turniej size
-	std::vector<Config> configs;
+	std::vector<GAConfig> configs;
 	for (size_t i = 0; i < count; i++)
 	{
 		getline(file, line);//empty line between

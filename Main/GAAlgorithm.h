@@ -15,11 +15,11 @@ static constexpr float SWAP_TO_INV_PROB = 0.9f;
 
 static constexpr char CSV_FIRST_LINE[] = "generation, worst, medium, best\n";
 
-class Config
+class GAConfig
 {
 public:
-	Config();
-	Config(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize);
+	GAConfig();
+	GAConfig(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize);
 
 	void saveToFile();
 private:
@@ -38,13 +38,13 @@ private:
 class GAAlgorithm
 {
 public:
-	GAAlgorithm(Config config, DistanceMatrix* distanceMatrix);
+	GAAlgorithm(GAConfig config, DistanceMatrix* distanceMatrix);
 	GAAlgorithm(const GAAlgorithm&);
 	GAAlgorithm& operator=(const GAAlgorithm&);
 	~GAAlgorithm();
 	std::pair<int, std::string> run(std::mt19937& rng);
 private:
-	Config config;
+	GAConfig config;
 	Population pop;
 	DistanceMatrix* distanceMatrix;
 

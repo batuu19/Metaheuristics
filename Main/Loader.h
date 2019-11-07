@@ -19,7 +19,7 @@ class Loader
 {
 public:
 	static Problem loadData(const std::string& filename);
-	static std::vector<Config> loadConfigs(const std::string& filename);
+	static std::vector<GAConfig> loadConfigs(const std::string& filename);
 
 	static std::vector<Point> debugLoadNodes(const std::string& filename);
 };

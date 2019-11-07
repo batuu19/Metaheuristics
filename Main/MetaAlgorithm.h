@@ -32,8 +32,7 @@ private:
 class MetaAlgorithm
 {
 public:
-	MetaAlgorithm();
-	MetaAlgorithm(const Problem& problem);
+	MetaAlgorithm(const Problem& problem,const Config& config);
 	MetaAlgorithm(const MetaAlgorithm&);
 	MetaAlgorithm& operator=(const MetaAlgorithm&);
 	virtual ~MetaAlgorithm();

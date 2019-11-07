@@ -1,10 +1,10 @@
 #include "GAAlgorithm.h"
 
-Config::Config()
-	: Config(-1, DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
+GAConfig::GAConfig()
+	: GAConfig(-1, DEFAULT_POPSIZE, DEFAULT_GENERATIONS, DEFAULT_PX, DEFAULT_PM, DEFAULT_TSIZE)
 {}
 
-Config::Config(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize)
+GAConfig::GAConfig(int id, size_t popSize, size_t generations, float px, float pm, size_t tSize)
 	:
 	id(id),
 	popSize(popSize),
@@ -17,14 +17,14 @@ Config::Config(int id, size_t popSize, size_t generations, float px, float pm, s
 		this->tSize = (size_t)((float)popSize * 0.1f);
 }
 
-std::string Config::getFileName()
+std::string GAConfig::getFileName()
 {
 	std::stringstream ss;
 	ss << "CSV\\configID" << id;
 	return ss.str();
 }
 
-void Config::saveToFile()
+void GAConfig::saveToFile()
 {
 	std::ofstream cfgFile;
 	cfgFile.open(getFileName() + ".cfg");
@@ -36,7 +36,7 @@ void Config::saveToFile()
 	cfgFile.close();
 }
 
-GAAlgorithm::GAAlgorithm(Config config, DistanceMatrix* distanceMatrix)
+GAAlgorithm::GAAlgorithm(GAConfig config, DistanceMatrix* distanceMatrix)
 	:
 	config(config),
 	distanceMatrix(distanceMatrix),
