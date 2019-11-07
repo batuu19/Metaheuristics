@@ -17,9 +17,11 @@ public:
 	size_t getCreaturesCount() const;
 
 	const std::vector<Creature>& getSortedCreatures();
+	//for Tabu and SA
 	Creature& getFirst();
+	void replaceFirst(const Creature& c);//needed?
+
 private:
 	size_t size;
 	std::vector<Creature> creatures;
-
 };

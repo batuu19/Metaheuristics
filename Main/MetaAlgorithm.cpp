@@ -1,6 +1,7 @@
 #include "MetaAlgorithm.h"
 
-Config Config::getGAConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize)
+Config Config::getGAConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize,
+	Mutation mutation, Crossover crossover)
 {
 	Config cfg;
 	cfg.filenamePrefix = "ga";
@@ -9,13 +10,16 @@ Config Config::getGAConfig(size_t popSize, size_t generations, float px, float p
 	cfg.px = px;
 	cfg.pm = pm;
 	cfg.tSize = tSize;
+	cfg.mutation = mutation;
+	cfg.crossover = crossover;
 	return cfg;
 }
 
-Config Config::getGAConfig(size_t id, size_t popSize, size_t generations, float px, float pm, size_t tSize)
+Config Config::getGAConfig(size_t id, size_t popSize, size_t generations, float px, float pm, size_t tSize,
+	Mutation mutation, Crossover crossover)
 {
-	Config cfg = getGAConfig(popSize, generations, px, pm, tSize);
-	cfg.filenamePrefix += id;
+	Config cfg = getGAConfig(popSize, generations, px, pm, tSize,mutation,crossover);
+	cfg.filenamePrefix += "" + id;
 	return cfg;
 }
 
@@ -32,7 +36,7 @@ Config Config::getTabuConfig(size_t neighborsCount, size_t maxIterations)
 Config Config::getTabuConfig(size_t id, size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg = getTabuConfig(neighborsCount, maxIterations);
-	cfg.filenamePrefix += id;
+	cfg.filenamePrefix += "" + id;
 	return cfg;
 }
 
@@ -51,7 +55,7 @@ Config Config::getSAConfig(float beginTemperature, double coolingRate, size_t ne
 Config Config::getSAConfig(size_t id, float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg = getSAConfig(beginTemperature, coolingRate, neighborsCount, maxIterations);
-	cfg.filenamePrefix += id;
+	cfg.filenamePrefix += "" + id;
 	return cfg;
 }
 

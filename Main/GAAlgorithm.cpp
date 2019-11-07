@@ -18,34 +18,44 @@ void GAAlgorithm::run(std::mt19937& rng)
 			auto c2 = pop.selection(rng, config.tSize);
 			if (percentageDist(rng) < config.px)
 			{
-				if (percentageDist(rng) < OX_TO_PMX_PROB)
+				switch (config.crossover)
 				{
-					auto c12 = c1.crossoverOX(c2, rng);
-					auto c21 = c2.crossoverOX(c1, rng);
-					c1 = c12;
-					c2 = c21;
-				}
-				else
-				{
-					auto vec = c1.crossoverPMX(c2, rng);
-					c1 = vec[0];
-					c2 = vec[1];
+					case Crossover::OX:
+					{
+						auto c12 = c1.crossoverOX(c2, rng);
+						auto c21 = c2.crossoverOX(c1, rng);
+						c1 = c12;
+						c2 = c21;
+						break;
+					}
+					case Crossover::PMX:
+					{
+						auto vec = c1.crossoverPMX(c2, rng);
+						c1 = vec[0];
+						c2 = vec[1];
+						break;
+					}
 				}
 
 			}
-			if (percentageDist(rng) < config.pm)
+			switch (config.mutation)
 			{
-				if (percentageDist(rng) < SWAP_TO_INV_PROB)
-					c1.mutateSwap(rng);
-				else
-					c1.mutateInv(rng);
-			}
-			if (percentageDist(rng) < config.pm)
-			{
-				if (percentageDist(rng) < SWAP_TO_INV_PROB)
-					c2.mutateSwap(rng);
-				else
-					c1.mutateInv(rng);
+				case Mutation::SWAP:
+				{
+					if (percentageDist(rng) < config.pm)
+						c1.mutateSwap(rng);
+					if (percentageDist(rng) < config.pm)
+						c2.mutateSwap(rng);
+					break;
+				}
+				case Mutation::INVERSE:
+				{
+					if (percentageDist(rng) < config.pm)
+						c1.mutateInv(rng);
+					if (percentageDist(rng) < config.pm)
+						c2.mutateInv(rng);
+					break;
+				}
 			}
 
 			newPop.addCreature(c1);

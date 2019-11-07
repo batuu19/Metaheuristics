@@ -12,6 +12,7 @@
 //typedef std::pair<int,int> swap_t;
 //typedef std::pair<Creature,swap_t> NeighborAndSwap;
 
+//TODO add move operators
 class Creature
 {
 public:

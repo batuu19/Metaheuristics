@@ -9,10 +9,12 @@ class DistanceMatrix
 public:
 	DistanceMatrix(const std::vector<Point>& nodes);
 	DistanceMatrix(const DistanceMatrix&) = delete;
-	DistanceMatrix& operator=(const DistanceMatrix&) = delete;//for sure?
+	DistanceMatrix& operator=(const DistanceMatrix&) = delete;
+	~DistanceMatrix();
 	float getDistance(int from, int to) const;
 	size_t getSize() const;
 private:
-	std::vector<std::vector<float>> matrix;//TODO: storage with pointers
+	float** matrix;
+	size_t size;
 
 };

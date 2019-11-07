@@ -55,7 +55,7 @@ void SAAlgorithm::run(std::mt19937& rng)
 			bestFitness << "," <<
 			temperature <<
 			std::endl;
-		temperature *= config.coolingRate;
+		temperature *= static_cast<float>( config.coolingRate);
 		//temperature -= beginTemp / DEFAULT_MAX_GENERATIONS_W;
 		generation++;
 	}

@@ -62,6 +62,7 @@ void TabuAlgorithm::run(std::mt19937 &rng)
 			bestFitness = best.getFitness();
 		}
 
+		
 
 
 		csvFile << generation << "," <<

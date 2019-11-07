@@ -20,7 +20,7 @@ void Population::init(std::mt19937& rng,DistanceMatrix* distanceMatrix)
 
 Creature Population::selection(std::mt19937& rng,size_t tSize)
 {
-	std::shuffle(creatures.begin(),creatures.end(),rng);
+	std::shuffle(creatures.begin(),creatures.end(),rng);//TODO optimize
 
 	std::sort(creatures.begin(),creatures.begin() + tSize,
 		[](const Creature& c1,const Creature& c2){
@@ -53,4 +53,9 @@ const std::vector<Creature>& Population::getSortedCreatures()
 Creature& Population::getFirst()
 {
 	return creatures[0];
+}
+
+void Population::replaceFirst(const Creature& c)
+{
+	creatures[0] = c;
 }
