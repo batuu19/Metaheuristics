@@ -46,6 +46,7 @@ public:
 	bool operator>(const Creature& other) const;
 	bool operator>=(const Creature& other) const;
 private:
+	//pass distance matrix here instead of keeping it in object?
 	void calculateFitness();
 	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);
 	size_t citiesCount;

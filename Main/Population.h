@@ -17,6 +17,7 @@ public:
 	size_t getCreaturesCount() const;
 
 	const std::vector<Creature>& getSortedCreatures();
+	//operator[] ?
 private:
 	size_t size;
 	std::vector<Creature> creatures;
