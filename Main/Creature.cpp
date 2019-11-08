@@ -3,45 +3,64 @@
 Creature::Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities)//private
 	:
 	citiesCount(cities.size()),
-	cities(cities),
 	dist(0, citiesCount-1),
 	distanceMatrix(distanceMatrix)
 {
+	this->cities = new int[citiesCount];
+
+	for (size_t i = 0; i < citiesCount; i++)
+		this->cities[i] = cities[i];
+
 	calculateFitness();//needed,optimize?
 }
 
 Creature::Creature(DistanceMatrix* distanceMatrix)
 	:
 	citiesCount(distanceMatrix->getSize()),
-	cities(citiesCount),
 	distanceMatrix(distanceMatrix),
 	dist(0,citiesCount-1)
-{}//no cities yet, do not calculate fitness
+{
+	//no cities yet, do not calculate fitness
+	cities = new int[citiesCount];
+}
 
 Creature::Creature(const Creature& other)
 	:
 	citiesCount(other.citiesCount),
-	cities(other.cities),
 	dist(0, citiesCount-1),
 	distanceMatrix(other.distanceMatrix),
 	fitness(other.fitness),
 	hash(other.hash)
-{}
+{
+	cities = new int[citiesCount];
+	for (size_t i = 0; i < citiesCount; i++)
+	{
+		cities[i] = other.cities[i];
+	}
+}
 
 Creature::Creature(Creature&& other) noexcept
 	:
 	citiesCount(other.citiesCount),
-	cities(std::move(other.cities)),
+	cities(other.cities),
 	dist(std::move(other.dist)),
 	distanceMatrix(other.distanceMatrix),
 	fitness(other.fitness),
 	hash(other.hash)
-{}
+{
+	other.cities = nullptr;
+}
 
 Creature& Creature::operator=(const Creature& other)
 {
 	this->citiesCount = other.citiesCount;
-	this->cities = other.cities;//?
+	delete this->cities;
+	cities = new int[citiesCount];
+	for (size_t i = 0; i < citiesCount; i++)
+	{
+		cities[i] = other.cities[i];
+	}
+
 	this->dist = std::uniform_int_distribution<size_t>(0, citiesCount-1);//???
 	this->distanceMatrix = other.distanceMatrix;
 	this->fitness = other.fitness;
@@ -55,17 +74,25 @@ Creature& Creature::operator=(Creature&& other) noexcept
 	this->fitness = other.fitness;
 	this->hash = other.hash;
 
-	this->cities = std::move( other.cities);
+	delete this->cities;
+	this->cities = other.cities;
+	other.cities = nullptr;
+
 	this->dist = std::move(other.dist);
 
 	this->distanceMatrix = other.distanceMatrix;
 	return *this;
 }
 
+Creature::~Creature()
+{
+	delete cities;
+}
+
 void Creature::init(std::mt19937& rng)
 {
-	std::iota(cities.begin(), cities.end(), 0);//0,1,2,3,...
-	std::shuffle(cities.begin(), cities.end(), rng);
+	std::iota(cities, cities + citiesCount, 0);//0,1,2,3,...
+	std::shuffle(cities, cities + citiesCount, rng);
 	calculateFitness();
 }
 
@@ -90,7 +117,7 @@ void Creature::mutateInv(std::mt19937& rng)
 	size_t begin, end;
 	getRandomBeginEnd(begin, end, rng);
 
-	std::reverse(cities.begin() + begin, cities.begin() + end);
+	std::reverse(cities + begin, cities + end);
 	calculateFitness();
 }
 
@@ -111,7 +138,7 @@ Creature Creature::crossoverOX(Creature& other, std::mt19937& rng)
 	}
 
 	size_t i = 0;
-	auto it = other.cities.begin();
+	auto it = other.cities;
 	while (i<citiesCount)
 	{
 		if (newOrder[i] == -1)//empty
@@ -187,7 +214,7 @@ std::vector<Creature> Creature::crossoverPMX(Creature& other, std::mt19937& rng)
 			{distanceMatrix, newOrder2} };
 }
 
-const std::vector<int>& Creature::getCities() const
+const int* Creature::getCities() const
 {
 	return cities;
 }
@@ -205,17 +232,17 @@ void Creature::calculateFitness()
     }
 	float fitness = 0.f;
 	size_t i = 1;
-	while (i < cities.size())
+	while (i < citiesCount)
 	{
 		fitness += distanceMatrix->getDistance(cities[i], cities[i - 1]);
 		i++;
 	}
-	fitness += distanceMatrix->getDistance(*cities.begin(), *(cities.end() - 1));
+	fitness += distanceMatrix->getDistance(cities[0], cities[citiesCount-1]);
 	this->fitness = fitness;
 
 	hash = 0;
 	//calculate hash;
-	for (size_t i = 0; i < cities.size(); i++)
+	for (size_t i = 0; i < citiesCount; i++)
 	{
 		hash += static_cast<unsigned long long>(primes[i]) * 
 				static_cast<unsigned long long>(cities[i]);
@@ -236,8 +263,10 @@ std::string Creature::getInfo(bool extended) const
 	if (extended)
 	{
 		ss << "Creature Info: Cities: ";
-		for (auto x : cities)
-			ss << x << ", ";
+		for (size_t i = 0; i < citiesCount; i++)
+		{
+			ss << cities[i] << ", ";
+		}
 		ss << cities[0];
 	}
 	ss << " Fitness: " << fitness;

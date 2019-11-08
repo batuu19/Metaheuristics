@@ -21,7 +21,7 @@ public:
 	Creature(Creature&&) noexcept;
 	Creature& operator=(const Creature&);
 	Creature& operator=(Creature&&) noexcept;
-	~Creature() = default;
+	~Creature();
 	void init(std::mt19937& rng);
 	void mutateSwap(std::mt19937& rng);
 	void mutateSwap(size_t first, size_t second);
@@ -38,7 +38,7 @@ public:
 	std::vector<Creature> getPointNeighbors(size_t point) const;
 	std::vector<Creature> getAllNeighbors() const;
 
-	const std::vector<int>& getCities() const;
+	const int* getCities() const;
 	unsigned long long getHash() const;
 	//std::vector<Creature> getAllNeighbors();//too many
 public:
@@ -53,7 +53,7 @@ private:
 	void calculateFitness();
 	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);
 	size_t citiesCount;
-	std::vector<int> cities;
+	int* cities;
 	std::uniform_int_distribution<size_t> dist;
 
 	void getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng) const;
