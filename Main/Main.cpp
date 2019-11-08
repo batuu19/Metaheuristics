@@ -27,15 +27,11 @@ int main()
 	std::mt19937 rng(std::random_device{}());
 	MetaAlgorithm* algorithm = 
 		new GAAlgorithm(problem, Config::getGAConfig(
-			100, 100, 0.9f, 0.05f, 10,
+			500, 500, 0.85f, 0.1f, 100,
 			Mutation::SWAP,Crossover::OX));
-	//MetaAlgorithm* algorithm =
-	//	new SAAlgorithm(problem, Config::getSAConfig(1500, 0.995, 3, 1000));
+	//pmx not working
 	algorithm->run(rng);
 
-	//SAAlgorithm alg = SAAlgorithm(problem);
-	//TabuAlgorithm alg = TabuAlgorithm(problem);
-	//alg.run(rng);
 	delete algorithm;
 	//system("pause");
 }

@@ -10,7 +10,7 @@ Population::Population(size_t size)
 
 void Population::init(std::mt19937& rng,DistanceMatrix* distanceMatrix)
 {
-	//creatures.reserve(distanceMatrix->getSize());
+	creatures.reserve(distanceMatrix->getSize());
     for (size_t i = 0; i < size; ++i) {
         creatures.emplace_back(distanceMatrix);
     }

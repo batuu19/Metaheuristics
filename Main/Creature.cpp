@@ -54,8 +54,8 @@ Creature::Creature(Creature&& other) noexcept
 Creature& Creature::operator=(const Creature& other)
 {
 	this->citiesCount = other.citiesCount;
-	delete this->cities;
-	cities = new int[citiesCount];
+	//delete this->cities;
+	//cities = new int[citiesCount];
 	for (size_t i = 0; i < citiesCount; i++)
 	{
 		cities[i] = other.cities[i];
