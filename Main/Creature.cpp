@@ -36,9 +36,7 @@ Creature::Creature(Creature&& other) noexcept
 	distanceMatrix(other.distanceMatrix),
 	fitness(other.fitness),
 	hash(other.hash)
-{
-	//distanceMatrix = nullptr;//needed?
-}
+{}
 
 Creature& Creature::operator=(const Creature& other)
 {
@@ -61,12 +59,8 @@ Creature& Creature::operator=(Creature&& other) noexcept
 	this->dist = std::move(other.dist);
 
 	this->distanceMatrix = other.distanceMatrix;
-	//other.distanceMatrix = nullptr;//needed?
 	return *this;
 }
-
-Creature::~Creature()
-{}//do nothing, do not delete distance matrix
 
 void Creature::init(std::mt19937& rng)
 {

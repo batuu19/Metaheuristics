@@ -21,7 +21,7 @@ public:
 	Creature(Creature&&) noexcept;
 	Creature& operator=(const Creature&);
 	Creature& operator=(Creature&&) noexcept;
-	~Creature();
+	~Creature() = default;
 	void init(std::mt19937& rng);
 	void mutateSwap(std::mt19937& rng);
 	void mutateSwap(size_t first, size_t second);
