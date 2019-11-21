@@ -39,7 +39,7 @@ void saveToFile(float*** results, size_t count)//[instance][algType][num]
 	std::string fileName = "badania.csv";
 	std::ofstream file;
 	file.open(fileName);
-	file << "optimum,avg,max,min,stdDev\n";
+	file << "name,optimum,randAvg,randMin,randMax,randSD,greedyAvg,greedyMin,greedyMax,greedySD,gaAvg,gaMin,gaMax,gaSD,tabuAvg,tabuMin,tabuMax,tabuSD,saAvg,saMin,saMax,saSD\n";
 	for (size_t inst = 0; inst < Instance::count; inst++)
 	{
 		file << instances[inst].name << "," << instances[inst].optimumValue;
@@ -55,6 +55,7 @@ void saveToFile(float*** results, size_t count)//[instance][algType][num]
 
 int main()
 {
+	//null ptr exception somewhere
 	const int runCount = 10;
 	std::mt19937 rng(std::random_device{}());
 	MetaAlgorithm* algorithm;
