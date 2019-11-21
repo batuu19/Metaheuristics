@@ -3,7 +3,7 @@
 Creature::Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities)//private
 	:
 	citiesCount(cities.size()),
-	dist(0, citiesCount-1),
+	dist(0, citiesCount - 1),
 	distanceMatrix(distanceMatrix)
 {
 	this->cities = new int[citiesCount];
@@ -18,7 +18,7 @@ Creature::Creature(DistanceMatrix* distanceMatrix)
 	:
 	citiesCount(distanceMatrix->getSize()),
 	distanceMatrix(distanceMatrix),
-	dist(0,citiesCount-1)
+	dist(0, citiesCount - 1)
 {
 	//no cities yet, do not calculate fitness
 	cities = new int[citiesCount];
@@ -27,7 +27,7 @@ Creature::Creature(DistanceMatrix* distanceMatrix)
 Creature::Creature(const Creature& other)
 	:
 	citiesCount(other.citiesCount),
-	dist(0, citiesCount-1),
+	dist(0, citiesCount - 1),
 	distanceMatrix(other.distanceMatrix),
 	fitness(other.fitness),
 	hash(other.hash)
@@ -61,7 +61,7 @@ Creature& Creature::operator=(const Creature& other)
 		cities[i] = other.cities[i];
 	}
 
-	this->dist = std::uniform_int_distribution<size_t>(0, citiesCount-1);//???
+	this->dist = std::uniform_int_distribution<size_t>(0, citiesCount - 1);//???
 	this->distanceMatrix = other.distanceMatrix;
 	this->fitness = other.fitness;
 	this->hash = other.hash;
@@ -107,8 +107,8 @@ void Creature::mutateSwap(std::mt19937& rng)
 
 void Creature::mutateSwap(size_t first, size_t second)
 {
-    std::swap(cities[first],cities[second]);
-    calculateFitness();
+	std::swap(cities[first], cities[second]);
+	calculateFitness();
 }
 
 
@@ -139,7 +139,7 @@ Creature Creature::crossoverOX(Creature& other, std::mt19937& rng)
 
 	size_t i = 0;
 	auto it = other.cities;
-	while (i<citiesCount)
+	while (i < citiesCount)
 	{
 		if (newOrder[i] == -1)//empty
 		{
@@ -155,63 +155,50 @@ Creature Creature::crossoverOX(Creature& other, std::mt19937& rng)
 	return result;
 }
 
-std::vector<Creature> Creature::crossoverPMX(Creature& other, std::mt19937& rng)
+Creature Creature::crossoverPMX(Creature& other, std::mt19937& rng)
 {
 	size_t begin, end;
 	getRandomBeginEnd(begin, end, rng);
 
-	//auto subSet1 = std::vector<int>(cities.begin() + begin, cities.begin() + end);
-	//auto subSet2 = std::vector<int>(other.cities.begin() + begin, other.cities.begin() + end);
+	std::vector<int> newOrder(citiesCount, -1);
+	std::set<int> ordered;//initial swatch of p1 in child
 
-	auto newOrder1 = std::vector<int>(citiesCount, -1);
-	auto newOrder2 = std::vector<int>(citiesCount, -1);
-
-	for (size_t i = begin; i < end; i++)
+	for (size_t index = begin; index < end; index++)
 	{
-		newOrder1[i] = cities[i];
-		newOrder2[i] = other.cities[i];
+		newOrder[index] = cities[index];
+		ordered.insert(cities[index]);
+	}
+	//find value in swatch of p2 that isn't in the child
+	int nextVal = 0;
+	int tVal = nextVal;
+	size_t index = begin;
+	while (index < end)
+	{
+		if (ordered.contains(other.cities[index]))
+			index++;
+		else //found in parent 2
+		{
+			nextVal = other.cities[index];
+			int tIndex = index;
+			index++;
+			do
+			{
+				tVal = cities[tIndex];
+				auto tPtr = std::find(other.cities, other.cities + citiesCount, tVal);
+				tIndex = tPtr - other.cities;
+			} while (tIndex >= begin && tIndex < end);
+			newOrder[tIndex] = nextVal;
+		}
 	}
 
-	std::set<int> set;
-	std::vector<int> randomSource;
-
-	//this
 	for (size_t i = 0; i < citiesCount; i++)
-		set.insert(set.end(), i);
-	for (size_t i = begin; i < end; i++)
-		set.erase(cities[i]);
-
-	randomSource = std::vector<int>(set.begin(), set.end());
-	std::shuffle(randomSource.begin(), randomSource.end(), rng);
-	size_t it = 0;
-	while (!randomSource.empty())
 	{
-		while (newOrder1[it] != -1)//skip filled
-			it++;
-		newOrder1[it] = randomSource.back();
-		randomSource.pop_back();
+		//optimize?
+		if (newOrder[i] == -1)
+			newOrder[i] = other.cities[i];
 	}
 
-	//other
-	set.clear();
-	for (size_t i = 0; i < citiesCount; i++)
-		set.insert(set.end(), i);
-	for (size_t i = begin; i < end; i++)
-		set.erase(other.cities[i]);
-	randomSource.clear();
-	randomSource = std::vector<int>(set.begin(), set.end());
-	std::shuffle(randomSource.begin(), randomSource.end(), rng);
-	it = 0;
-	while (!randomSource.empty())
-	{
-		while (newOrder2[it] != -1)//skip filled
-			it++;
-		newOrder2[it] = randomSource.back();
-		randomSource.pop_back();
-	}
-
-	return { {distanceMatrix, newOrder1},
-			{distanceMatrix, newOrder2} };
+	return Creature(distanceMatrix, newOrder);
 }
 
 const int* Creature::getCities() const
@@ -226,10 +213,10 @@ unsigned long long Creature::getHash() const
 
 void Creature::calculateFitness()
 {
-    if(cities[0] == 0 && cities[1] == 0)
-    {
-        std::cout<<"boi";
-    }
+	if (cities[0] == 0 && cities[1] == 0)
+	{
+		std::cout << "boi";
+	}
 	float fitness = 0.f;
 	size_t i = 1;
 	while (i < citiesCount)
@@ -237,17 +224,17 @@ void Creature::calculateFitness()
 		fitness += distanceMatrix->getDistance(cities[i], cities[i - 1]);
 		i++;
 	}
-	fitness += distanceMatrix->getDistance(cities[0], cities[citiesCount-1]);
+	fitness += distanceMatrix->getDistance(cities[0], cities[citiesCount - 1]);
 	this->fitness = fitness;
 
 	hash = 0;
 	//calculate hash;
 	for (size_t i = 0; i < citiesCount; i++)
 	{
-		hash += static_cast<unsigned long long>(primes[i]) * 
-				static_cast<unsigned long long>(cities[i]);
+		hash += static_cast<unsigned long long>(primes[i])*
+			static_cast<unsigned long long>(cities[i]);
 	}
-	
+
 
 	//std::hash<std::vector<size_t>>;
 }
@@ -293,7 +280,7 @@ std::vector<Creature> Creature::getRandomNeighbors(std::mt19937& rng, size_t cou
 
 std::vector<Creature> Creature::getPointNeighbors(size_t point) const
 {
-    std::vector<Creature> neighbors;
+	std::vector<Creature> neighbors;
 	neighbors.reserve(citiesCount);
 	for (size_t i = 0; i < citiesCount; i++)
 	{
@@ -315,7 +302,7 @@ std::vector<Creature> Creature::getAllNeighbors() const
 	std::vector<Creature> temp;
 	for (size_t i = 0; i < citiesCount; i++)
 	{
-		for (size_t j = i+1; j < citiesCount; j++)
+		for (size_t j = i + 1; j < citiesCount; j++)
 		{
 			auto c = Creature(*this);
 			c.mutateSwap(i, j);
@@ -338,9 +325,9 @@ void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng) 
 		std::swap(begin, end);
 }
 
-bool Creature::operator<(const Creature &other) const
+bool Creature::operator<(const Creature& other) const
 {
-    return this->fitness < other.fitness;
+	return this->fitness < other.fitness;
 }
 
 bool Creature::operator<=(const Creature& other) const

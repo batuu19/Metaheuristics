@@ -27,7 +27,7 @@ public:
 	void mutateSwap(size_t first, size_t second);
 	void mutateInv(std::mt19937& rng);
 	Creature crossoverOX(Creature& other, std::mt19937& rng);
-	std::vector<Creature> crossoverPMX(Creature& other, std::mt19937& rng);
+	Creature crossoverPMX(Creature& other, std::mt19937& rng);
 	float getFitness() const;
 	std::string getInfo(bool extended = true) const;
 
@@ -48,7 +48,7 @@ public:
 	bool operator<=(const Creature& other) const;
 	bool operator>(const Creature& other) const;
 	bool operator>=(const Creature& other) const;
-private:
+public:
 	//pass distance matrix here instead of keeping it in object?
 	void calculateFitness();
 	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);

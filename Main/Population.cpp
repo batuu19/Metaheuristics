@@ -1,6 +1,7 @@
 #include "Population.h"
 #include "Utils.h"
 #include <algorithm>
+#include <iterator>
 
 Population::Population(size_t size)
 	:
@@ -19,23 +20,11 @@ void Population::init(std::mt19937& rng, DistanceMatrix* distanceMatrix)
 
 }
 
-Creature Population::selection(std::mt19937& rng, size_t tSize, bool cppLatest)
+Creature Population::selection(std::mt19937& rng, size_t tSize)
 {
-	if (cppLatest)
-	{
-		std::vector<Creature> out;
-		std::sample(creatures.begin(), creatures.end(), std::back_inserter(out), tSize, rng);
-		return out[0];
-	}
-	else
-	{
-		std::shuffle(creatures.begin(), creatures.end(), rng);//TODO optimize
-		std::sort(creatures.begin(), creatures.begin() + tSize,
-			[](const Creature& c1, const Creature& c2) {
-				return c1.getFitness() < c2.getFitness();
-			});
-		return creatures[0];
-	}
+	std::set<Creature> out;
+	std::sample(creatures.begin(), creatures.end(), std::inserter(out, out.begin()), tSize, rng);
+	return *out.begin();
 }
 
 

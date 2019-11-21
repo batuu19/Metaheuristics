@@ -30,9 +30,8 @@ void GAAlgorithm::run(std::mt19937& rng)
 					}
 					case Crossover::PMX:
 					{
-						auto vec = c1.crossoverPMX(c2, rng);
-						c1 = vec[0];
-						c2 = vec[1];
+						c1 = c1.crossoverPMX(c2, rng);
+						c2 = c2.crossoverPMX(c1, rng);
 						break;
 					}
 				}

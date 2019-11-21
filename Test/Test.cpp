@@ -5,19 +5,19 @@
 #include <vector>
 #include <limits>
 #include <cmath>
+#include <set>
+#include <numeric>
+#include <algorithm>
 
 int main()
 {
 	size_t size = 20;
-	int* arr = new int[size];
-	std::vector<int> vec(size, 1);
-
-	for (size_t i = 0; i < size; i++)
+	std::vector<int> vec(size);
+	std::iota(vec.begin(), vec.end(), 0);
+	std::vector<int> vec2(size, -1);
+	for (int i = 10; i < 15; i++)
 	{
-		arr[i] = i;
+		vec2[i] = vec[i];
 	}
-
-
-	std::cout << "Hello World!\n";
-	delete[]arr;
+	
 }
