@@ -28,7 +28,7 @@ int main()
 
 	MetaAlgorithm* algorithm = 
 		new GAAlgorithm(problem, Config::getGAConfig(
-			200, 200, 0.85f, 0.1f, 100,
+			500, 500, 0.85f, 0.1f, 100,
 			Mutation::SWAP,Crossover::PMX));
 	algorithm->run(rng);
 

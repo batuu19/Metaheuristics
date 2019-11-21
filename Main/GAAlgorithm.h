@@ -20,6 +20,6 @@ class GAAlgorithm : public MetaAlgorithm
 {
 public:
 	GAAlgorithm(const Problem& problem, const Config& config) : MetaAlgorithm(problem, config) {};
-	void run(std::mt19937& rng) override;
+	float run(std::mt19937& rng) override;
 private:
 };

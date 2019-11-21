@@ -1,6 +1,6 @@
 #include "GAAlgorithm.h"
 
-void GAAlgorithm::run(std::mt19937& rng)
+float GAAlgorithm::run(std::mt19937& rng)
 {
 	std::ofstream csvFile;
 
@@ -30,8 +30,10 @@ void GAAlgorithm::run(std::mt19937& rng)
 					}
 					case Crossover::PMX:
 					{
-						c1 = c1.crossoverPMX(c2, rng);
-						c2 = c2.crossoverPMX(c1, rng);
+						auto c12 = c1.crossoverPMX(c2, rng);
+						auto c21 = c2.crossoverPMX(c1, rng);
+						c1 = c12;
+						c2 = c21;
 						break;
 					}
 				}
@@ -81,6 +83,8 @@ void GAAlgorithm::run(std::mt19937& rng)
 		//std::cout << i << std::endl;
 	}
 	csvFile.close();
+	
+	return pop.getSortedCreatures()[0].getFitness();
 }
 
 

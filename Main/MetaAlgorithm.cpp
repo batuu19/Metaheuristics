@@ -86,6 +86,3 @@ MetaAlgorithm& MetaAlgorithm::operator=(const MetaAlgorithm& other)
 	this->citiesCount = other.citiesCount;
 	return *this;
 }
-
-MetaAlgorithm::~MetaAlgorithm()
-{}

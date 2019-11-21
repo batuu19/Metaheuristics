@@ -1,6 +1,6 @@
 #include "TabuAlgorithm.h"
 
-void TabuAlgorithm::run(std::mt19937 &rng)
+float TabuAlgorithm::run(std::mt19937 &rng)
 {
 	//csv file
 	std::ofstream csvFile;
@@ -70,12 +70,6 @@ void TabuAlgorithm::run(std::mt19937 &rng)
 			bestFitness << "," <<
 			(*sorted.rbegin()).getFitness() <<
 			std::endl;
-		std::cout << generation << "," <<
-			best.getFitness() << "," <<
-			bestFitness << "," <<
-			(*sorted.rbegin()).getFitness() <<
-			std::endl;
-		generation++;
 	}
-	std::cout << "BEST: " << bestFitness << std::endl;
+	return bestFitness;
 }

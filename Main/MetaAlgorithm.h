@@ -50,13 +50,12 @@ public:
 	MetaAlgorithm(const Problem& problem,const Config& config);
 	MetaAlgorithm(const MetaAlgorithm&);
 	MetaAlgorithm& operator=(const MetaAlgorithm&);
-	virtual ~MetaAlgorithm();
-	virtual void run(std::mt19937& rng) = 0;
+	virtual ~MetaAlgorithm() = default;
+	virtual float run(std::mt19937& rng) = 0;
 protected:
 	Config config;
 	Population pop;
 	DistanceMatrix* distanceMatrix;
-	//need file here
 	size_t citiesCount;
 	std::uniform_real_distribution<float> percentageDist;
 };

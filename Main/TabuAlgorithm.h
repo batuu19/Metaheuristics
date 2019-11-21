@@ -13,7 +13,7 @@ class TabuAlgorithm : public MetaAlgorithm
 {
 public:
 	TabuAlgorithm(const Problem& problem, const Config& config) : MetaAlgorithm(problem, config) {};
-	void run(std::mt19937& rng);
+	float run(std::mt19937& rng);
 private:
 	TabuList tabuList;
 };

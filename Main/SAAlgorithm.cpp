@@ -1,6 +1,6 @@
 #include "SAAlgorithm.h"
 
-void SAAlgorithm::run(std::mt19937& rng)
+float SAAlgorithm::run(std::mt19937& rng)
 {
 	//CSV FILE
 	std::ofstream csvFile;
@@ -46,8 +46,6 @@ void SAAlgorithm::run(std::mt19937& rng)
 		}
 		bestFitness = std::min(bestFitness, best.getFitness());
 
-		//std::cout << temperature << std::endl;
-		std::cout << "best: " << best.getFitness() << "\tBEST_EVER" << bestFitness << std::endl;
 		csvFile <<
 			generation << "," <<
 			best.getFitness() << "," <<
@@ -59,7 +57,6 @@ void SAAlgorithm::run(std::mt19937& rng)
 		//temperature -= beginTemp / DEFAULT_MAX_GENERATIONS_W;
 		generation++;
 	}
-
-	std::cout << "BEST: " << bestFitness << std::endl;
 	csvFile.close();
+	return bestFitness;
 }
