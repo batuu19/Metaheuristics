@@ -8,26 +8,34 @@ Population::Population(size_t size)
 {
 }
 
-void Population::init(std::mt19937& rng,DistanceMatrix* distanceMatrix)
+void Population::init(std::mt19937& rng, DistanceMatrix* distanceMatrix)
 {
-	creatures.reserve(distanceMatrix->getSize());
-    for (size_t i = 0; i < size; ++i) {
-        creatures.emplace_back(distanceMatrix);
-    }
+	creatures.reserve(size);
+	for (size_t i = 0; i < size; ++i) {
+		creatures.emplace_back(distanceMatrix);
+	}
 	for (auto& c : creatures)
 		c.init(rng);
 
 }
 
-Creature Population::selection(std::mt19937& rng,size_t tSize)
+Creature Population::selection(std::mt19937& rng, size_t tSize, bool cppLatest)
 {
-	std::shuffle(creatures.begin(),creatures.end(),rng);//TODO optimize
-
-	std::sort(creatures.begin(),creatures.begin() + tSize,
-		[](const Creature& c1,const Creature& c2){
-			return c1.getFitness() < c2.getFitness();
-		});
-	return creatures[0];
+	if (cppLatest)
+	{
+		std::vector<Creature> out;
+		std::sample(creatures.begin(), creatures.end(), std::back_inserter(out), tSize, rng);
+		return out[0];
+	}
+	else
+	{
+		std::shuffle(creatures.begin(), creatures.end(), rng);//TODO optimize
+		std::sort(creatures.begin(), creatures.begin() + tSize,
+			[](const Creature& c1, const Creature& c2) {
+				return c1.getFitness() < c2.getFitness();
+			});
+		return creatures[0];
+	}
 }
 
 
