@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include "Problem.h";
 #include "Population.h"
 #include "DistanceMatrix.h"
@@ -25,6 +26,9 @@ public:
 	static Config getTabuConfig(size_t id,size_t neighborsCount, size_t maxIterations);
 	static Config getSAConfig(float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations);
 	static Config getSAConfig(size_t id,float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations);
+	static Config getGreedyConfig(size_t maxIterations);
+	static Config getGreedyConfig(size_t id,size_t maxIterations);
+
 public://temp public
 	Config() = default;
 	friend class MetaAlgorithm;

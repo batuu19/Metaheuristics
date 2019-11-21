@@ -4,7 +4,7 @@ float SAAlgorithm::run(std::mt19937& rng)
 {
 	//CSV FILE
 	std::ofstream csvFile;
-	csvFile.open("sa.csv");
+	csvFile.open(config.filenamePrefix + ".csv");
 	csvFile << "generation,best,worst,bestEver,temperature\n";
 	pop.init(rng, distanceMatrix);
 	auto best = pop.getFirst();

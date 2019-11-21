@@ -211,6 +211,14 @@ unsigned long long Creature::getHash() const
 	return hash;
 }
 
+Creature Creature::getRandomCreature(const Problem& problem,std::mt19937& rng)
+{
+	std::vector<int> vec(problem.getDimension());
+	std::iota(vec.begin(), vec.end(), 0);
+	std::shuffle(vec.begin(), vec.end(), rng);
+	return Creature(problem.getDistanceMatrix(),vec);
+}
+
 void Creature::calculateFitness()
 {
 	if (cities[0] == 0 && cities[1] == 0)

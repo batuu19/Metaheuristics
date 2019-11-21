@@ -54,6 +54,9 @@
     <ClCompile Include="SAAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GreedyAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Loader.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="Creature.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GreedyAlgorithm.h">
+      <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

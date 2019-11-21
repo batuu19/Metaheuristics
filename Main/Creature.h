@@ -34,13 +34,14 @@ public:
 	//Tabu
 	//here?
 	std::vector<Creature> getRandomNeighbors(std::mt19937& rng,size_t count) const;
-	std::vector<Creature> getPointNeighbors(size_t point, size_t count) const;
+	//std::vector<Creature> getPointNeighbors(size_t point, size_t count) const;
 	std::vector<Creature> getPointNeighbors(size_t point) const;
 	std::vector<Creature> getAllNeighbors() const;
 
 	const int* getCities() const;
 	unsigned long long getHash() const;
-	//std::vector<Creature> getAllNeighbors();//too many
+
+	static Creature getRandomCreature(const Problem& problem,std::mt19937& rng);
 public:
 	//bool operator==(const Creature& other) const;
 	//using fitness
@@ -48,7 +49,7 @@ public:
 	bool operator<=(const Creature& other) const;
 	bool operator>(const Creature& other) const;
 	bool operator>=(const Creature& other) const;
-public:
+private:
 	//pass distance matrix here instead of keeping it in object?
 	void calculateFitness();
 	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);

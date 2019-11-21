@@ -26,6 +26,7 @@ Config Config::getGAConfig(size_t id, size_t popSize, size_t generations, float 
 Config Config::getTabuConfig(size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg;
+	cfg.filenamePrefix = "tabu";
 	cfg.popSize = 1;
 	cfg.generations = maxIterations;
 	cfg.neighborsCount = neighborsCount;
@@ -43,6 +44,7 @@ Config Config::getTabuConfig(size_t id, size_t neighborsCount, size_t maxIterati
 Config Config::getSAConfig(float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg;
+	cfg.filenamePrefix = "sa";
 	cfg.popSize = 1;
 	cfg.generations = maxIterations;
 	cfg.beginTemperature = beginTemperature;
@@ -55,6 +57,21 @@ Config Config::getSAConfig(float beginTemperature, double coolingRate, size_t ne
 Config Config::getSAConfig(size_t id, float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg = getSAConfig(beginTemperature, coolingRate, neighborsCount, maxIterations);
+	cfg.filenamePrefix += "" + id;
+	return cfg;
+}
+
+Config Config::getGreedyConfig(size_t maxIterations)
+{
+	Config cfg;
+	cfg.filenamePrefix = "greedy";
+	cfg.maxIterations = maxIterations;
+	return cfg;
+}
+
+Config Config::getGreedyConfig(size_t id, size_t maxIterations)
+{
+	Config cfg = getGreedyConfig(maxIterations);
 	cfg.filenamePrefix += "" + id;
 	return cfg;
 }

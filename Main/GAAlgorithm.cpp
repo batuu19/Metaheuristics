@@ -4,7 +4,7 @@ float GAAlgorithm::run(std::mt19937& rng)
 {
 	std::ofstream csvFile;
 
-	csvFile.open("ga.csv");
+	csvFile.open(config.filenamePrefix + ".csv");
 	pop.init(rng, distanceMatrix);
 	csvFile << CSV_FIRST_LINE;
 
