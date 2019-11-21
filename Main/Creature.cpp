@@ -221,10 +221,6 @@ Creature Creature::getRandomCreature(const Problem& problem,std::mt19937& rng)
 
 void Creature::calculateFitness()
 {
-	if (cities[0] == 0 && cities[1] == 0)
-	{
-		std::cout << "boi";
-	}
 	float fitness = 0.f;
 	size_t i = 1;
 	while (i < citiesCount)

@@ -4,7 +4,7 @@ Config Config::getGAConfig(size_t popSize, size_t generations, float px, float p
 	Mutation mutation, Crossover crossover)
 {
 	Config cfg;
-	cfg.filenamePrefix = "ga";
+	cfg.filenamePrefix = "CSV\\ga";
 	cfg.popSize = popSize;
 	cfg.generations = generations;
 	cfg.px = px;
@@ -19,14 +19,25 @@ Config Config::getGAConfig(size_t id, size_t popSize, size_t generations, float 
 	Mutation mutation, Crossover crossover)
 {
 	Config cfg = getGAConfig(popSize, generations, px, pm, tSize,mutation,crossover);
-	cfg.filenamePrefix += "" + id;
+	std::stringstream ss;
+	ss << cfg.filenamePrefix << id;
+	cfg.filenamePrefix = ss.str();
+	return cfg;
+}
+
+Config Config::getGAConfig(size_t id, std::string name, size_t popSize, size_t generations, float px, float pm, size_t tSize, Mutation mutation, Crossover crossover)
+{
+	Config cfg = getGAConfig(popSize, generations, px, pm, tSize, mutation, crossover);
+	std::stringstream ss;
+	ss << cfg.filenamePrefix << "_" << name << "_" << id;
+	cfg.filenamePrefix = ss.str();
 	return cfg;
 }
 
 Config Config::getTabuConfig(size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg;
-	cfg.filenamePrefix = "tabu";
+	cfg.filenamePrefix = "CSV\\tabu";
 	cfg.popSize = 1;
 	cfg.generations = maxIterations;
 	cfg.neighborsCount = neighborsCount;
@@ -37,14 +48,25 @@ Config Config::getTabuConfig(size_t neighborsCount, size_t maxIterations)
 Config Config::getTabuConfig(size_t id, size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg = getTabuConfig(neighborsCount, maxIterations);
-	cfg.filenamePrefix += "" + id;
+	std::stringstream ss;
+	ss << cfg.filenamePrefix << id;
+	cfg.filenamePrefix = ss.str();
+	return cfg;
+}
+
+Config Config::getTabuConfig(size_t id, std::string name, size_t neighborsCount, size_t maxIterations)
+{
+	Config cfg = getTabuConfig(neighborsCount, maxIterations);
+	std::stringstream ss;
+	ss << cfg.filenamePrefix << "_" << name << "_" << id;
+	cfg.filenamePrefix = ss.str();
 	return cfg;
 }
 
 Config Config::getSAConfig(float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg;
-	cfg.filenamePrefix = "sa";
+	cfg.filenamePrefix = "CSV\\sa";
 	cfg.popSize = 1;
 	cfg.generations = maxIterations;
 	cfg.beginTemperature = beginTemperature;
@@ -57,14 +79,26 @@ Config Config::getSAConfig(float beginTemperature, double coolingRate, size_t ne
 Config Config::getSAConfig(size_t id, float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations)
 {
 	Config cfg = getSAConfig(beginTemperature, coolingRate, neighborsCount, maxIterations);
-	cfg.filenamePrefix += "" + id;
+	std::stringstream ss;
+	ss << cfg.filenamePrefix << id;
+	cfg.filenamePrefix = ss.str();
+	return cfg;
+}
+
+Config Config::getSAConfig(size_t id, std::string name, float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations)
+{
+	Config cfg = getSAConfig(beginTemperature, coolingRate, neighborsCount, maxIterations);
+	std::stringstream ss;
+	ss << cfg.filenamePrefix << "_" << name << "_" << id;
+	cfg.filenamePrefix = ss.str();
 	return cfg;
 }
 
 Config Config::getGreedyConfig(size_t maxIterations)
 {
 	Config cfg;
-	cfg.filenamePrefix = "greedy";
+	cfg.filenamePrefix = "CSV\\greedy";
+	cfg.popSize = 1;
 	cfg.maxIterations = maxIterations;
 	return cfg;
 }
@@ -72,7 +106,18 @@ Config Config::getGreedyConfig(size_t maxIterations)
 Config Config::getGreedyConfig(size_t id, size_t maxIterations)
 {
 	Config cfg = getGreedyConfig(maxIterations);
-	cfg.filenamePrefix += "" + id;
+	std::stringstream ss;
+	ss << cfg.filenamePrefix << id;
+	cfg.filenamePrefix = ss.str();
+	return cfg;
+}
+
+Config Config::getGreedyConfig(size_t id, std::string name, size_t maxIterations)
+{
+	Config cfg = getGreedyConfig(maxIterations);
+	std::stringstream ss;
+	ss << cfg.filenamePrefix << "_" << name << "_" << id;
+	cfg.filenamePrefix = ss.str();
 	return cfg;
 }
 

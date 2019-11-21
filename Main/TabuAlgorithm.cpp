@@ -4,7 +4,7 @@ float TabuAlgorithm::run(std::mt19937 &rng)
 {
 	//csv file
 	std::ofstream csvFile;
-	csvFile.open("tabu.csv");
+	csvFile.open(config.filenamePrefix + ".csv");
 	csvFile << "generation,best,worst,bestEver\n";
 	//csv file
 	pop.init(rng,distanceMatrix);
@@ -58,11 +58,10 @@ float TabuAlgorithm::run(std::mt19937 &rng)
 		//if improvement
 		if (best.getFitness() < bestFitness)
 		{
-			std::cout << "FOUND BETTER\n";
 			bestFitness = best.getFitness();
 		}
 
-		
+		generation++;
 
 
 		csvFile << generation << "," <<

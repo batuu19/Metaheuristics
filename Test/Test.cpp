@@ -11,13 +11,7 @@
 
 int main()
 {
-	size_t size = 20;
-	std::vector<int> vec(size);
-	std::iota(vec.begin(), vec.end(), 0);
-	std::vector<int> vec2(size, -1);
-	for (int i = 10; i < 15; i++)
-	{
-		vec2[i] = vec[i];
-	}
-	
+	bool end = false;
+	int gen = 99, gen2 = 101;
+
 }

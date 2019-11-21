@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GreedyAlgorithm.h" />
+    <ClInclude Include="Instance.h" />
     <ClInclude Include="MetaAlgorithm.h" />
     <ClInclude Include="GAAlgorithm.h" />
     <ClInclude Include="Creature.h" />
