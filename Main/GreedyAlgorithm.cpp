@@ -4,25 +4,32 @@ float GreedyAlgorithm::run(std::mt19937& rng)
 {
 	std::ofstream csvFile;
 	csvFile.open(config.filenamePrefix + ".csv");
-	csvFile << "generation,best\n";
 
 	pop.init(rng, distanceMatrix);
-	auto best = pop.getFirst();
-	std::vector<Creature> neighbors;
-	size_t generation = 0;
-	bool end = false;
-	while (!(end || generation >= config.maxIterations))
+
+	std::uniform_int_distribution<int> cityDist(0, citiesCount - 1);
+	int city = cityDist(rng);
+	int nextCity;
+	std::vector<int> cities;
+	std::vector<int> allCities(citiesCount);
+	std::iota(allCities.begin(), allCities.end(), 0);
+	allCities.erase(allCities.begin() + city);//they are 0,1,2,3 so this will erase right
+	cities.reserve(citiesCount);
+	cities.push_back(city);
+	for (size_t i = 1; i < citiesCount; i++)
 	{
-		csvFile << generation <<","<< best.getFitness()<<std::endl;
-		neighbors = best.getAllNeighbors();
-		std::sort(neighbors.begin(), neighbors.end());
-		if (neighbors[0] >= best)end = true;
-		else
-		{
-			best = neighbors[0];
-			generation++;
-		}
-	};
+		std::sort(allCities.begin(), allCities.end(), [this,&city](int c1, int c2) {
+			return
+				distanceMatrix->getDistance(city, c1) < distanceMatrix->getDistance(city, c2);
+		});
+		city = allCities[0];
+		cities.push_back(city);
+		std::swap(*allCities.begin(), *allCities.rbegin());
+		allCities.pop_back();
+	}
+
+	Creature best = Creature(distanceMatrix, cities);
+	csvFile << best.getFitness();
 	csvFile.close();
 	return best.getFitness();
 	

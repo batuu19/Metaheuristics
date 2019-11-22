@@ -1,6 +1,6 @@
 #include "Creature.h"
 
-Creature::Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities)//private
+Creature::Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities)//private?
 	:
 	citiesCount(cities.size()),
 	dist(0, citiesCount - 1),
@@ -174,7 +174,8 @@ Creature Creature::crossoverPMX(Creature& other, std::mt19937& rng)
 	size_t index = begin;
 	while (index < end)
 	{
-		if (ordered.contains(other.cities[index]))
+		if(ordered.find(other.cities[index]) != ordered.end())
+		//if (ordered.contains(other.cities[index]))
 			index++;
 		else //found in parent 2
 		{

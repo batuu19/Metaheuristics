@@ -17,6 +17,7 @@ class Creature
 {
 public:
 	Creature(DistanceMatrix* distanceMatrix);
+	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);
 	Creature(const Creature&);
 	Creature(Creature&&) noexcept;
 	Creature& operator=(const Creature&);
@@ -52,7 +53,7 @@ public:
 private:
 	//pass distance matrix here instead of keeping it in object?
 	void calculateFitness();
-	Creature(DistanceMatrix* distanceMatrix, const std::vector<int>& cities);
+	
 	size_t citiesCount;
 	int* cities;
 	std::uniform_int_distribution<size_t> dist;
