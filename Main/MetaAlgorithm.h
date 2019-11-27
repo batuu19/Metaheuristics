@@ -29,9 +29,9 @@ public:
 	static Config getSAConfig(float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations);
 	static Config getSAConfig(size_t id, float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations);
 	static Config getSAConfig(size_t id, std::string name, float beginTemperature, double coolingRate, size_t neighborsCount, size_t maxIterations);
-	static Config getGreedyConfig(size_t maxIterations);
-	static Config getGreedyConfig(size_t id, size_t maxIterations);
-	static Config getGreedyConfig(size_t id, std::string name, size_t maxIterations);
+	static Config getGreedyConfig();
+	static Config getGreedyConfig(size_t id);
+	static Config getGreedyConfig(size_t id, std::string name);
 
 public://temp public
 	Config() = default;

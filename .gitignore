@@ -343,3 +343,4 @@ healthchecksdb
 /Main/config — kopia.cfg
 /tabuSprawko.docx
 /TabuSearch.pdf
+*.csv

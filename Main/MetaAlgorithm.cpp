@@ -94,27 +94,26 @@ Config Config::getSAConfig(size_t id, std::string name, float beginTemperature, 
 	return cfg;
 }
 
-Config Config::getGreedyConfig(size_t maxIterations)
+Config Config::getGreedyConfig()
 {
 	Config cfg;
 	cfg.filenamePrefix = "CSV\\greedy";
 	cfg.popSize = 1;
-	cfg.maxIterations = maxIterations;
 	return cfg;
 }
 
-Config Config::getGreedyConfig(size_t id, size_t maxIterations)
+Config Config::getGreedyConfig(size_t id)
 {
-	Config cfg = getGreedyConfig(maxIterations);
+	Config cfg = getGreedyConfig();
 	std::stringstream ss;
 	ss << cfg.filenamePrefix << id;
 	cfg.filenamePrefix = ss.str();
 	return cfg;
 }
 
-Config Config::getGreedyConfig(size_t id, std::string name, size_t maxIterations)
+Config Config::getGreedyConfig(size_t id, std::string name)
 {
-	Config cfg = getGreedyConfig(maxIterations);
+	Config cfg = getGreedyConfig();
 	std::stringstream ss;
 	ss << cfg.filenamePrefix << "_" << name << "_" << id;
 	cfg.filenamePrefix = ss.str();
