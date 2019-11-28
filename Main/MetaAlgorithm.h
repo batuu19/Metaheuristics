@@ -36,6 +36,9 @@ public:
 	static Config getGreedyConfig(size_t id);
 	static Config getGreedyConfig(size_t id, std::string name);
 
+	static Config getGATSConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize,
+		size_t maxIterations, size_t neighborsCount);
+
 public://temp public
 	Config() = default;
 	friend class MetaAlgorithm;

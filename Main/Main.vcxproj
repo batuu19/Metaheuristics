@@ -159,6 +159,7 @@
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DistanceMatrix.cpp" />
     <ClCompile Include="GAAlgorithm.cpp" />
+    <ClCompile Include="GATSAlgorithm.cpp" />
     <ClCompile Include="GreedyAlgorithm.cpp" />
     <ClCompile Include="MetaAlgorithm.cpp" />
     <ClCompile Include="Population.cpp" />
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlgorithmsRunner.h" />
+    <ClInclude Include="GATSAlgorithm.h" />
     <ClInclude Include="GreedyAlgorithm.h" />
     <ClInclude Include="MetaAlgorithm.h" />
     <ClInclude Include="GAAlgorithm.h" />

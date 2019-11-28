@@ -60,6 +60,9 @@
     <ClCompile Include="AlgorithmsRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GATSAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Loader.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="AlgorithmsRunner.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GATSAlgorithm.h">
+      <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

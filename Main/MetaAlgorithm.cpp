@@ -120,6 +120,22 @@ Config Config::getGreedyConfig(size_t id, std::string name)
 	return cfg;
 }
 
+Config Config::getGATSConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize,
+	size_t maxIterations, size_t neighborsCount)
+{
+	Config cfg;
+	cfg.filenamePrefix = "CSV\\gats";
+	cfg.popSize = popSize;
+	cfg.generations = generations;
+	cfg.px = px;
+	cfg.pm = pm;
+	cfg.tSize = tSize;
+
+	cfg.maxIterations = maxIterations;
+	cfg.neighborsCount = neighborsCount;
+	return cfg;
+}
+
 
 
 

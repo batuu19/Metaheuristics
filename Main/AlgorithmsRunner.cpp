@@ -75,7 +75,6 @@ void AlgorithmsRunner::run(std::mt19937& rng, std::string filename)
 {
 	auto results = run(rng);
 	saveResultsToFiles(results, runCount);
-
 }
 
 float AlgorithmsRunner::runAlgorithm(std::mt19937& rng, AlgorithmType algType,Config config, std::string instanceName)
@@ -98,6 +97,9 @@ float AlgorithmsRunner::runAlgorithm(std::mt19937& rng, AlgorithmType algType,Co
 		break;
 	case AlgorithmType::SA:
 		algorithm = new SAAlgorithm(problem, config);
+		break;
+	case AlgorithmType::GA_TS:
+		algorithm = new GATSAlgorithm(problem, config);
 		break;
 	default:
 		return -1.f;

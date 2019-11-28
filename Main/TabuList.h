@@ -4,7 +4,7 @@
 #include <iterator>
 #include <map>
 
-constexpr size_t DEFAULT_TABULIST_MAXSIZE = 10;
+constexpr size_t DEFAULT_TABULIST_MAXSIZE = 99999999999;
 
 class TabuList
 {
@@ -20,7 +20,7 @@ public:
 	const const_iterator end() const;
 
 private:
-	std::map<size_t,unsigned long long> indexHashMap;
+	tabuMap indexHashMap;
 	size_t maxSize = DEFAULT_TABULIST_MAXSIZE;
 	size_t indexBegin = 0, indexEnd = 0,size = 0;
 };
