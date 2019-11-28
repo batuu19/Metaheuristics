@@ -5,7 +5,7 @@
 #include "Population.h"
 #include "DistanceMatrix.h"
 
-enum Mutation//TODO add and use
+enum Mutation
 {
 	SWAP,
 	INVERSE,
@@ -20,9 +20,12 @@ enum Crossover
 class Config
 {
 public:
-	static Config getGAConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize, Mutation mutation, Crossover crossover);
-	static Config getGAConfig(size_t id, size_t popSize, size_t generations, float px, float pm, size_t tSize, Mutation mutation, Crossover crossover);
-	static Config getGAConfig(size_t id, std::string name, size_t popSize, size_t generations, float px, float pm, size_t tSize, Mutation mutation, Crossover crossover);
+	static Config getGAConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize,
+		Mutation mutation = Mutation::SWAP, Crossover crossover = Crossover::OX);
+	static Config getGAConfig(size_t id, size_t popSize, size_t generations, float px, float pm, size_t tSize,
+		Mutation mutation = Mutation::SWAP, Crossover crossover = Crossover::OX);
+	static Config getGAConfig(size_t id, std::string name, size_t popSize, size_t generations, float px, float pm, size_t tSize,
+		Mutation mutation = Mutation::SWAP, Crossover crossover = Crossover::OX);
 	static Config getTabuConfig(size_t neighborsCount, size_t maxIterations);
 	static Config getTabuConfig(size_t id, size_t neighborsCount, size_t maxIterations);
 	static Config getTabuConfig(size_t id, std::string name, size_t neighborsCount, size_t maxIterations);

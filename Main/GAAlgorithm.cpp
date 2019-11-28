@@ -7,7 +7,6 @@ float GAAlgorithm::run(std::mt19937& rng)
 	csvFile.open(config.filenamePrefix + ".csv");
 	pop.init(rng, distanceMatrix);
 	csvFile << CSV_FIRST_LINE;
-
 	for (size_t i = 0; i < config.generations; i++)
 	{
 		Population newPop = Population(config.popSize);
@@ -18,46 +17,15 @@ float GAAlgorithm::run(std::mt19937& rng)
 			auto c2 = pop.selection(rng, config.tSize);
 			if (percentageDist(rng) < config.px)
 			{
-				switch (config.crossover)
-				{
-					case Crossover::OX:
-					{
-						auto c12 = c1.crossoverOX(c2, rng);
-						auto c21 = c2.crossoverOX(c1, rng);
-						c1 = c12;
-						c2 = c21;
-						break;
-					}
-					case Crossover::PMX:
-					{
-						auto c12 = c1.crossoverPMX(c2, rng);
-						auto c21 = c2.crossoverPMX(c1, rng);
-						c1 = c12;
-						c2 = c21;
-						break;
-					}
-				}
+				auto c12 = c1.crossoverPMX(c2, rng);
+				auto c21 = c2.crossoverPMX(c1, rng);
+				c1 = c12;
+				c2 = c21;
+			}
 
-			}
-			switch (config.mutation)
-			{
-				case Mutation::SWAP:
-				{
-					if (percentageDist(rng) < config.pm)
-						c1.mutateSwap(rng);
-					if (percentageDist(rng) < config.pm)
-						c2.mutateSwap(rng);
-					break;
-				}
-				case Mutation::INVERSE:
-				{
-					if (percentageDist(rng) < config.pm)
-						c1.mutateInv(rng);
-					if (percentageDist(rng) < config.pm)
-						c2.mutateInv(rng);
-					break;
-				}
-			}
+			int swapCount = std::abs(nDist(rng));//using pm here
+			c1.mutateSwap(rng, swapCount);
+			c2.mutateSwap(rng, swapCount);
 
 			newPop.addCreature(c1);
 			newPop.addCreature(c2);
@@ -83,7 +51,7 @@ float GAAlgorithm::run(std::mt19937& rng)
 		//std::cout << i << std::endl;
 	}
 	csvFile.close();
-	
+
 	return pop.getSortedCreatures()[0].getFitness();
 }
 

@@ -26,6 +26,7 @@ public:
 	void init(std::mt19937& rng);
 	void mutateSwap(std::mt19937& rng);
 	void mutateSwap(size_t first, size_t second);
+	void mutateSwap(std::mt19937& rng, size_t swapCount);//count?
 	void mutateInv(std::mt19937& rng);
 	Creature crossoverOX(Creature& other, std::mt19937& rng);
 	Creature crossoverPMX(Creature& other, std::mt19937& rng);
@@ -56,7 +57,7 @@ private:
 	
 	size_t citiesCount;
 	int* cities;
-	std::uniform_int_distribution<size_t> dist;
+	std::uniform_int_distribution<size_t> dist;//cities dist
 
 	void getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng) const;
 

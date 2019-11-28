@@ -100,15 +100,23 @@ void Creature::mutateSwap(std::mt19937& rng)
 {
 	size_t first, second;
 	getRandomBeginEnd(first, second, rng);
-
-	std::swap(cities[first], cities[second]);
-	calculateFitness();
+	mutateSwap(first, second);
 }
 
 void Creature::mutateSwap(size_t first, size_t second)
 {
 	std::swap(cities[first], cities[second]);
 	calculateFitness();
+}
+
+void Creature::mutateSwap(std::mt19937& rng, size_t swapCount)
+{
+	size_t first, second;
+	for (size_t i = 0; i < swapCount; i++)
+	{
+		getRandomBeginEnd(first, second, rng);
+		mutateSwap(first, second);
+	}
 }
 
 
@@ -161,21 +169,20 @@ Creature Creature::crossoverPMX(Creature& other, std::mt19937& rng)
 	getRandomBeginEnd(begin, end, rng);
 
 	std::vector<int> newOrder(citiesCount, -1);
-	std::set<int> ordered;//initial swatch of p1 in child
-
+	std::vector<int> swatch(cities + begin, cities + end);//initial swatch of p1 in child
 	for (size_t index = begin; index < end; index++)
 	{
 		newOrder[index] = cities[index];
-		ordered.insert(cities[index]);
 	}
+	std::sort(swatch.begin(), swatch.end());
 	//find value in swatch of p2 that isn't in the child
 	int nextVal = 0;
 	int tVal = nextVal;
 	size_t index = begin;
 	while (index < end)
 	{
-		if(ordered.find(other.cities[index]) != ordered.end())
-		//if (ordered.contains(other.cities[index]))
+		if (std::binary_search(swatch.begin(), swatch.end(), other.cities[index]))
+			//if (swatch.contains(other.cities[index]))
 			index++;
 		else //found in parent 2
 		{
@@ -212,12 +219,12 @@ unsigned long long Creature::getHash() const
 	return hash;
 }
 
-Creature Creature::getRandomCreature(const Problem& problem,std::mt19937& rng)
+Creature Creature::getRandomCreature(const Problem& problem, std::mt19937& rng)
 {
 	std::vector<int> vec(problem.getDimension());
 	std::iota(vec.begin(), vec.end(), 0);
 	std::shuffle(vec.begin(), vec.end(), rng);
-	return Creature(problem.getDistanceMatrix(),vec);
+	return Creature(problem.getDistanceMatrix(), vec);
 }
 
 void Creature::calculateFitness()

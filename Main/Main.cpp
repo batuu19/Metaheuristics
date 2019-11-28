@@ -13,6 +13,6 @@
 int main()
 {
 	std::mt19937 rng(std::random_device{}());
-	AlgorithmsRunner runner = AlgorithmsRunner(3);
-	runner.run(rng);
+	AlgorithmsRunner runner;
+	runner.runAlgorithm(rng, AlgorithmType::GENETIC, Config::getGAConfig(200, 1000, 0.80f,0.02f, 30), "kroA150");
 }

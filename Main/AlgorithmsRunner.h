@@ -53,12 +53,13 @@ const static std::vector<Instance> instances = Instance::getInstances();
 class AlgorithmsRunner
 {
 public:
-	AlgorithmsRunner(size_t runCount);
+	AlgorithmsRunner(size_t runCount = 1);
 	AlgorithmsRunner(const AlgorithmsRunner&) = delete;
 	AlgorithmsRunner& operator=(const AlgorithmsRunner&) = delete;
 	~AlgorithmsRunner();
 	float*** run(std::mt19937& rng);
 	void run(std::mt19937& rng, std::string filename);
+	static float runAlgorithm(std::mt19937& rng,AlgorithmType algType,Config config,std::string instanceName);
 	static std::string getCSVLine(float* results, size_t runCount);
 	static void saveResultsToFiles(float*** results, size_t runCount, std::string prefix = "",std::string path = "CSV\\results\\");
 private:

@@ -5,7 +5,8 @@
 
 Population::Population(size_t size)
 	:
-	size(size)
+	size(size),
+	sizeDist(0, size - 1)
 {
 }
 
@@ -22,9 +23,20 @@ void Population::init(std::mt19937& rng, DistanceMatrix* distanceMatrix)
 
 Creature Population::selection(std::mt19937& rng, size_t tSize)
 {
-	std::set<Creature> out;
+	/*std::set<Creature> out;
 	std::sample(creatures.begin(), creatures.end(), std::inserter(out, out.begin()), tSize, rng);
-	return *out.begin();
+	return *out.begin();*/
+
+	Creature* bestC;
+	Creature* c;
+
+	bestC = &creatures[sizeDist(rng)];
+	while (--tSize > 0)
+	{
+		c = &creatures[sizeDist(rng)];
+		bestC = std::min(bestC, c);
+	}
+	return *bestC;
 }
 
 

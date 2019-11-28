@@ -25,4 +25,5 @@ public:
 private:
 	size_t size;
 	std::vector<Creature> creatures;
+	std::uniform_int_distribution<size_t> sizeDist;
 };

@@ -78,6 +78,36 @@ void AlgorithmsRunner::run(std::mt19937& rng, std::string filename)
 
 }
 
+float AlgorithmsRunner::runAlgorithm(std::mt19937& rng, AlgorithmType algType,Config config, std::string instanceName)
+{
+	MetaAlgorithm* algorithm;
+	Problem problem = Loader::loadData(TSP_DIRECTORY + instanceName + ".tsp");
+	float best;
+	switch (algType)
+	{
+	case AlgorithmType::RANDOM:
+		return Creature::getRandomCreature(problem, rng).getFitness();
+	case AlgorithmType::GREEDY:
+		algorithm = new GreedyAlgorithm(problem, config);
+		break;
+	case AlgorithmType::GENETIC:
+		algorithm = new GAAlgorithm(problem, config);
+		break;
+	case AlgorithmType::TABU:
+		algorithm = new TabuAlgorithm(problem, config);
+		break;
+	case AlgorithmType::SA:
+		algorithm = new SAAlgorithm(problem, config);
+		break;
+	default:
+		return -1.f;
+	}
+
+	best = algorithm->run(rng);
+	delete algorithm;
+	return best;
+}
+
 std::string AlgorithmsRunner::getCSVLine(float* results, size_t runCount)
 {
 	std::stringstream ss;
