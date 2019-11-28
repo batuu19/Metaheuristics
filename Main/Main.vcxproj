@@ -155,9 +155,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AgedPopulation.cpp" />
     <ClCompile Include="AlgorithmsRunner.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DistanceMatrix.cpp" />
+    <ClCompile Include="GAAgeAlgorithm.cpp" />
     <ClCompile Include="GAAlgorithm.cpp" />
     <ClCompile Include="GATSAlgorithm.cpp" />
     <ClCompile Include="GreedyAlgorithm.cpp" />
@@ -172,7 +174,9 @@
     <ClCompile Include="SAAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AgedPopulation.h" />
     <ClInclude Include="AlgorithmsRunner.h" />
+    <ClInclude Include="GAAgeAlgorithm.h" />
     <ClInclude Include="GATSAlgorithm.h" />
     <ClInclude Include="GreedyAlgorithm.h" />
     <ClInclude Include="MetaAlgorithm.h" />

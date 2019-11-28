@@ -5,6 +5,7 @@
 #include "SAAlgorithm.h"
 #include "TabuAlgorithm.h"
 #include "GATSAlgorithm.h"
+#include "GAAgeAlgorithm.h"
 #include "Loader.h"
 #include <random>
 #include <memory>
@@ -46,6 +47,7 @@ enum class AlgorithmType
 	SA,
 	NONE,//end of main algs
 	GA_TS,
+	GA_AGED,
 };
 
 static constexpr size_t ALGORITGM_COUNT = static_cast<size_t>(AlgorithmType::NONE);

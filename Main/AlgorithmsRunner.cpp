@@ -101,6 +101,9 @@ float AlgorithmsRunner::runAlgorithm(std::mt19937& rng, AlgorithmType algType,Co
 	case AlgorithmType::GA_TS:
 		algorithm = new GATSAlgorithm(problem, config);
 		break;
+	case AlgorithmType::GA_AGED:
+		algorithm = new GAAgeAlgorithm(problem, config);
+		break;
 	default:
 		return -1.f;
 	}

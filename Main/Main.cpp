@@ -14,5 +14,5 @@ int main()
 {
 	std::mt19937 rng(std::random_device{}());
 	AlgorithmsRunner runner;
-	runner.runAlgorithm(rng, AlgorithmType::GA_TS, Config::getGATSConfig(100, 100, 0.5f, 0.02f,10,10, 8), "kroA100");
+	runner.runAlgorithm(rng, AlgorithmType::GA_AGED, Config::getGAConfig(0,"aged_test",100,100,0.8f,0.02f,10), "kroA100");
 }
