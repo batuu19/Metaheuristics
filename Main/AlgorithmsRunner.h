@@ -20,16 +20,16 @@ public:
 	{
 		return {
 			{0,"kroA100",	 21282,},
-			{1,"kroA150",	 26524,},
-			{2,"kroA200",	 29368,},
-			{3,"fl417",		 11861,},
+			//{1,"kroA150",	 26524,},
+			//{2,"kroA200",	 29368,},
+			/*{3,"fl417",		 11861,},
 			{4,"ali535",	 202339,},
 			{5,"gr666",		 294358,},
 			{6,"nrw1379",	 56638,},
-			{7,"pr2392",	 378032,},
+			{7,"pr2392",	 378032,},*/
 		};
 	}
-	static const size_t count = 8;
+	static const size_t count = 1;
 private:
 	Instance(size_t id, std::string name, size_t optimumValue)
 		:

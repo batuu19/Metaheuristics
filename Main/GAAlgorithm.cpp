@@ -11,7 +11,7 @@ float GAAlgorithm::run(std::mt19937& rng)
 	{
 		Population newPop = Population(config.popSize);
 		size_t creaturesCount = 0;
-		while (creaturesCount < config.popSize - 1)//because putting always 2 at back
+		while (creaturesCount < config.popSize - 3)//because putting 4
 		{
 			auto c1 = pop.selection(rng, config.tSize);
 			auto c2 = pop.selection(rng, config.tSize);
@@ -19,24 +19,33 @@ float GAAlgorithm::run(std::mt19937& rng)
 			{
 				auto c12 = c1.crossoverPMX(c2, rng);
 				auto c21 = c2.crossoverPMX(c1, rng);
+				if (percentageDist(rng) < config.px * 0.7f)
+				{
+					newPop.addCreature(c1);
+					newPop.addCreature(c2);
+					creaturesCount += 2;
+				}
 				c1 = c12;
 				c2 = c21;
 			}
 
-			int swapCount = std::abs(nDist(rng));//using pm here
-			c1.mutateSwap(rng, swapCount);
-			c2.mutateSwap(rng, swapCount);
-
+			int swapCount = nDist(rng) + (config.popSize * config.pm * 0.85f);//using pm here
+			if (swapCount > 0)
+			{
+				c1.mutateSwap(rng, swapCount);
+				c2.mutateSwap(rng, swapCount);
+			}
 			newPop.addCreature(c1);
 			newPop.addCreature(c2);
 			creaturesCount += 2;
 		}
 
-		if (creaturesCount == config.popSize - 1)
+		while (creaturesCount < config.popSize)
 		{
 			auto c = Creature(distanceMatrix);
 			c.init(rng);
 			newPop.addCreature(c);
+			creaturesCount++;
 		}
 
 		//swap populations

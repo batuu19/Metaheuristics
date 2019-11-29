@@ -11,7 +11,7 @@ class GAAlgorithm : public MetaAlgorithm
 public:
 	GAAlgorithm(const Problem& problem, const Config& config) :
 		MetaAlgorithm(problem, config),
-		nDist(0, citiesCount * config.pm)
+		nDist(0, config.popSize * config.pm)
 	{};
 	float run(std::mt19937& rng) override;
 private:
