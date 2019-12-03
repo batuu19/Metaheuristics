@@ -19,7 +19,7 @@ public:
 	static std::vector<Instance> getInstances()
 	{
 		return {
-			{0,"kroA100",	 21282,},
+			{0,"kroA200",	 21282,},
 			//{1,"kroA150",	 26524,},
 			//{2,"kroA200",	 29368,},
 			/*{3,"fl417",		 11861,},
@@ -63,8 +63,12 @@ public:
 	float*** run(std::mt19937& rng);
 	void run(std::mt19937& rng, std::string filename);
 	static float runAlgorithm(std::mt19937& rng,AlgorithmType algType,Config config,std::string instanceName);
+	static float runAlgorithm(std::mt19937& rng,AlgorithmType algType,Config config,const Problem& problem);
 	static std::string getCSVLine(float* results, size_t runCount);
 	static void saveResultsToFiles(float*** results, size_t runCount, std::string prefix = "",std::string path = "CSV\\results\\");
+	static int configTester(std::mt19937& rng, AlgorithmType algType,
+		const std::vector<Config>& configs,int repeats, const Problem& problem);
+	static void configTester(std::mt19937& rng);
 private:
 	size_t runCount;
 	float*** cache;

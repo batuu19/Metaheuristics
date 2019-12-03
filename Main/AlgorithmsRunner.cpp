@@ -42,7 +42,7 @@ float*** AlgorithmsRunner::run(std::mt19937& rng)
 		{
 			std::cout << i << " ";
 			Config greedyConfig = Config::getGreedyConfig(i, instance.name);
-			Config gaConfig = Config::getGAConfig(i, instance.name, 1000, 1500, 0.85f, 0.005f, 50, Mutation::SWAP, Crossover::OX);
+			Config gaConfig = Config::getGAConfig(i, instance.name, 1200, 1200, 0.8f, 0.006f,25);
 			Config tsConfig = Config::getTabuConfig(i, instance.name, 4, totalCreatureCount);
 			Config saConfig = Config::getSAConfig(i, instance.name, 1500.f, 0.995, 5, totalCreatureCount);
 
@@ -79,8 +79,12 @@ void AlgorithmsRunner::run(std::mt19937& rng, std::string filename)
 
 float AlgorithmsRunner::runAlgorithm(std::mt19937& rng, AlgorithmType algType,Config config, std::string instanceName)
 {
+	return runAlgorithm(rng, algType, config, Loader::loadData(TSP_DIRECTORY + instanceName + ".tsp"));	
+}
+
+float AlgorithmsRunner::runAlgorithm(std::mt19937& rng, AlgorithmType algType, Config config, const Problem& problem)
+{
 	MetaAlgorithm* algorithm;
-	Problem problem = Loader::loadData(TSP_DIRECTORY + instanceName + ".tsp");
 	float best;
 	switch (algType)
 	{
@@ -158,4 +162,67 @@ void AlgorithmsRunner::saveResultsToFiles(float*** results, size_t runCount, std
 			*files[f] << std::endl;
 		}
 	}
+}
+
+int AlgorithmsRunner::configTester(std::mt19937& rng, AlgorithmType algType, 
+	const std::vector<Config>& configs,int repeats, const Problem& problem)
+{
+	int bestConfigId = 0;
+	float best = std::numeric_limits<float>::max();
+	float algBest;
+	for (size_t i = 0; i < configs.size(); i++)
+	{
+		std::cout << "Config " << i << "/" << configs.size() << std::endl;
+		int sum = 0;
+		for (int i = 0; i < repeats; i++)
+		{
+			sum += runAlgorithm(rng, algType, configs[i], problem);
+		}
+		algBest = sum / repeats;
+		if (algBest < best)
+		{
+			best = algBest;
+			bestConfigId = i;
+		}
+
+	}
+	return bestConfigId;
+}
+
+void AlgorithmsRunner::configTester(std::mt19937& rng)
+{
+	int repeats = 5;
+	std::vector<int> popSizes = { 1200 };
+	std::vector<int> generationCounts = { 1200 };
+	std::vector<float> pxs = { 0.75f,0.8f,0.9f,0.95f,0.99f };
+	std::vector<float> pms = {0.02,0.008,0.006,0.001};
+	std::vector<int> tSizes = { 5,10,25 };
+	std::vector<Config> configs;
+	size_t configNum = 0;
+	configs.reserve(popSizes.size() * generationCounts.size() *
+		pxs.size() * pms.size() * tSizes.size());
+	for (auto popSize : popSizes)
+	for (auto generationCount : generationCounts)
+	for (auto px : pxs)
+	for (auto pm : pms)
+	for (auto tSize : tSizes)
+	{
+		configs.push_back(Config::getGAConfig(configNum, popSize, generationCount, px, pm, tSize));
+		configNum++;
+	}
+
+	std::string instanceName = "kroA200";
+	Problem problem = Loader::loadData(TSP_DIRECTORY + instanceName + ".tsp");
+	int bestConfigId = configTester(rng, AlgorithmType::GENETIC, configs, repeats, problem);
+	Config config = configs[bestConfigId];
+
+	std::ofstream bestConfigFile;
+	bestConfigFile.open("best.txt");
+	bestConfigFile << "id " << bestConfigId << std::endl;
+	bestConfigFile << "popSize" << config.popSize << std::endl;
+	bestConfigFile << "generations" << config.generations << std::endl;
+	bestConfigFile << "px" << config.px << std::endl;
+	bestConfigFile << "pm" << config.pm << std::endl;
+	bestConfigFile << "tSize" << config.tSize << std::endl;
+	bestConfigFile.close();
 }

@@ -112,10 +112,32 @@ void Creature::mutateSwap(size_t first, size_t second)
 void Creature::mutateSwap(std::mt19937& rng, size_t swapCount)
 {
 	size_t first, second;
-	for (size_t i = 0; i < swapCount; i++)
+
+	if (swapCount > citiesCount / 6)
 	{
-		getRandomBeginEnd(first, second, rng);
-		mutateSwap(first, second);
+		for (size_t i = 0; i < swapCount; i++)
+		{
+			getRandomBeginEnd(first, second, rng);
+			mutateSwap(first, second);
+		}
+	}
+	else
+	{
+		while (swapCount > 1)
+		{
+			do
+			{
+				first = dist(rng);
+				second = dist(rng);
+			} while (
+				citiesCount - second < 2 * swapCount ||
+				(int)second - (int)first < 2 * (int)swapCount
+				);
+			std::swap_ranges(cities + first, cities + first + swapCount, cities + second);
+
+			swapCount /= 2;
+		}
+		calculateFitness();
 	}
 }
 

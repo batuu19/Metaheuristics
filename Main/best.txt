@@ -1,0 +1,6 @@
+id 20
+popSize1200
+generations1200
+px0.8
+pm0.006
+tSize25

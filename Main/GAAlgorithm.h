@@ -11,9 +11,9 @@ class GAAlgorithm : public MetaAlgorithm
 public:
 	GAAlgorithm(const Problem& problem, const Config& config) :
 		MetaAlgorithm(problem, config),
-		nDist(0, config.popSize * config.pm)
+		swapDist(0, problem.getDimension() * config.pm*2)
 	{};
 	float run(std::mt19937& rng) override;
 private:
-	std::normal_distribution<float> nDist;
+	std::normal_distribution<float> swapDist;
 };

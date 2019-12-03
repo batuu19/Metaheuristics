@@ -5,27 +5,13 @@
 #include "Population.h"
 #include "DistanceMatrix.h"
 
-enum Mutation
-{
-	SWAP,
-	INVERSE,
-};
-enum Crossover
-{
-	OX,
-	PMX,
-};
-
 //template<typename T>
 class Config
 {
 public:
-	static Config getGAConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize,
-		Mutation mutation = Mutation::SWAP, Crossover crossover = Crossover::OX);
-	static Config getGAConfig(size_t id, size_t popSize, size_t generations, float px, float pm, size_t tSize,
-		Mutation mutation = Mutation::SWAP, Crossover crossover = Crossover::OX);
-	static Config getGAConfig(size_t id, std::string name, size_t popSize, size_t generations, float px, float pm, size_t tSize,
-		Mutation mutation = Mutation::SWAP, Crossover crossover = Crossover::OX);
+	static Config getGAConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize);
+	static Config getGAConfig(size_t id, size_t popSize, size_t generations, float px, float pm, size_t tSize);
+	static Config getGAConfig(size_t id, std::string name, size_t popSize, size_t generations, float px, float pm, size_t tSize);
 	static Config getTabuConfig(size_t neighborsCount, size_t maxIterations);
 	static Config getTabuConfig(size_t id, size_t neighborsCount, size_t maxIterations);
 	static Config getTabuConfig(size_t id, std::string name, size_t neighborsCount, size_t maxIterations);
@@ -48,8 +34,6 @@ public://temp public
 	size_t generations;
 	float px, pm;
 	size_t tSize;
-	Mutation mutation;
-	Crossover crossover;
 	//tabu
 	size_t neighborsCount;
 	size_t maxIterations;

@@ -1,7 +1,6 @@
 #include "MetaAlgorithm.h"
 
-Config Config::getGAConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize,
-	Mutation mutation, Crossover crossover)
+Config Config::getGAConfig(size_t popSize, size_t generations, float px, float pm, size_t tSize)
 {
 	Config cfg;
 	cfg.filenamePrefix = "CSV\\ga";
@@ -10,24 +9,21 @@ Config Config::getGAConfig(size_t popSize, size_t generations, float px, float p
 	cfg.px = px;
 	cfg.pm = pm;
 	cfg.tSize = tSize;
-	cfg.mutation = mutation;
-	cfg.crossover = crossover;
 	return cfg;
 }
 
-Config Config::getGAConfig(size_t id, size_t popSize, size_t generations, float px, float pm, size_t tSize,
-	Mutation mutation, Crossover crossover)
+Config Config::getGAConfig(size_t id, size_t popSize, size_t generations, float px, float pm, size_t tSize)
 {
-	Config cfg = getGAConfig(popSize, generations, px, pm, tSize,mutation,crossover);
+	Config cfg = getGAConfig(popSize, generations, px, pm, tSize);
 	std::stringstream ss;
 	ss << cfg.filenamePrefix << id;
 	cfg.filenamePrefix = ss.str();
 	return cfg;
 }
 
-Config Config::getGAConfig(size_t id, std::string name, size_t popSize, size_t generations, float px, float pm, size_t tSize, Mutation mutation, Crossover crossover)
+Config Config::getGAConfig(size_t id, std::string name, size_t popSize, size_t generations, float px, float pm, size_t tSize)
 {
-	Config cfg = getGAConfig(popSize, generations, px, pm, tSize, mutation, crossover);
+	Config cfg = getGAConfig(popSize, generations, px, pm, tSize);
 	std::stringstream ss;
 	ss << cfg.filenamePrefix << "_" << name << "_" << id;
 	cfg.filenamePrefix = ss.str();
