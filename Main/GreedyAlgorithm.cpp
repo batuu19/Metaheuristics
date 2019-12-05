@@ -9,7 +9,6 @@ float GreedyAlgorithm::run(std::mt19937& rng)
 
 	std::uniform_int_distribution<int> cityDist(0, citiesCount - 1);
 	int city = cityDist(rng);
-	int nextCity;
 	std::vector<int> cities;
 	std::vector<int> allCities(citiesCount);
 	std::iota(allCities.begin(), allCities.end(), 0);

@@ -17,7 +17,7 @@ void Population::init(std::mt19937& rng, DistanceMatrix* distanceMatrix)
 		creatures.emplace_back(distanceMatrix);
 	}
 	for (auto& c : creatures)
-		c.init(rng);
+		c.init(rng,true);
 
 }
 

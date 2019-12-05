@@ -8,12 +8,14 @@ float GAAlgorithm::run(std::mt19937& rng)
 	csvFile << CSV_FIRST_LINE;
 	float best = std::numeric_limits<float>::max();
 	int swapCount;
+	auto lastSorted = pop.getSortedCreatures();
 	for (size_t i = 0; i < config.generations; i++)
 	{
 		Population newPop = Population(config.popSize);
 		size_t creaturesCount = 0;
 		while (creaturesCount < config.popSize - 3)//because putting n 
 		{
+			//ruletka?
 			auto c1 = std::move(pop.selection(rng, config.tSize));
 			Creature c11 = Creature(c1);
 			auto c2 = std::move(pop.selection(rng, config.tSize));
@@ -53,14 +55,14 @@ float GAAlgorithm::run(std::mt19937& rng)
 		//swap populations
 		std::swap(pop, newPop);
 
-		auto vec = pop.getSortedCreatures();
+		lastSorted = pop.getSortedCreatures();
 		csvFile << i << ","
-			<< vec[config.popSize - 1].getFitness() << ","
-			<< vec[config.popSize / 2].getFitness() << ","
-			<< vec[0].getFitness()
+			<< lastSorted[config.popSize - 1].getFitness() << ","
+			<< lastSorted[config.popSize / 2].getFitness() << ","
+			<< lastSorted[0].getFitness()
 			<< std::endl;
 		//std::cout << i << std::endl;
-		best = std::min(best, vec[0].getFitness());
+		best = std::min(best, lastSorted[0].getFitness());
 	}
 	csvFile.close();
 

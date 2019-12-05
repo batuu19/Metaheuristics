@@ -89,10 +89,36 @@ Creature::~Creature()
 	delete cities;
 }
 
-void Creature::init(std::mt19937& rng)
+void Creature::init(std::mt19937& rng, bool greedy)
 {
-	std::iota(cities, cities + citiesCount, 0);//0,1,2,3,...
-	std::shuffle(cities, cities + citiesCount, rng);
+	if (greedy)
+	{
+		std::uniform_int_distribution<int> cityDist(0, citiesCount - 1);
+
+		int city = cityDist(rng);
+
+		std::vector<int> allCities(citiesCount);
+		std::iota(allCities.begin(), allCities.end(), 0);
+		allCities.erase(allCities.begin() + city);//they are 0,1,2,3 so this will erase right
+		cities[0] = city;
+
+		for (size_t i = 1; i < citiesCount; i++)
+		{
+			std::sort(allCities.begin(), allCities.end(), [this, &city](int c1, int c2) {
+				return
+					distanceMatrix->getDistance(city, c1) < distanceMatrix->getDistance(city, c2);
+				});
+			city = allCities[0];
+			cities[i] = city;
+			std::swap(*allCities.begin(), *allCities.rbegin());
+			allCities.pop_back();
+		}
+	}
+	else
+	{
+		std::iota(cities, cities + citiesCount, 0);//0,1,2,3,...
+		std::shuffle(cities, cities + citiesCount, rng);
+	}
 	calculateFitness();
 }
 

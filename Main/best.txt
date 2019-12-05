@@ -1,6 +1,6 @@
-id 2
+id 12
 popSize1200
 generations1200
 px0.8
-pm0.001
-tSize15
+pm0.01
+tSize5

@@ -23,7 +23,7 @@ public:
 	Creature& operator=(const Creature&);
 	Creature& operator=(Creature&&) noexcept;
 	~Creature();
-	void init(std::mt19937& rng);
+	void init(std::mt19937& rng,bool greedy = false);
 	void mutateSwap(std::mt19937& rng);
 	void mutateSwap(size_t first, size_t second);
 	void mutateSwap(std::mt19937& rng, size_t swapCount);//count?
