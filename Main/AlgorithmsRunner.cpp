@@ -42,7 +42,7 @@ float*** AlgorithmsRunner::run(std::mt19937& rng)
 		{
 			std::cout << i << " ";
 			Config greedyConfig = Config::getGreedyConfig(i, instance.name);
-			Config gaConfig = Config::getGAConfig(i, instance.name, 1200, 1200, 0.8f, 0.006f,25);
+			Config gaConfig = Config::getGAConfig(i, instance.name, 1200, 1200, 0.7f, 0.008f,5);
 			Config tsConfig = Config::getTabuConfig(i, instance.name, 4, totalCreatureCount);
 			Config saConfig = Config::getSAConfig(i, instance.name, 1500.f, 0.995, 5, totalCreatureCount);
 
@@ -52,7 +52,7 @@ float*** AlgorithmsRunner::run(std::mt19937& rng)
 			results[instance.id][1][i] = algorithm->run(rng);
 			delete algorithm;
 
-			algorithm = new GAAlgorithm(problem, gaConfig);
+			algorithm = new GAAgeAlgorithm(problem, gaConfig);
 			results[instance.id][2][i] = algorithm->run(rng);
 			delete algorithm;
 
@@ -194,9 +194,9 @@ void AlgorithmsRunner::configTester(std::mt19937& rng)
 	int repeats = 5;
 	std::vector<int> popSizes = { 1200 };
 	std::vector<int> generationCounts = { 1200 };
-	std::vector<float> pxs = { 0.75f,0.8f,0.9f,0.95f,0.99f };
-	std::vector<float> pms = {0.02,0.008,0.006,0.001};
-	std::vector<int> tSizes = { 5,10,25 };
+	std::vector<float> pxs = { 0.8f };
+	std::vector<float> pms = {0.001f};
+	std::vector<int> tSizes = { 5,10,15,20,25,30};
 	std::vector<Config> configs;
 	size_t configNum = 0;
 	configs.reserve(popSizes.size() * generationCounts.size() *

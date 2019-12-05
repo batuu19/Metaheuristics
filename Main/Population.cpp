@@ -34,7 +34,8 @@ Creature Population::selection(std::mt19937& rng, size_t tSize)
 	while (--tSize > 0)
 	{
 		c = &creatures[sizeDist(rng)];
-		bestC = std::min(bestC, c);
+		if (c->getFitness() < bestC->getFitness())
+			bestC = c;
 	}
 	return *bestC;
 }

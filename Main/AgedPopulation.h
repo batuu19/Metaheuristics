@@ -31,4 +31,5 @@ private:
 	std::vector<AgedCreature> creatures;
 	std::uniform_int_distribution<size_t> sizeDist;
 	float percentBase = 0.1;
+	int maxAge = 5;
 };

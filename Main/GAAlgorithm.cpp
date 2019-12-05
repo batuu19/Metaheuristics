@@ -3,31 +3,38 @@
 float GAAlgorithm::run(std::mt19937& rng)
 {
 	std::ofstream csvFile;
-
 	csvFile.open(config.filenamePrefix + ".csv");
 	pop.init(rng, distanceMatrix);
 	csvFile << CSV_FIRST_LINE;
 	float best = std::numeric_limits<float>::max();
+	int swapCount;
 	for (size_t i = 0; i < config.generations; i++)
 	{
 		Population newPop = Population(config.popSize);
 		size_t creaturesCount = 0;
 		while (creaturesCount < config.popSize - 3)//because putting n 
 		{
-			auto c1 = pop.selection(rng, config.tSize);
-			auto c2 = pop.selection(rng, config.tSize);
+			auto c1 = std::move(pop.selection(rng, config.tSize));
+			Creature c11 = Creature(c1);
+			auto c2 = std::move(pop.selection(rng, config.tSize));
 			if (percentageDist(rng) < config.px)
 			{
-				auto c12 = c1.crossoverPMX(c2, rng);
-				auto c21 = c2.crossoverPMX(c1, rng);
-				c1 = c12;
-				c2 = c21;
+				c1 = std::move(c1.crossoverPMX(c2, rng));
+			}
+			if (percentageDist(rng) < config.px)
+			{
+				c2 = std::move(c2.crossoverPMX(c11, rng));
 			}
 
-			int swapCount = swapDist(rng);
+
+			swapCount = swapDist(rng);
 			if (swapCount > 0)
 			{
 				c1.mutateSwap(rng, swapCount);
+			}
+			swapCount = swapDist(rng);
+			if (swapCount > 0)
+			{
 				c2.mutateSwap(rng, swapCount);
 			}
 			newPop.addCreature(c1);
@@ -57,7 +64,7 @@ float GAAlgorithm::run(std::mt19937& rng)
 	}
 	csvFile.close();
 
-	return pop.getSortedCreatures()[0].getFitness();
+	return best;
 }
 
 

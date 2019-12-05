@@ -40,14 +40,10 @@ AgedCreature AgedPopulation::selection(std::mt19937& rng, size_t tSize)
 		c = &creatures[sizeDist(rng)];
 		bestC = std::min(bestC, c, [this](AgedCreature* c1, AgedCreature* c2)
 			{
-				//if small diffrence choose younger
-				auto diff = std::abs(c1->creature.getFitness() - c2->creature.getFitness());
-				float percent = diff / (c1->creature.getFitness() + c2->creature.getFitness());
-
-				float percentNeeded = percentBase * (std::abs(c1->age - c2->age) + 1);
-
-				if (percent < percentNeeded)
-					return c1->creature < c2->creature;
+				if (c1->creature < c2->creature && c1->age < maxAge)
+					return true;
+				else if (c2->creature < c1->creature && c2->age < maxAge)
+					return false;
 				else
 					return c1->age < c2->age;
 			});

@@ -7,25 +7,35 @@ float GAAgeAlgorithm::run(std::mt19937& rng)
 	csvFile.open(config.filenamePrefix + ".csv");
 	agedPop.init(rng, distanceMatrix);
 	csvFile << "generation, worst, medium, best\n";
+	int swapCount;
+	float best = std::numeric_limits<float>::max();
 	for (size_t i = 0; i < config.generations; i++)
 	{
 		AgedPopulation newAgedPop = AgedPopulation(config.popSize);
 		size_t creaturesCount = 0;
 		while (creaturesCount < config.popSize - 1)//because putting always 2 at back
 		{
-			auto c1 = agedPop.selection(rng, config.tSize);
-			auto c2 = agedPop.selection(rng, config.tSize);
+			auto c1 = std::move(agedPop.selection(rng, config.tSize));
+			auto c2 = std::move(agedPop.selection(rng, config.tSize));
+			AgedCreature c11 = AgedCreature(c1);
 			if (percentageDist(rng) < config.px)
 			{
-				auto c12 = c1.creature.crossoverPMX(c2.creature, rng);
-				auto c21 = c2.creature.crossoverPMX(c1.creature, rng);
-				c1 = c12;
-				c2 = c21;
+				c1 = std::move(c1.creature.crossoverPMX(c2.creature, rng));
 			}
-
-			int swapCount = std::abs(nDist(rng));//using pm here
-			c1.creature.mutateSwap(rng, swapCount);
-			c2.creature.mutateSwap(rng, swapCount);
+			if (percentageDist(rng) < config.px)
+			{
+				c2 = std::move(c2.creature.crossoverPMX(c11.creature, rng));
+			}
+			swapCount = swapDist(rng);
+			if (swapCount > 0)
+			{
+				c1.creature.mutateSwap(rng, swapCount);
+			}
+			swapCount = swapDist(rng);
+			if (swapCount > 0)
+			{
+				c2.creature.mutateSwap(rng, swapCount);
+			}
 
 			newAgedPop.addCreature(c1);
 			newAgedPop.addCreature(c2);
@@ -49,9 +59,9 @@ float GAAgeAlgorithm::run(std::mt19937& rng)
 			<< vec[config.popSize / 2].creature.getFitness() << ","
 			<< vec[0].creature.getFitness()
 			<< std::endl;
-		//std::cout << i << std::endl;
+		best = std::min(best, vec[0].creature.getFitness());
 	}
 	csvFile.close();
 
-	return agedPop.getSortedCreatures()[0].creature.getFitness();
+	return best;
 }
