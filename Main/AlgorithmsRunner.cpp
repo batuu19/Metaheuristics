@@ -42,7 +42,7 @@ float*** AlgorithmsRunner::run(std::mt19937& rng)
 		{
 			std::cout << i << " ";
 			Config greedyConfig = Config::getGreedyConfig(i, instance.name);
-			Config gaConfig = Config::getGAConfig(i, instance.name, 1200, 1200, 0.8f, 0.01f,150);
+			Config gaConfig = Config::getGAConfig(i, instance.name, 1000, 1000, 0.5f, 0.08f,50);
 			Config tsConfig = Config::getTabuConfig(i, instance.name, 4, totalCreatureCount);
 			Config saConfig = Config::getSAConfig(i, instance.name, 1500.f, 0.995, 5, totalCreatureCount);
 

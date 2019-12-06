@@ -57,7 +57,7 @@ private:
 	
 	size_t citiesCount;
 	int* cities;
-	std::uniform_int_distribution<size_t> dist;//cities dist
+	mutable std::uniform_int_distribution<size_t> dist;//cities dist
 
 	void getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng) const;
 

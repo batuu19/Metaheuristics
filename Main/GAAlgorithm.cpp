@@ -28,16 +28,13 @@ float GAAlgorithm::run(std::mt19937& rng)
 				c2 = std::move(c2.crossoverPMX(c11, rng));
 			}
 
-
-			swapCount = swapDist(rng);
-			if (swapCount > 0)
+			if (percentageDist(rng) < config.pm)
 			{
-				c1.mutateSwap(rng, swapCount);
+				c1.mutateInv(rng);
 			}
-			swapCount = swapDist(rng);
-			if (swapCount > 0)
+			if (percentageDist(rng) < config.pm)
 			{
-				c2.mutateSwap(rng, swapCount);
+				c2.mutateInv(rng);
 			}
 			newPop.addCreature(c1);
 			newPop.addCreature(c2);
@@ -61,7 +58,6 @@ float GAAlgorithm::run(std::mt19937& rng)
 			<< lastSorted[config.popSize / 2].getFitness() << ","
 			<< lastSorted[0].getFitness()
 			<< std::endl;
-		//std::cout << i << std::endl;
 		best = std::min(best, lastSorted[0].getFitness());
 	}
 	csvFile.close();

@@ -34,7 +34,7 @@ float SAAlgorithm::run(std::mt19937& rng)
 		}
 		else
 		{
-			auto value = std::expf(
+			auto value = expf(
 				(best.getFitness() - neighbors[0].getFitness()) / (float)temperature);
 			//(neighbors[0].getFitness() - best.getFitness()) / (float)temperature);
 			auto percentage = percentageDist(rng);
