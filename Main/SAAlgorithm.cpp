@@ -18,12 +18,13 @@ float SAAlgorithm::run(std::mt19937& rng)
 	neighbors.reserve(config.neighborsCount);
 	auto temperature = config.beginTemperature;
 	size_t generation = 1;
+	std::uniform_int_distribution<size_t> pointDist(0, citiesCount - 1);
 	while (generation < config.maxIterations)
 	{
 		neighbors.clear();
-		neighbors = best.getRandomNeighbors(rng, config.neighborsCount);
 		//neighbors = best.getPointNeighbors(pointDist(rng));
-
+		//neighbors = best.getPointNeighbors(pointDist(rng));
+		neighbors = best.getInvNeighbors(rng,config.neighborsCount);
 		std::sort(neighbors.begin(), neighbors.end());
 
 

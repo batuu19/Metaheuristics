@@ -373,6 +373,20 @@ std::vector<Creature> Creature::getAllNeighbors() const
 	return neighbors;
 }
 
+std::vector<Creature> Creature::getInvNeighbors(std::mt19937 & rng, size_t count) const
+{
+	std::vector<Creature> neighbors;
+	neighbors.reserve(citiesCount);
+	for (size_t i = 0; i < citiesCount; i++)
+	{
+		auto c = Creature(*this);
+		c.mutateInv(rng);
+		c.calculateFitness();
+		neighbors.push_back(c);
+	}
+	return neighbors;
+}
+
 void Creature::getRandomBeginEnd(size_t& begin, size_t& end, std::mt19937& rng) const
 {
 	begin = dist(rng);

@@ -37,14 +37,14 @@ float*** AlgorithmsRunner::run(std::mt19937& rng)
 	{
 		std::cout << instance.name << " ";
 		Problem problem = Loader::loadData(TSP_DIRECTORY + instance.name + ".tsp");
-		size_t totalCreatureCount = 100;
+		size_t totalCreatureCount = 10000;
 		for (size_t i = 0; i < runCount; i++)
 		{
 			std::cout << i << " ";
 			Config greedyConfig = Config::getGreedyConfig(i, instance.name);
 			Config gaConfig = Config::getGAConfig(i, instance.name, 1000, 1000, 0.5f, 0.08f,50);
-			Config tsConfig = Config::getTabuConfig(i, instance.name, 4, totalCreatureCount);
-			Config saConfig = Config::getSAConfig(i, instance.name, 1500.f, 0.995, 5, totalCreatureCount);
+			Config tsConfig = Config::getTabuConfig(i, instance.name, 10, totalCreatureCount);
+			Config saConfig = Config::getSAConfig(i, instance.name, 1500.f, 0.995f, 20, totalCreatureCount);
 
 			results[instance.id][0][i] = Creature::getRandomCreature(problem, rng).getFitness();
 

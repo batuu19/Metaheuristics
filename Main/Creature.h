@@ -39,6 +39,7 @@ public:
 	//std::vector<Creature> getPointNeighbors(size_t point, size_t count) const;
 	std::vector<Creature> getPointNeighbors(size_t point) const;
 	std::vector<Creature> getAllNeighbors() const;
+	std::vector<Creature> getInvNeighbors(std::mt19937& rng,size_t count) const;
 
 	const int* getCities() const;
 	unsigned long long getHash() const;

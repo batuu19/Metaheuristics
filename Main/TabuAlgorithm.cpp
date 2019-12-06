@@ -36,7 +36,9 @@ float TabuAlgorithm::run(std::mt19937 &rng)
 		neighbors.clear();
 		sorted.clear();
 
-		neighbors = best.getRandomNeighbors(rng, config.neighborsCount);
+		//neighbors = best.getPointNeighbors(pointDist(rng));
+
+		neighbors = best.getInvNeighbors(rng, config.neighborsCount);
 
 		std::copy_if(neighbors.begin(), neighbors.end(), std::inserter(sorted, sorted.begin()),
 			[this](const Creature& c)

@@ -4,7 +4,7 @@
 #include <iterator>
 #include <map>
 
-constexpr size_t DEFAULT_TABULIST_MAXSIZE = 99999999999;
+constexpr size_t DEFAULT_TABULIST_MAXSIZE = 100;
 
 class TabuList
 {

@@ -19,8 +19,8 @@ public:
 	static std::vector<Instance> getInstances()
 	{
 		return {
-			{0,"kroA200",	 21282,},
-			//{1,"kroA150",	 26524,},
+			{0,"kroA100",	 21282,},
+			{1,"kroA150",	 26524,},
 			//{2,"kroA200",	 29368,},
 			/*{3,"fl417",		 11861,},
 			{4,"ali535",	 202339,},
@@ -29,7 +29,7 @@ public:
 			{7,"pr2392",	 378032,},*/
 		};
 	}
-	static const size_t count = 1;
+	static const size_t count = 2;
 private:
 	Instance(size_t id, std::string name, size_t optimumValue)
 		:
